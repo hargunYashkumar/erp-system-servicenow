@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="d5b2358650a4410f9337bd602d788f61" label="College Onboarding" name="x_1790229_edusph_0_onboarding" type="collection">
+        <element label="Submitted On" name="submitted_on" type="glide_date_time"/>
+        <element choice="3" default="draft" label="Status" mandatory="true" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Submitted" sequence="2" value="submitted"/>
+                <element inactive_on_update="false" label="Draft" sequence="1" value="draft"/>
+                <element inactive_on_update="false" label="Rejected" sequence="5" value="rejected"/>
+                <element inactive_on_update="false" label="In Review" sequence="3" value="in_review"/>
+                <element inactive_on_update="false" label="Go-Live" sequence="6" value="go_live"/>
+                <element inactive_on_update="false" label="Approved" sequence="4" value="approved"/>
+            </choice>
+        </element>
+        <element label="Requested By" mandatory="true" name="requested_by" reference="sys_user" type="reference"/>
+        <element label="Documents" name="documents" type="attachment"/>
+        <element label="College" mandatory="true" name="college" reference="x_1790229_edusph_0_college" type="reference"/>
+        <element label="Go Live Date" name="go_live_date" type="glide_date"/>
+        <element label="Decision Notes" name="decision_notes" type="string"/>
+        <element label="Approved By" name="approved_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element label="Decision Date" name="decision_on" type="glide_date_time"/>
+        <index name="index">
+            <element name="approved_by"/>
+        </index>
+        <index name="index2">
+            <element name="college"/>
+        </index>
+        <index name="index3">
+            <element name="requested_by"/>
+        </index>
+    </element>
+</database>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="df61abba47594daf934bc295bc423dab" label="College Program" name="x_1790229_edusph_0_coll_prog" type="collection">
+        <element label="Department" mandatory="true" name="department" reference="x_1790229_edusph_0_department" type="reference"/>
+        <element label="Approved" mandatory="true" name="approved" type="boolean"/>
+        <element label="Intake Seats" mandatory="true" name="intake_seats" type="integer"/>
+        <element label="College" mandatory="true" name="college" reference="x_1790229_edusph_0_college" type="reference"/>
+        <element label="Program" mandatory="true" name="program" reference="x_1790229_edusph_0_program" type="reference"/>
+        <index name="index">
+            <element name="college"/>
+        </index>
+        <index name="index2">
+            <element name="department"/>
+        </index>
+        <index name="index3">
+            <element name="program"/>
+        </index>
+    </element>
+</database>

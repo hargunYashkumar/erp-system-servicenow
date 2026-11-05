@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="1bc94c1fcec34474949440ae0746141d" label="Affiliation Record" name="x_1790229_edusph_0_affiliation" type="collection">
+        <element label="College" mandatory="true" name="college" reference="x_1790229_edusph_0_college" type="reference"/>
+        <element label="Valid To" mandatory="true" name="valid_to" type="glide_date"/>
+        <element choice="3" default="pending" label="Status" mandatory="true" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Suspended" sequence="5" value="suspended"/>
+                <element inactive_on_update="false" label="Expired" sequence="4" value="expired"/>
+                <element inactive_on_update="false" label="Active" sequence="2" value="active"/>
+                <element inactive_on_update="false" label="Pending" sequence="1" value="pending"/>
+                <element inactive_on_update="false" label="Renewal Due" sequence="3" value="renewal_due"/>
+            </choice>
+        </element>
+        <element label="Valid From" mandatory="true" name="valid_from" type="glide_date"/>
+        <element label="Renewal Due" name="renewal_due" type="glide_date"/>
+        <index name="index">
+            <element name="college"/>
+        </index>
+    </element>
+</database>

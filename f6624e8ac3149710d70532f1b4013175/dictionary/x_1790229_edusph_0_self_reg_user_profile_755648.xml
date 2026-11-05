@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="d8736a9ac3141b10d70532f1b4013181" extends="sys_self_registered_user_profile" label="Edusph 0 Self Reg User Profile 755648" max_length="40" name="x_1790229_edusph_0_self_reg_user_profile_755648" type="collection"/>
+</database>

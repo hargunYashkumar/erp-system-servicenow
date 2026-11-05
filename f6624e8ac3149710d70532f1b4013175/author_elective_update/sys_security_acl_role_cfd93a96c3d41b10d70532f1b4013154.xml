@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="DELETE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-04 08:57:30</sys_created_on>
+        <sys_id>cfd93a96c3d41b10d70532f1b4013154</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1790229_edusph_0_test.x_erp.test_role</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_security_acl display_value="x_1790229_edusph_0_test">bed93a96c3d41b10d70532f1b4013137</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_cfd93a96c3d41b10d70532f1b4013154</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-04 08:57:30</sys_updated_on>
+        <sys_user_role display_value="x_erp.test_role" name="x_erp.test_role">b6d9f696c3d41b10d70532f1b40131be</sys_user_role>
+    </sys_security_acl_role>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</application>
+        <file_path/>
+        <instance_id>899734a8db923d582f082a5913961960</instance_id>
+        <instance_name>dev199710</instance_name>
+        <name>sys_security_acl_role_cfd93a96c3d41b10d70532f1b4013154</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role"><sys_security_acl_role action="INSERT_OR_UPDATE"><sys_class_name>sys_security_acl_role</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-11-04 08:57:30</sys_created_on><sys_id>cfd93a96c3d41b10d70532f1b4013154</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_1790229_edusph_0_test.x_erp.test_role</sys_name><sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package><sys_policy/><sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope><sys_security_acl display_value="x_1790229_edusph_0_test">bed93a96c3d41b10d70532f1b4013137</sys_security_acl><sys_update_name>sys_security_acl_role_cfd93a96c3d41b10d70532f1b4013154</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-11-04 08:57:30</sys_updated_on><sys_user_role display_value="x_erp.test_role" name="x_erp.test_role">b6d9f696c3d41b10d70532f1b40131be</sys_user_role></sys_security_acl_role></record_update>]]></payload>
+        <payload_hash>1461105672</payload_hash>
+        <record_name>x_1790229_edusph_0_test.x_erp.test_role</record_name>
+        <reverted_from/>
+        <source>f0e58e8ac3909710d70532f1b401318d</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-04 08:57:31</sys_created_on>
+        <sys_id>97d93a96c3d41b10d70532f1b4013188</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a1a5c719920000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-04 08:57:31</sys_updated_on>
+        <type>Access Roles</type>
+        <update_guid>57d93a9643d41b10bf9f276a2586d087</update_guid>
+        <update_guid_history>57d93a9643d41b10bf9f276a2586d087:1461105672</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="x_1790229_edusph_0_test.x_erp.test_role">c05a76d6c3d41b10d70532f1b4013188</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-04 08:59:29</sys_created_on>
+        <sys_db_object display_value="" name="sys_security_acl_role">sys_security_acl_role</sys_db_object>
+        <sys_id>5f90a101dd4f44dc8e786ecfb37d8c84</sys_id>
+        <sys_metadata>cfd93a96c3d41b10d70532f1b4013154</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1790229_edusph_0_test.x_erp.test_role</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_parent display_value="x_1790229_edusph_0_test">bed93a96c3d41b10d70532f1b4013137</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_scope_delete display_value="">496efbe1a9de4fe0a3807b4e0edc8400</sys_scope_delete>
+        <sys_update_name>sys_security_acl_role_cfd93a96c3d41b10d70532f1b4013154</sys_update_name>
+        <sys_update_version display_value="sys_security_acl_role_cfd93a96c3d41b10d70532f1b4013154">97d93a96c3d41b10d70532f1b4013188</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-04 08:59:29</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

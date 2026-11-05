@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_user_registration_config">
+    <sys_user_registration_config action="INSERT_OR_UPDATE">
+        <activation_error_page display_value="sn_user_activation_error">b8e54fb1533200102b12ddeeff7b1286</activation_error_page>
+        <activation_link_expiry_time>24</activation_link_expiry_time>
+        <activation_success_page display_value="sn_user_activation_success">2df447b1533200102b12ddeeff7b12c5</activation_success_page>
+        <activation_table>x_1790229_edusph_0_user_acti_req_755648</activation_table>
+        <active>true</active>
+        <description><![CDATA[<p>Testing Purpose</p>]]></description>
+        <enable_captcha>false</enable_captcha>
+        <enable_terms>true</enable_terms>
+        <internal_name>x_1790229_edusph_0.User Registration</internal_name>
+        <name>User Registration</name>
+        <post_registration_redirect_page display_value="sn_user_post_registration_redirect">61638b31533200102b12ddeeff7b12f5</post_registration_redirect_page>
+        <record_producer display_value="User Registration">5173aa9ac3141b10d70532f1b40131c7</record_producer>
+        <registration_label>Register</registration_label>
+        <registration_table>x_1790229_edusph_0_user_reg_req_755648</registration_table>
+        <requires_user_verification>true</requires_user_verification>
+        <role_to_assign name="snc_external">940ba702933002009c8579b4f47ffbe2</role_to_assign>
+        <sys_class_name>sys_user_registration_config</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-04 07:19:26</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>d3e26a5ac3141b10d70532f1b401311e</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>User Registration</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_user_registration_config_d3e26a5ac3141b10d70532f1b401311e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-04 07:20:15</sys_updated_on>
+        <terms_and_condition_url>www.example.com</terms_and_condition_url>
+        <transform_map display_value="u_reg_xmap_746519">ce732e9ac3141b10d70532f1b4013187</transform_map>
+        <user_onboarding_flow display_value="External User Onboarding">3539c77e5376001001a3ddeeff7b1214</user_onboarding_flow>
+        <user_table>x_1790229_edusph_0_self_reg_user_profile_755648</user_table>
+        <user_verification_flow display_value="External User Verification">ecebaf7a533200102b12ddeeff7b1257</user_verification_flow>
+    </sys_user_registration_config>
+</record_update>

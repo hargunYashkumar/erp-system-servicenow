@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="College Program" section_id="ed01ce0c822a4c7ebc11a92cdf12fe06" sys_domain="global" table="x_1790229_edusph_0_coll_prog" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>college</element>
+            <position>0</position>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-04 10:16:10</sys_created_on>
+            <sys_id>07358ae18d9f4392935cad42cf17b628</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="College Program" display_value="College Program" name="x_1790229_edusph_0_coll_prog" sys_domain="global" view="Default view">ed01ce0c822a4c7ebc11a92cdf12fe06</sys_ui_section>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-04 10:16:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>program</element>
+            <position>1</position>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-04 10:16:10</sys_created_on>
+            <sys_id>61401ae6155141f0b42eb18df02eba2c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="College Program" display_value="College Program" name="x_1790229_edusph_0_coll_prog" sys_domain="global" view="Default view">ed01ce0c822a4c7ebc11a92cdf12fe06</sys_ui_section>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-04 10:16:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>department</element>
+            <position>2</position>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-04 10:16:10</sys_created_on>
+            <sys_id>8de9a39f69344b81a4e26440d02a6aa4</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="College Program" display_value="College Program" name="x_1790229_edusph_0_coll_prog" sys_domain="global" view="Default view">ed01ce0c822a4c7ebc11a92cdf12fe06</sys_ui_section>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-04 10:16:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>intake_seats</element>
+            <position>3</position>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-04 10:16:10</sys_created_on>
+            <sys_id>7a9ec50e83f942499a0c7e6c5a4fbbea</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="College Program" display_value="College Program" name="x_1790229_edusph_0_coll_prog" sys_domain="global" view="Default view">ed01ce0c822a4c7ebc11a92cdf12fe06</sys_ui_section>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-04 10:16:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>approved</element>
+            <position>4</position>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-04 10:16:10</sys_created_on>
+            <sys_id>3ab1bf5b65c14b9488bde92cbf6aa9be</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="College Program" display_value="College Program" name="x_1790229_edusph_0_coll_prog" sys_domain="global" view="Default view">ed01ce0c822a4c7ebc11a92cdf12fe06</sys_ui_section>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-04 10:16:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>College Program</caption>
+            <header>false</header>
+            <name>x_1790229_edusph_0_coll_prog</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-04 10:16:10</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>ed01ce0c822a4c7ebc11a92cdf12fe06</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_1790229_edusph_0_coll_prog</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+            <sys_update_name>sys_ui_section_ed01ce0c822a4c7ebc11a92cdf12fe06</sys_update_name>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-04 10:16:10</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

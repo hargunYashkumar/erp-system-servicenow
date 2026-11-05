@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_user_role">
+    <sys_user_role action="INSERT_OR_UPDATE">
+        <assignable_by/>
+        <can_delegate>true</can_delegate>
+        <description>External users who access the public admission portal to fill out forms and upload documents prior to admission confirmation.</description>
+        <elevated_privilege>false</elevated_privilege>
+        <federated_id>bC7sDtZrHMMTaIYnRtVffUYqsqH8sjB8efPhBivvUTE=</federated_id>
+        <grantable>true</grantable>
+        <includes_roles/>
+        <name>x_erp.applicant</name>
+        <scoped_admin>false</scoped_admin>
+        <suffix>applicant</suffix>
+        <sys_class_name>sys_user_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-11-04 09:04:45</sys_created_on>
+        <sys_id>4d8bba5ac3d41b10d70532f1b401314b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_erp.applicant</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_user_role_4d8bba5ac3d41b10d70532f1b401314b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-11-04 09:04:45</sys_updated_on>
+    </sys_user_role>
+</record_update>

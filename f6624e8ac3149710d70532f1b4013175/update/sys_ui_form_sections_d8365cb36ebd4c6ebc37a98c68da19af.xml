@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_form_sections form_id="d8365cb36ebd4c6ebc37a98c68da19af" sys_domain="global" table="x_1790229_edusph_0_employee" version="3">
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>0</position>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-04 10:16:08</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>887bdf0e07284419ba724c81c23144f3</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_1790229_edusph_0_employee" name="x_1790229_edusph_0_employee" sys_domain="global" view="Default view">d8365cb36ebd4c6ebc37a98c68da19af</sys_ui_form>
+            <sys_ui_section caption="Employee" display_value="Employee" name="x_1790229_edusph_0_employee" sys_domain="global" view="Default view">b70690871de44b51973343889857d9d7</sys_ui_section>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-04 10:16:08</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form action="INSERT_OR_UPDATE">
+            <name>x_1790229_edusph_0_employee</name>
+            <roles/>
+            <sys_class_name>sys_ui_form</sys_class_name>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-04 10:16:09</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>d8365cb36ebd4c6ebc37a98c68da19af</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_1790229_edusph_0_employee</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+            <sys_update_name>sys_ui_form_sections_d8365cb36ebd4c6ebc37a98c68da19af</sys_update_name>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-04 10:16:09</sys_updated_on>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_form>
+    </sys_ui_form_sections>
+</record_update>

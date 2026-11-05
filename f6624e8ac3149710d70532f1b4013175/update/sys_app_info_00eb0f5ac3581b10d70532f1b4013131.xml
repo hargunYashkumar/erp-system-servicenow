@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_app_info">
+    <sys_app_info action="INSERT_OR_UPDATE">
+        <properties>{"generated_using_ba":"true"}</properties>
+        <sys_class_name>sys_app_info</sys_class_name>
+        <sys_created_by>Developer-Vayu</sys_created_by>
+        <sys_created_on>2026-11-04 10:16:12</sys_created_on>
+        <sys_id>00eb0f5ac3581b10d70532f1b4013131</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_app_info_00eb0f5ac3581b10d70532f1b4013131</sys_update_name>
+        <sys_updated_by>Developer-Vayu</sys_updated_by>
+        <sys_updated_on>2026-11-04 10:16:12</sys_updated_on>
+    </sys_app_info>
+</record_update>

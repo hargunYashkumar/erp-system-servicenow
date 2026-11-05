@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="6d64c5a03e1c4ec18eccfef7bf2e3a6d" label="College" name="x_1790229_edusph_0_college" type="collection">
+        <element label="Onboarded On" name="onboarded_on" type="glide_date"/>
+        <element choice="3" label="Status" mandatory="true" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Affiliation Suspended" sequence="3" value="affiliation_suspended"/>
+                <element inactive_on_update="false" label="Inactive" sequence="4" value="inactive"/>
+                <element inactive_on_update="false" label="Onboarding" sequence="1" value="onboarding"/>
+                <element inactive_on_update="false" label="Active" sequence="2" value="active"/>
+            </choice>
+        </element>
+        <element display="true" label="Name" mandatory="true" name="name" type="string"/>
+        <element label="Code" mandatory="true" name="code" type="string"/>
+        <element label="Director" name="director" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element label="University" mandatory="true" name="university" reference="x_1790229_edusph_0_university" type="reference"/>
+        <element label="Affiliation No" mandatory="true" name="affiliation_no" type="string"/>
+        <index name="index">
+            <element name="director"/>
+        </index>
+        <index name="index2">
+            <element name="university"/>
+        </index>
+    </element>
+</database>

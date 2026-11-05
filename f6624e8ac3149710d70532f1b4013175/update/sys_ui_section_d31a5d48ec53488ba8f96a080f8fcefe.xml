@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="Affiliation Record" section_id="d31a5d48ec53488ba8f96a080f8fcefe" sys_domain="global" table="x_1790229_edusph_0_affiliation" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>college</element>
+            <position>0</position>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-04 10:16:10</sys_created_on>
+            <sys_id>c860e85d51224c589698713c509bd6ef</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Affiliation Record" display_value="Affiliation Record" name="x_1790229_edusph_0_affiliation" sys_domain="global" view="Default view">d31a5d48ec53488ba8f96a080f8fcefe</sys_ui_section>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-04 10:16:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>valid_from</element>
+            <position>1</position>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-04 10:16:10</sys_created_on>
+            <sys_id>71580df0705a4e3ba75b5118565ffa53</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Affiliation Record" display_value="Affiliation Record" name="x_1790229_edusph_0_affiliation" sys_domain="global" view="Default view">d31a5d48ec53488ba8f96a080f8fcefe</sys_ui_section>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-04 10:16:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>valid_to</element>
+            <position>2</position>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-04 10:16:10</sys_created_on>
+            <sys_id>98a23522a1014283828ba471ea859720</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Affiliation Record" display_value="Affiliation Record" name="x_1790229_edusph_0_affiliation" sys_domain="global" view="Default view">d31a5d48ec53488ba8f96a080f8fcefe</sys_ui_section>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-04 10:16:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>status</element>
+            <position>3</position>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-04 10:16:10</sys_created_on>
+            <sys_id>bb8149dff7a146f5b55a6659f006c6a4</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Affiliation Record" display_value="Affiliation Record" name="x_1790229_edusph_0_affiliation" sys_domain="global" view="Default view">d31a5d48ec53488ba8f96a080f8fcefe</sys_ui_section>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-04 10:16:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>renewal_due</element>
+            <position>4</position>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-04 10:16:10</sys_created_on>
+            <sys_id>18b3303f486f4ceb9fd99950a51d65e8</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Affiliation Record" display_value="Affiliation Record" name="x_1790229_edusph_0_affiliation" sys_domain="global" view="Default view">d31a5d48ec53488ba8f96a080f8fcefe</sys_ui_section>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-04 10:16:10</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>Affiliation Record</caption>
+            <header>false</header>
+            <name>x_1790229_edusph_0_affiliation</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-04 10:16:10</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>d31a5d48ec53488ba8f96a080f8fcefe</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_1790229_edusph_0_affiliation</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+            <sys_update_name>sys_ui_section_d31a5d48ec53488ba8f96a080f8fcefe</sys_update_name>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-04 10:16:10</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

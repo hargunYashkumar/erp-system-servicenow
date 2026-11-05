@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="f9d332342e964fbda15e1d8774292145" label="University" name="x_1790229_edusph_0_university" type="collection">
+        <element label="Head Dean" name="head_dean" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element display="true" label="Name" mandatory="true" name="name" type="string"/>
+        <element default="true" label="Active" mandatory="true" name="active" type="boolean"/>
+        <element label="Code" mandatory="true" name="code" type="string"/>
+        <index name="index">
+            <element name="head_dean"/>
+        </index>
+    </element>
+</database>
