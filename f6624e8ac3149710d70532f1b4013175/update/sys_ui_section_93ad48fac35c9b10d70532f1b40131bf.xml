@@ -84,6 +84,20 @@
             <sys_user/>
             <type/>
         </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>section</element>
+            <position>6</position>
+            <sys_created_by>Developer-Rakshit</sys_created_by>
+            <sys_created_on>2026-11-12 08:43:36</sys_created_on>
+            <sys_id>1d630485c3681710d70532f1b40131c7</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_student_attendance" sys_domain="global" view="Default view">93ad48fac35c9b10d70532f1b40131bf</sys_ui_section>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-12 08:43:36</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
         <sys_ui_section action="INSERT_OR_UPDATE">
             <caption/>
             <header>false</header>

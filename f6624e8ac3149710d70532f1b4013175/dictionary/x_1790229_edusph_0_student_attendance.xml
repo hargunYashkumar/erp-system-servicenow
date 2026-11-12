@@ -7,7 +7,7 @@
         <element attributes="edge_encryption_enabled=true" label="Weightage" max_length="38" name="weightage" type="decimal"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Correction Approved By" max_length="32" name="correction_approved_by" reference="x_1790229_edusph_0_employee" type="reference"/>
         <element label="Correction Reason" max_length="255" name="correction_reason" type="string"/>
-        <element attributes="edge_encryption_enabled=true" choice="1" label="Correction Status" mandatory="true" max_length="40" name="correction_status" type="choice">
+        <element attributes="edge_encryption_enabled=true" choice="1" default="Not Requested" label="Correction Status" max_length="40" name="correction_status" type="choice">
             <choice>
                 <element inactive_on_update="false" label="Rejected" sequence="3" value="Rejected"/>
                 <element inactive_on_update="false" label="Not Requested" sequence="0" value="Not Requested"/>
@@ -15,6 +15,7 @@
                 <element inactive_on_update="false" label="Pending Approval" sequence="1" value="Pending Approval"/>
             </choice>
         </element>
+        <element label="Section" max_length="32" name="section" reference="x_1790229_edusph_0_section" type="reference"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" type="reference"/>
         <element attributes="edge_encryption_enabled=true" choice="1" label="Status" mandatory="true" max_length="40" name="status" type="choice">
             <choice>
@@ -31,9 +32,12 @@
             <element name="marked_by"/>
         </index>
         <index name="index3">
-            <element name="session"/>
+            <element name="section"/>
         </index>
         <index name="index4">
+            <element name="session"/>
+        </index>
+        <index name="index5">
             <element name="student"/>
         </index>
     </element>

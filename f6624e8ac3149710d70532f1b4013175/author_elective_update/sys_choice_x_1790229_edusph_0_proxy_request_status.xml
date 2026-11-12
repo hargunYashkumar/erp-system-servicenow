@@ -20,7 +20,7 @@
             <element>status</element>
             <hint/>
             <inactive>false</inactive>
-            <label>approved</label>
+            <label>Approved</label>
             <language>en</language>
             <name>x_1790229_edusph_0_proxy_request</name>
             <sequence>0</sequence>
@@ -29,10 +29,10 @@
             <sys_created_on>2026-11-05 10:04:30</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_mod_count>0</sys_mod_count>
+            <sys_mod_count>2</sys_mod_count>
             <sys_updated_by>Developer-Rakshit</sys_updated_by>
-            <sys_updated_on>2026-11-05 10:04:30</sys_updated_on>
-            <value>approved</value>
+            <sys_updated_on>2026-11-12 09:00:28</sys_updated_on>
+            <value>Approved</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>

@@ -29,8 +29,8 @@
         <element choice="1" display="true" label="Ticket Category" mandatory="true" max_length="40" name="ticket_category" type="string">
             <choice/>
         </element>
-        <element attributes="edge_encryption_enabled=true" label="Active" mandatory="true" max_length="40" name="active" type="boolean"/>
         <element label="Response" max_length="255" name="response" type="string"/>
+        <element label="Active" max_length="40" name="active" type="boolean"/>
         <element attributes="edge_encryption_enabled=true" label="Response Hours" max_length="15" name="response_hours" type="decimal"/>
     </element>
 </database>

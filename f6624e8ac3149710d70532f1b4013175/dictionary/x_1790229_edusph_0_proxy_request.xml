@@ -26,7 +26,7 @@
             <choice>
                 <element inactive_on_update="false" label="Requested" sequence="1" value="Requested"/>
                 <element inactive_on_update="false" label="Completed" sequence="5" value="Completed"/>
-                <element inactive_on_update="false" label="approved" sequence="0" value="approved"/>
+                <element inactive_on_update="false" label="Approved" sequence="0" value="Approved"/>
                 <element inactive_on_update="false" label="Cancelled" sequence="4" value="Cancelled"/>
                 <element inactive_on_update="false" label="Rejected" sequence="3" value="Rejected"/>
                 <element inactive_on_update="false" label="Assigned" sequence="2" value="Assigned"/>
