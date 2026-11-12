@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="e76a2726c3589b10d70532f1b4013170" label="Student Fee" max_length="40" name="x_1790229_edusph_0_student_fee" type="collection">
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Structure" mandatory="true" max_length="32" name="structure" reference="x_1790229_edusph_0_fee_structure" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Status" mandatory="true" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Cancelled" sequence="5" value="Cancelled"/>
+                <element inactive_on_update="false" label="Overdue" sequence="4" value="Overdue"/>
+                <element inactive_on_update="false" label="Unpaid" sequence="0" value="Unpaid"/>
+                <element inactive_on_update="false" label="Due" sequence="2" value="Due"/>
+                <element inactive_on_update="false" label="Waived" sequence="3" value="Waived"/>
+                <element inactive_on_update="false" label="Paid" sequence="1" value="Paid"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" type="reference"/>
+        <element label="Due Date" max_length="40" name="due_date" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true,omit_sys_original=true" label="Amount" mandatory="true" max_length="20" name="amount" type="currency"/>
+        <index name="index">
+            <element name="structure"/>
+        </index>
+        <index name="index2">
+            <element name="student"/>
+        </index>
+    </element>
+</database>

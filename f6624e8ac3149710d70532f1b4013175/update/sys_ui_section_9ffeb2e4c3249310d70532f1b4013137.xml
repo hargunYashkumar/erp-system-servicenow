@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="Regularization Details" section_id="9ffeb2e4c3249310d70532f1b4013137" sys_domain="global" table="x_1790229_edusph_0_faculty_attendance" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>regularized_by</element>
+            <position>0</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 09:06:15</sys_created_on>
+            <sys_id>1ffeb2e4c3249310d70532f1b4013166</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Regularization Details" display_value="Regularization Details" name="x_1790229_edusph_0_faculty_attendance" sys_domain="global" view="Default view">9ffeb2e4c3249310d70532f1b4013137</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 09:06:15</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>regularization_status</element>
+            <position>1</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 09:06:15</sys_created_on>
+            <sys_id>9bfeb2e4c3249310d70532f1b4013167</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Regularization Details" display_value="Regularization Details" name="x_1790229_edusph_0_faculty_attendance" sys_domain="global" view="Default view">9ffeb2e4c3249310d70532f1b4013137</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 09:06:15</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>2</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 09:06:15</sys_created_on>
+            <sys_id>1bfeb2e4c3249310d70532f1b4013168</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Regularization Details" display_value="Regularization Details" name="x_1790229_edusph_0_faculty_attendance" sys_domain="global" view="Default view">9ffeb2e4c3249310d70532f1b4013137</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 09:06:15</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>regularized_on</element>
+            <position>3</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 09:06:15</sys_created_on>
+            <sys_id>97feb2e4c3249310d70532f1b4013169</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Regularization Details" display_value="Regularization Details" name="x_1790229_edusph_0_faculty_attendance" sys_domain="global" view="Default view">9ffeb2e4c3249310d70532f1b4013137</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 09:06:15</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>regularization_reason</element>
+            <position>4</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 09:06:15</sys_created_on>
+            <sys_id>17feb2e4c3249310d70532f1b401316a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Regularization Details" display_value="Regularization Details" name="x_1790229_edusph_0_faculty_attendance" sys_domain="global" view="Default view">9ffeb2e4c3249310d70532f1b4013137</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 09:06:15</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption>Regularization Details</caption>
+            <header>false</header>
+            <name>x_1790229_edusph_0_faculty_attendance</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 09:06:15</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>9ffeb2e4c3249310d70532f1b4013137</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_1790229_edusph_0_faculty_attendance</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+            <sys_update_name>sys_ui_section_9ffeb2e4c3249310d70532f1b4013137</sys_update_name>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 09:06:15</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="427aaf26c3589b10d70532f1b40131b4" label="Feedback Form" max_length="40" name="x_1790229_edusph_0_feedback_form" type="collection">
+        <element choice="1" label="Target Role" mandatory="true" max_length="40" name="target_role" type="string">
+            <choice/>
+        </element>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Target type" mandatory="true" max_length="40" name="target_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Service Ticket" sequence="4" value="service_ticket"/>
+                <element inactive_on_update="false" label="Facility" sequence="1" value="facility"/>
+                <element inactive_on_update="false" label="Faculty" sequence="0" value="faculty"/>
+                <element inactive_on_update="false" label="Event Planner" sequence="3" value="event_planner"/>
+                <element inactive_on_update="false" label="Event" sequence="2" value="event"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Type" mandatory="true" max_length="40" name="type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Service Quality Feedback" sequence="3" value="service_quality_feedback"/>
+                <element inactive_on_update="false" label="Event Feedback" sequence="1" value="event_feedback"/>
+                <element inactive_on_update="false" label="Semester Feedback" sequence="0" value="semester_feedback"/>
+                <element inactive_on_update="false" label="Faculty Concern Feedback" sequence="2" value="faculty_concern_feedback"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Active" mandatory="true" max_length="40" name="active" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Event" max_length="32" name="event" reference="x_1790229_edusph_0_event" type="reference"/>
+        <element label="Form name" mandatory="true" max_length="255" name="name" type="string"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Semester" max_length="32" name="semester" reference="x_1790229_edusph_0_semester" type="reference"/>
+        <element label="Title" mandatory="true" max_length="255" name="title" type="string"/>
+        <element choice="1" label="Status" mandatory="true" max_length="40" name="status" type="string">
+            <choice/>
+        </element>
+        <element label="Frequency" max_length="255" name="frequency" type="string"/>
+        <index name="index">
+            <element name="event"/>
+        </index>
+        <index name="index2">
+            <element name="semester"/>
+        </index>
+    </element>
+</database>

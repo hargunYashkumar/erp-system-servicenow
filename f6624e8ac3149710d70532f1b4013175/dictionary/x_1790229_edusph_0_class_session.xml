@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="55d9a7a2c3589b10d70532f1b4013154" label="Class Session" max_length="40" name="x_1790229_edusph_0_class_session" type="collection">
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Period" mandatory="true" max_length="32" name="period" reference="x_1790229_edusph_0_period" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Lab Batch" max_length="32" name="lab_batch" reference="x_1790229_edusph_0_lab_batch" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Faculty" max_length="32" name="faculty" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Offering" mandatory="true" max_length="32" name="offering" reference="x_1790229_edusph_0_course_offering" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Session Status" mandatory="true" max_length="40" name="session_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Completed" sequence="1" value="Completed"/>
+                <element inactive="true" inactive_on_update="true" label="Not Requested" sequence="0" value="Not Requested"/>
+                <element inactive_on_update="false" label="Scheduled" sequence="0" value="Scheduled"/>
+                <element inactive_on_update="false" label="Cancelled" sequence="2" value="Cancelled"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Room" mandatory="true" max_length="32" name="room" reference="x_1790229_edusph_0_room" type="reference"/>
+        <element label="Date" mandatory="true" max_length="40" name="date" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Type" mandatory="true" max_length="40" name="type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Lab" sequence="1" value="Lab"/>
+                <element inactive_on_update="false" label="Lecture" sequence="0" value="Lecture"/>
+                <element inactive_on_update="false" label="Seminar" sequence="4" value="Seminar"/>
+                <element inactive_on_update="false" label="Practical" sequence="3" value="Practical"/>
+                <element inactive_on_update="false" label="Tutorial" sequence="2" value="Tutorial"/>
+            </choice>
+        </element>
+        <index name="index">
+            <element name="faculty"/>
+        </index>
+        <index name="index2">
+            <element name="lab_batch"/>
+        </index>
+        <index name="index3">
+            <element name="offering"/>
+        </index>
+        <index name="index4">
+            <element name="period"/>
+        </index>
+        <index name="index5">
+            <element name="room"/>
+        </index>
+    </element>
+</database>

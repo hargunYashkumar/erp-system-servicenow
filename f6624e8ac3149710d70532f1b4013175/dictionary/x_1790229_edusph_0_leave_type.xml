@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="c6f9afa2c3589b10d70532f1b4013140" label="Leave Type" max_length="40" name="x_1790229_edusph_0_leave_type" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Carry Forward" mandatory="true" max_length="40" name="carry_forward" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Min Notice Days" max_length="40" name="min_notice_days" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" label="Doc After Days" max_length="40" name="doc_after_days" type="integer"/>
+        <element label="Code" mandatory="true" max_length="40" name="code" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Annual Limit" max_length="15" name="annual_limit" type="decimal"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Duration Unit" mandatory="true" max_length="40" name="duration_unit" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Years" sequence="3" value="Years"/>
+                <element inactive_on_update="false" label="Days" sequence="0" value="Days"/>
+                <element inactive_on_update="false" label="Months" sequence="2" value="Months"/>
+                <element inactive_on_update="false" label="Weeks" sequence="1" value="Weeks"/>
+            </choice>
+        </element>
+        <element label="Name" mandatory="true" max_length="100" name="name" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Paid" mandatory="true" max_length="40" name="paid" type="boolean"/>
+    </element>
+</database>

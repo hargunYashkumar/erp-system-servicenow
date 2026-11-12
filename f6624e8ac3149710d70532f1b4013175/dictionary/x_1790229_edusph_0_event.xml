@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="ee4ae326c3589b10d70532f1b4013175" label="Event" max_length="40" name="x_1790229_edusph_0_event" type="collection">
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="College" mandatory="true" max_length="32" name="college" reference="x_1790229_edusph_0_college" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Event Head" max_length="32" name="event_head" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,omit_sys_original=true" label="Sponsor Amount" max_length="20" name="sponsor_amount" type="currency"/>
+        <element label="Title" max_length="255" name="title" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Capacity" mandatory="true" max_length="40" name="capacity" type="integer"/>
+        <element label="End" max_length="40" name="end" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true,omit_sys_original=true" label="Entry Fee" max_length="20" name="entry_fee" type="currency"/>
+        <element choice="1" label="Category" mandatory="true" max_length="40" name="category" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Sports" sequence="2" value="Sports"/>
+                <element inactive_on_update="false" label="Workshop" sequence="4" value="Workshop"/>
+                <element inactive_on_update="false" label="Academic" sequence="0" value="Academic"/>
+                <element inactive_on_update="false" label="Fest" sequence="7" value="Fest"/>
+                <element inactive_on_update="false" label="Cultural" sequence="1" value="Cultural"/>
+                <element inactive_on_update="false" label="Conference" sequence="6" value="Conference"/>
+                <element inactive_on_update="false" label="Technical" sequence="3" value="Technical"/>
+                <element inactive_on_update="false" label="Seminar" sequence="5" value="Seminar"/>
+            </choice>
+        </element>
+        <element choice="1" label="Status" mandatory="true" max_length="40" name="status" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Published" sequence="3" value="Published"/>
+                <element inactive_on_update="false" label="Cancelled" sequence="5" value="Cancelled"/>
+                <element inactive_on_update="false" label="Completed" sequence="4" value="Completed"/>
+                <element inactive_on_update="false" label="Draft" sequence="0" value="Draft"/>
+                <element inactive_on_update="false" label="Approved" sequence="2" value="Approved"/>
+                <element inactive_on_update="false" label="Submitted" sequence="1" value="Submitted"/>
+            </choice>
+        </element>
+        <element label="Start" max_length="40" name="start" type="glide_date_time"/>
+        <element choice="1" label="Type" mandatory="true" max_length="40" name="type" type="string">
+            <choice>
+                <element inactive_on_update="false" label="External" sequence="1" value="External"/>
+                <element inactive_on_update="false" label="Internal" sequence="0" value="Internal"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Venue" max_length="32" name="venue" reference="x_1790229_edusph_0_room" type="reference"/>
+        <index name="index">
+            <element name="college"/>
+        </index>
+        <index name="index2">
+            <element name="event_head"/>
+        </index>
+        <index name="index3">
+            <element name="venue"/>
+        </index>
+    </element>
+</database>

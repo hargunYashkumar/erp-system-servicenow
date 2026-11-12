@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="round_name" table="x_1790229_edusph_0_interview_round" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>round_name</element>
+            <name>x_1790229_edusph_0_interview_round</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>Developer-Rakshit</sys_created_by>
+            <sys_created_on>2026-11-06 08:52:45</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>round_name</sys_name>
+            <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+            <sys_update_name>sys_choice_x_1790229_edusph_0_interview_round_round_name</sys_update_name>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-06 08:52:45</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>round_name</element>
+            <hint/>
+            <inactive>true</inactive>
+            <label>-TBDTARGET-x_1790229_edusph_0_interview_round</label>
+            <language>en</language>
+            <name>x_1790229_edusph_0_interview_round</name>
+            <sequence>0</sequence>
+            <synonyms/>
+            <sys_created_by>Developer-Rakshit</sys_created_by>
+            <sys_created_on>2026-11-06 08:52:45</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-06 08:52:45</sys_updated_on>
+            <value>-TBDTARGET-x_1790229_edusph_0_interview_round</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>round_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Aptitude Test</label>
+            <language>en</language>
+            <name>x_1790229_edusph_0_interview_round</name>
+            <sequence>0</sequence>
+            <synonyms/>
+            <sys_created_by>Developer-Rakshit</sys_created_by>
+            <sys_created_on>2026-11-06 08:52:45</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-06 08:52:45</sys_updated_on>
+            <value>Aptitude Test</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>round_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Written Test</label>
+            <language>en</language>
+            <name>x_1790229_edusph_0_interview_round</name>
+            <sequence>1</sequence>
+            <synonyms/>
+            <sys_created_by>Developer-Rakshit</sys_created_by>
+            <sys_created_on>2026-11-06 08:52:45</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-06 08:52:45</sys_updated_on>
+            <value>Written Test</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>round_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Coding Test</label>
+            <language>en</language>
+            <name>x_1790229_edusph_0_interview_round</name>
+            <sequence>2</sequence>
+            <synonyms/>
+            <sys_created_by>Developer-Rakshit</sys_created_by>
+            <sys_created_on>2026-11-06 08:52:45</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-06 08:52:45</sys_updated_on>
+            <value>Coding Test</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>round_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Technical Interview</label>
+            <language>en</language>
+            <name>x_1790229_edusph_0_interview_round</name>
+            <sequence>3</sequence>
+            <synonyms/>
+            <sys_created_by>Developer-Rakshit</sys_created_by>
+            <sys_created_on>2026-11-06 08:52:45</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-06 08:52:45</sys_updated_on>
+            <value>Technical Interview</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>round_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Group Discussion</label>
+            <language>en</language>
+            <name>x_1790229_edusph_0_interview_round</name>
+            <sequence>4</sequence>
+            <synonyms/>
+            <sys_created_by>Developer-Rakshit</sys_created_by>
+            <sys_created_on>2026-11-06 08:52:45</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-06 08:52:45</sys_updated_on>
+            <value>Group Discussion</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>round_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Managerial Interview</label>
+            <language>en</language>
+            <name>x_1790229_edusph_0_interview_round</name>
+            <sequence>5</sequence>
+            <synonyms/>
+            <sys_created_by>Developer-Rakshit</sys_created_by>
+            <sys_created_on>2026-11-06 08:52:45</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-06 08:52:45</sys_updated_on>
+            <value>Managerial Interview</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>round_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>HR Interview</label>
+            <language>en</language>
+            <name>x_1790229_edusph_0_interview_round</name>
+            <sequence>6</sequence>
+            <synonyms/>
+            <sys_created_by>Developer-Rakshit</sys_created_by>
+            <sys_created_on>2026-11-06 08:52:45</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-06 08:52:45</sys_updated_on>
+            <value>HR Interview</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>round_name</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Other</label>
+            <language>en</language>
+            <name>x_1790229_edusph_0_interview_round</name>
+            <sequence>7</sequence>
+            <synonyms/>
+            <sys_created_by>Developer-Rakshit</sys_created_by>
+            <sys_created_on>2026-11-06 08:52:45</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-06 08:52:45</sys_updated_on>
+            <value>Other</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

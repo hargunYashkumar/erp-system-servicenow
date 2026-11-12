@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="08738becc3249310d70532f1b4013134" label="Asset Request" max_length="40" name="x_1790229_edusph_0_asset_request" type="collection">
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Requester" mandatory="true" max_length="32" name="requester" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Requested Quantity" max_length="40" name="requested_quantity" type="integer"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Asset" max_length="32" name="asset" reference="alm_asset" type="reference"/>
+        <element label="Purpose" max_length="255" name="purpose" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Status" mandatory="true" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Cancelled" sequence="6" value="cancelled"/>
+                <element inactive_on_update="false" label="Rejected" sequence="4" value="rejected"/>
+                <element inactive_on_update="false" label="Submitted" sequence="1" value="submitted"/>
+                <element inactive_on_update="false" label="Draft" sequence="0" value="draft"/>
+                <element inactive_on_update="false" label="Approved" sequence="3" value="approved"/>
+                <element inactive_on_update="false" label="Fulfilled" sequence="5" value="fulfilled"/>
+                <element inactive_on_update="false" label="Pending Approval" sequence="2" value="pending_approval"/>
+            </choice>
+        </element>
+        <element label="Requested on" max_length="40" name="requested_on" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Type" mandatory="true" max_length="40" name="type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Technical Asset" sequence="0" value="technical_asset"/>
+                <element inactive_on_update="false" label="Sports Equipment" sequence="1" value="sports_equipment"/>
+            </choice>
+        </element>
+        <element label="Decision notes" max_length="255" name="decision_notes" type="string"/>
+        <index name="index">
+            <element name="asset"/>
+        </index>
+        <index name="index2">
+            <element name="requester"/>
+        </index>
+    </element>
+</database>

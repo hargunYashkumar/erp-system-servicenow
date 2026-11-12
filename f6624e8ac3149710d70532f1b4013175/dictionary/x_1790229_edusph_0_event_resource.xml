@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="574a2726c3589b10d70532f1b4013188" label="Event Resource" max_length="40" name="x_1790229_edusph_0_event_resource" type="collection">
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Event" mandatory="true" max_length="32" name="event" reference="x_1790229_edusph_0_event" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Asset" max_length="32" name="asset" reference="alm_asset" type="reference"/>
+        <element choice="1" label="Status" mandatory="true" max_length="40" name="status" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Requested" sequence="0" value="Requested"/>
+                <element inactive_on_update="false" label="Allocated" sequence="2" value="Allocated"/>
+                <element inactive_on_update="false" label="Approved" sequence="1" value="Approved"/>
+                <element inactive_on_update="false" label="Rejected" sequence="4" value="Rejected"/>
+                <element inactive_on_update="false" label="Returned" sequence="3" value="Returned"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Qty" max_length="40" name="qty" type="integer"/>
+        <index name="index">
+            <element name="asset"/>
+        </index>
+        <index name="index2">
+            <element name="event"/>
+        </index>
+    </element>
+</database>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="eff9efa2c3589b10d70532f1b40131d0" label="Room" max_length="40" name="x_1790229_edusph_0_room" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Capacity" mandatory="true" max_length="40" name="capacity" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Type" mandatory="true" max_length="40" name="type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Classroom" sequence="0" value="Classroom"/>
+                <element inactive_on_update="false" label="Conference Room" sequence="5" value="Conference Room"/>
+                <element inactive_on_update="false" label="Laboratory" sequence="1" value="Laboratory"/>
+                <element inactive_on_update="false" label="Smart Classroom" sequence="9" value="Smart Classroom"/>
+                <element inactive_on_update="false" label="Workshop" sequence="8" value="Workshop"/>
+                <element inactive_on_update="false" label="Auditorium" sequence="4" value="Auditorium"/>
+                <element inactive_on_update="false" label="Seminar Hall" sequence="3" value="Seminar Hall"/>
+                <element inactive_on_update="false" label="Examination Hall" sequence="7" value="Examination Hall"/>
+                <element inactive_on_update="false" label="Library" sequence="6" value="Library"/>
+                <element inactive_on_update="false" label="Computer Lab" sequence="2" value="Computer Lab"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="College" mandatory="true" max_length="32" name="college" reference="x_1790229_edusph_0_college" type="reference"/>
+        <element label="Code" mandatory="true" max_length="40" name="code" type="string"/>
+        <element label="Building" max_length="100" name="building" type="string"/>
+        <index name="index">
+            <element name="college"/>
+        </index>
+    </element>
+</database>

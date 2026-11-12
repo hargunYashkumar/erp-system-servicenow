@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="2c2a6be2c3589b10d70532f1b40131cb" label="Hall Ticket" max_length="40" name="x_1790229_edusph_0_hall_ticket" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Fee Ok" mandatory="true" max_length="40" name="fee_ok" type="boolean"/>
+        <element label="Approval2" max_length="100" name="approval2" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Attendance Ok" mandatory="true" max_length="40" name="attendance_ok" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Exam" max_length="32" name="exam" reference="x_1790229_edusph_0_exam_event" type="reference"/>
+        <element label="Issued On" max_length="40" name="issued_on" type="glide_date_time"/>
+        <element label="Approval1" max_length="100" name="approval1" type="string"/>
+        <element label="Rejection Reason" max_length="255" name="rejection_reason" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Status" mandatory="true" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="On Hold" sequence="2" value="on_hold"/>
+                <element inactive_on_update="false" label="Issued" sequence="4" value="issued"/>
+                <element inactive_on_update="false" label="Approved" sequence="3" value="approved"/>
+                <element inactive_on_update="false" label="Eligible" sequence="1" value="eligible"/>
+                <element inactive_on_update="false" label="Pending" sequence="0" value="pending"/>
+                <element inactive_on_update="false" label="Cancelled" sequence="5" value="cancelled"/>
+            </choice>
+        </element>
+        <index name="index">
+            <element name="exam"/>
+        </index>
+        <index name="index2">
+            <element name="student"/>
+        </index>
+    </element>
+</database>

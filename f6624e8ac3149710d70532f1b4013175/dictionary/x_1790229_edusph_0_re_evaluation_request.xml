@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="ca2a2fe2c3589b10d70532f1b401310f" label="Re-evaluation Request" max_length="40" name="x_1790229_edusph_0_re_evaluation_request" type="collection">
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student fee record" mandatory="true" max_length="32" name="student_fee" reference="x_1790229_edusph_0_student_fee" type="reference"/>
+        <element label="Attempt No" mandatory="true" max_length="255" name="attempt_no" type="string"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Fee" max_length="32" name="fee" reference="x_1790229_edusph_0_student_fee" type="reference"/>
+        <element label="Courses" max_length="255" name="courses" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Status" mandatory="true" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Submitted" sequence="0" value="submitted"/>
+                <element inactive_on_update="false" label="Rejected" sequence="3" value="rejected"/>
+                <element inactive_on_update="false" label="Fee Pending" sequence="1" value="fee_pending"/>
+                <element inactive_on_update="false" label="Approved" sequence="2" value="approved"/>
+                <element inactive_on_update="false" label="Completed" sequence="4" value="completed"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" type="reference"/>
+        <element label="Decision on" max_length="40" name="decision_on" type="glide_date_time"/>
+        <element label="Scope" max_length="255" name="scope" type="string"/>
+        <element label="Requested on" max_length="40" name="requested_on" type="glide_date_time"/>
+        <index name="index">
+            <element name="fee"/>
+        </index>
+        <index name="index2">
+            <element name="student"/>
+        </index>
+        <index name="index3">
+            <element name="student_fee"/>
+        </index>
+    </element>
+</database>

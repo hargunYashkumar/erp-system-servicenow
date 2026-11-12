@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="0fd92ba2c3589b10d70532f1b4013132" label="Proxy Request" max_length="40" name="x_1790229_edusph_0_proxy_request" type="collection">
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Type" mandatory="true" max_length="40" name="type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Planned" sequence="0" value="Planned"/>
+                <element inactive="true" inactive_on_update="true" label="on leave" sequence="0" value="on_leave"/>
+                <element inactive_on_update="false" label="Emergency" sequence="1" value="Emergency"/>
+            </choice>
+        </element>
+        <element label="Requested On" max_length="40" name="requested_on" type="glide_date_time"/>
+        <element choice="1" label="Escalation Status" max_length="40" name="escalation_status" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Escalated to HOD" sequence="2" value="Escalated to HOD"/>
+                <element inactive_on_update="false" label="Pending Escalation" sequence="1" value="Pending Escalation"/>
+                <element inactive_on_update="false" label="Not Escalated" sequence="0" value="Not Escalated"/>
+                <element inactive_on_update="false" label="Resolved" sequence="3" value="Resolved"/>
+            </choice>
+        </element>
+        <element label="Decision On" max_length="40" name="decision_on" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Absent Faculty" max_length="32" name="absent_faculty" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Requested By" mandatory="true" max_length="32" name="requested_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Proxy Faculty" max_length="32" name="proxy_faculty" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Decision By" max_length="32" name="decision_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Session" max_length="32" name="session" reference="x_1790229_edusph_0_class_session" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Status" mandatory="true" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Requested" sequence="1" value="Requested"/>
+                <element inactive_on_update="false" label="Completed" sequence="5" value="Completed"/>
+                <element inactive_on_update="false" label="approved" sequence="0" value="approved"/>
+                <element inactive_on_update="false" label="Cancelled" sequence="4" value="Cancelled"/>
+                <element inactive_on_update="false" label="Rejected" sequence="3" value="Rejected"/>
+                <element inactive_on_update="false" label="Assigned" sequence="2" value="Assigned"/>
+            </choice>
+        </element>
+        <element label="Reason" max_length="255" name="reason" type="string"/>
+        <index name="index">
+            <element name="absent_faculty"/>
+        </index>
+        <index name="index2">
+            <element name="decision_by"/>
+        </index>
+        <index name="index3">
+            <element name="proxy_faculty"/>
+        </index>
+        <index name="index4">
+            <element name="requested_by"/>
+        </index>
+        <index name="index5">
+            <element name="session"/>
+        </index>
+    </element>
+</database>

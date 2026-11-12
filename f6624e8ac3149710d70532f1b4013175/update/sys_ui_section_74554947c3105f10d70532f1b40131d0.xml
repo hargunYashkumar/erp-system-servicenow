@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="" section_id="74554947c3105f10d70532f1b40131d0" sys_domain="global" table="x_1790229_edusph_0_placement_offer" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>registration</element>
+            <position>0</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 12:10:22</sys_created_on>
+            <sys_id>d429a7a8c3689310d70532f1b4013108</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_placement_offer" sys_domain="global" view="Default view">74554947c3105f10d70532f1b40131d0</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 12:10:22</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>offer_status</element>
+            <position>1</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 12:10:22</sys_created_on>
+            <sys_id>5429a7a8c3689310d70532f1b4013109</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_placement_offer" sys_domain="global" view="Default view">74554947c3105f10d70532f1b40131d0</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 12:10:22</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>accepted_on</element>
+            <position>2</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 12:10:22</sys_created_on>
+            <sys_id>d029a7a8c3689310d70532f1b401310a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_placement_offer" sys_domain="global" view="Default view">74554947c3105f10d70532f1b40131d0</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 12:10:22</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>3</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 12:10:22</sys_created_on>
+            <sys_id>5029a7a8c3689310d70532f1b401310b</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_placement_offer" sys_domain="global" view="Default view">74554947c3105f10d70532f1b40131d0</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 12:10:22</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>package_lpa</element>
+            <position>4</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 12:10:22</sys_created_on>
+            <sys_id>dc29a7a8c3689310d70532f1b401310b</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_placement_offer" sys_domain="global" view="Default view">74554947c3105f10d70532f1b40131d0</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 12:10:22</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>offered_on</element>
+            <position>5</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 12:10:22</sys_created_on>
+            <sys_id>5c29a7a8c3689310d70532f1b401310c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_placement_offer" sys_domain="global" view="Default view">74554947c3105f10d70532f1b40131d0</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 12:10:22</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>letter</element>
+            <position>6</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 12:10:22</sys_created_on>
+            <sys_id>d829a7a8c3689310d70532f1b401310d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_placement_offer" sys_domain="global" view="Default view">74554947c3105f10d70532f1b40131d0</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 12:10:22</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption/>
+            <header>false</header>
+            <name>x_1790229_edusph_0_placement_offer</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>Developer-Rakshit</sys_created_by>
+            <sys_created_on>2026-11-06 08:23:48</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>74554947c3105f10d70532f1b40131d0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_1790229_edusph_0_placement_offer</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+            <sys_update_name>sys_ui_section_74554947c3105f10d70532f1b40131d0</sys_update_name>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-06 08:23:48</sys_updated_on>
+            <sys_user/>
+            <title>true</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

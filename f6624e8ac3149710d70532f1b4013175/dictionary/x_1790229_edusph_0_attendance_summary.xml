@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="82d9e7a2c3589b10d70532f1b4013105" label="Attendance Summary" max_length="40" name="x_1790229_edusph_0_attendance_summary" type="collection">
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Semester" mandatory="true" max_length="32" name="semester" reference="x_1790229_edusph_0_semester" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Points Earned" max_length="15" name="points_earned" type="decimal"/>
+        <element attributes="edge_encryption_enabled=true" label="Weighted Pct" max_length="15" name="weighted_pct" type="decimal"/>
+        <element label="Calculated On" max_length="40" name="calculated_on" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true" label="Points Possible" max_length="15" name="points_possible" type="decimal"/>
+        <element attributes="edge_encryption_enabled=true" label="Eligible" mandatory="true" max_length="40" name="eligible" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" type="reference"/>
+        <index name="index">
+            <element name="semester"/>
+        </index>
+        <index name="index2">
+            <element name="student"/>
+        </index>
+    </element>
+</database>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="50b96b62c3589b10d70532f1b4013171" label="Elective Quota" max_length="40" name="x_1790229_edusph_0_elective_quota" type="collection">
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Program" mandatory="true" max_length="32" name="program" reference="x_1790229_edusph_0_program" type="reference"/>
+        <element label="Seats" max_length="40" name="seats" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Category" mandatory="true" max_length="40" name="category" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Assets" sequence="5" value="assets"/>
+                <element inactive_on_update="false" label="Examination" sequence="3" value="examination"/>
+                <element inactive_on_update="false" label="Attendance" sequence="1" value="attendance"/>
+                <element inactive_on_update="false" label="Other" sequence="7" value="other"/>
+                <element inactive_on_update="false" label="Academic" sequence="0" value="academic"/>
+                <element inactive_on_update="false" label="IT  Support" sequence="6" value="it_support"/>
+                <element inactive_on_update="false" label="Events" sequence="4" value="events"/>
+                <element inactive_on_update="false" label="Fees" sequence="2" value="fees"/>
+            </choice>
+        </element>
+        <element label="Filled" max_length="40" name="filled" type="string"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Offering" mandatory="true" max_length="32" name="offering" reference="x_1790229_edusph_0_course_offering" type="reference"/>
+        <index name="index">
+            <element name="offering"/>
+        </index>
+        <index name="index2">
+            <element name="program"/>
+        </index>
+    </element>
+</database>

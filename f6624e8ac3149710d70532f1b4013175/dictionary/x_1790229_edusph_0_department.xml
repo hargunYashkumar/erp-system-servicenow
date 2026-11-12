@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="725677e477784c19a89172377e7771e2" label="Department" name="x_1790229_edusph_0_department" type="collection">
-        <element display="true" label="Name" name="name" type="string"/>
+        <element display="true" label="Name" mandatory="true" max_length="121" name="name" type="string"/>
+        <element label="Code" mandatory="true" max_length="40" name="code" type="string"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="College" mandatory="true" max_length="32" name="college" reference="x_1790229_edusph_0_college" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="HOD" max_length="32" name="hod" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <index name="index">
+            <element name="college"/>
+        </index>
+        <index name="index2">
+            <element name="hod"/>
+        </index>
     </element>
 </database>

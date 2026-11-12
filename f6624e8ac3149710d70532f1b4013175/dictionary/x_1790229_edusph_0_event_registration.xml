@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="674a6726c3589b10d70532f1b401311e" label="Event Registration" max_length="40" name="x_1790229_edusph_0_event_registration" type="collection">
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Fee" max_length="32" name="fee" reference="x_1790229_edusph_0_student_fee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Payment Transaction" mandatory="true" max_length="32" name="payment_transaction" reference="x_1790229_edusph_0_payment_transaction" type="reference"/>
+        <element label="Qr Code" mandatory="true" max_length="255" name="qr_code" type="string"/>
+        <element choice="1" label="Status" mandatory="true" max_length="40" name="status" type="string">
+            <choice/>
+        </element>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Event" mandatory="true" max_length="32" name="event" reference="x_1790229_edusph_0_event" type="reference"/>
+        <index name="index">
+            <element name="event"/>
+        </index>
+        <index name="index2">
+            <element name="fee"/>
+        </index>
+        <index name="index3">
+            <element name="payment_transaction"/>
+        </index>
+        <index name="index4">
+            <element name="student"/>
+        </index>
+    </element>
+</database>

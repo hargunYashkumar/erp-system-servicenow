@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="164a2fe2c3589b10d70532f1b4013106" label="Placement Offer" max_length="40" name="x_1790229_edusph_0_placement_offer" type="collection">
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Registration" max_length="32" name="registration" reference="x_1790229_edusph_0_drive_registration" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Letter" max_length="255" name="letter" type="file_attachment"/>
+        <element label="Accepted on" max_length="40" name="accepted_on" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true,omit_sys_original=true" label="Package Lpa" max_length="20" name="package_lpa" type="currency"/>
+        <element label="Offered on" max_length="40" name="offered_on" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Offer status" mandatory="true" max_length="40" name="offer_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Draft" sequence="0" value="Draft"/>
+                <element inactive_on_update="false" label="Declined" sequence="3" value="Declined"/>
+                <element inactive_on_update="false" label="Accepted" sequence="2" value="Accepted"/>
+                <element inactive_on_update="false" label="Offered" sequence="1" value="Offered"/>
+                <element inactive="true" inactive_on_update="true" label="-TBDTARGET-x_1790229_edusph_0_placement_offer" sequence="0" value="-TBDTARGET-x_1790229_edusph_0_placement_offer"/>
+                <element inactive_on_update="false" label="Withdrawn" sequence="5" value="Withdrawn"/>
+                <element inactive_on_update="false" label="Expired" sequence="4" value="Expired"/>
+            </choice>
+        </element>
+        <index name="index">
+            <element name="registration"/>
+        </index>
+    </element>
+</database>

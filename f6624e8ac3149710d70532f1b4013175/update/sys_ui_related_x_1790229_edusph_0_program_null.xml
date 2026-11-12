@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_related sys_domain="global" table="x_1790229_edusph_0_program" version="2" view="">
+        <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
+            <filter/>
+            <group_by_field/>
+            <list_id display_value="Program - Default view" name="x_1790229_edusph_0_program" related_list="NULL" sys_domain="global" view="Default view">5c9e92a4c3209310d70532f1b401317e</list_id>
+            <order_by/>
+            <position>0</position>
+            <related_list>x_1790229_edusph_0_curriculum_course.program</related_list>
+            <sys_class_name>sys_ui_related_list_entry</sys_class_name>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 06:44:36</sys_created_on>
+            <sys_id>5c9e92a4c3209310d70532f1b401317f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 06:44:36</sys_updated_on>
+        </sys_ui_related_list_entry>
+        <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
+            <filter/>
+            <group_by_field/>
+            <list_id display_value="Program - Default view" name="x_1790229_edusph_0_program" related_list="NULL" sys_domain="global" view="Default view">5c9e92a4c3209310d70532f1b401317e</list_id>
+            <order_by/>
+            <position>1</position>
+            <related_list>x_1790229_edusph_0_semester.program</related_list>
+            <sys_class_name>sys_ui_related_list_entry</sys_class_name>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 06:44:36</sys_created_on>
+            <sys_id>d09e92a4c3209310d70532f1b4013180</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 06:44:36</sys_updated_on>
+        </sys_ui_related_list_entry>
+        <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
+            <filter/>
+            <group_by_field/>
+            <list_id display_value="Program - Default view" name="x_1790229_edusph_0_program" related_list="NULL" sys_domain="global" view="Default view">5c9e92a4c3209310d70532f1b401317e</list_id>
+            <order_by/>
+            <position>2</position>
+            <related_list>x_1790229_edusph_0_section.program</related_list>
+            <sys_class_name>sys_ui_related_list_entry</sys_class_name>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 06:44:36</sys_created_on>
+            <sys_id>589e92a4c3209310d70532f1b4013180</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 06:44:36</sys_updated_on>
+        </sys_ui_related_list_entry>
+        <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
+            <filter/>
+            <group_by_field/>
+            <list_id display_value="Program - Default view" name="x_1790229_edusph_0_program" related_list="NULL" sys_domain="global" view="Default view">5c9e92a4c3209310d70532f1b401317e</list_id>
+            <order_by/>
+            <position>3</position>
+            <related_list>x_1790229_edusph_0_student.program</related_list>
+            <sys_class_name>sys_ui_related_list_entry</sys_class_name>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 06:44:36</sys_created_on>
+            <sys_id>dc9e92a4c3209310d70532f1b4013180</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 06:44:36</sys_updated_on>
+        </sys_ui_related_list_entry>
+        <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
+            <filter/>
+            <group_by_field/>
+            <list_id display_value="Program - Default view" name="x_1790229_edusph_0_program" related_list="NULL" sys_domain="global" view="Default view">5c9e92a4c3209310d70532f1b401317e</list_id>
+            <order_by/>
+            <position>4</position>
+            <related_list>x_1790229_edusph_0_elective_quota.program</related_list>
+            <sys_class_name>sys_ui_related_list_entry</sys_class_name>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 06:44:36</sys_created_on>
+            <sys_id>549e92a4c3209310d70532f1b4013181</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 06:44:36</sys_updated_on>
+        </sys_ui_related_list_entry>
+        <sys_ui_related_list action="INSERT_OR_UPDATE">
+            <calculated_name>Program - Default view</calculated_name>
+            <filter/>
+            <name>x_1790229_edusph_0_program</name>
+            <order_by/>
+            <position/>
+            <related_list/>
+            <sys_class_name>sys_ui_related_list</sys_class_name>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 06:44:36</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>5c9e92a4c3209310d70532f1b401317e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Program - Default view</sys_name>
+            <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+            <sys_update_name>sys_ui_related_x_1790229_edusph_0_program_null</sys_update_name>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 06:44:36</sys_updated_on>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_related_list>
+    </sys_ui_related>
+</record_update>

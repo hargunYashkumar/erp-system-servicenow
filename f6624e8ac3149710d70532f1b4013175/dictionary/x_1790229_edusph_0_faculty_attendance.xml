@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="3ed9e7a2c3589b10d70532f1b40131ce" label="Faculty Attendance" max_length="40" name="x_1790229_edusph_0_faculty_attendance" type="collection">
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Regularization Status" mandatory="true" max_length="40" name="regularization_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Requested" sequence="1" value="Requested"/>
+                <element inactive_on_update="false" label="Not Required" sequence="0" value="Not Required"/>
+                <element inactive_on_update="false" label="Overdue" sequence="3" value="Overdue"/>
+                <element inactive="true" inactive_on_update="true" label="Regularized" sequence="0" value="regularized"/>
+                <element inactive_on_update="false" label="Completed" sequence="2" value="Completed"/>
+            </choice>
+        </element>
+        <element label="Check Out" max_length="40" name="check_out" type="glide_date_time"/>
+        <element label="Date" mandatory="true" max_length="40" name="date" type="glide_date"/>
+        <element label="Check In" max_length="40" name="check_in" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Employee" mandatory="true" max_length="32" name="employee" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Regularized By" max_length="32" name="regularized_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Hours" max_length="15" name="hours" type="decimal"/>
+        <element label="Regularization Reason" max_length="255" name="regularization_reason" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Late Arrival Flag" mandatory="true" max_length="40" name="late_arrival_flag" type="boolean"/>
+        <element label="Regularized On" max_length="40" name="regularized_on" type="glide_date_time"/>
+        <index name="index">
+            <element name="employee"/>
+        </index>
+        <index name="index2">
+            <element name="regularized_by"/>
+        </index>
+    </element>
+</database>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="fff9a3e2c3589b10d70532f1b4013178" label="Period" max_length="40" name="x_1790229_edusph_0_period" type="collection">
+        <element label="No" max_length="40" name="no" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Start Time" mandatory="true" max_length="40" name="start_time" type="glide_time"/>
+        <element attributes="edge_encryption_enabled=true" label="End Time" mandatory="true" max_length="40" name="end_time" type="glide_time"/>
+    </element>
+</database>

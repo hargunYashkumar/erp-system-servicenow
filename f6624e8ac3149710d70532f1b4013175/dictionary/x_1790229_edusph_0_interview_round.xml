@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="f54aa326c3589b10d70532f1b4013195" label="Interview Round" max_length="40" name="x_1790229_edusph_0_interview_round" type="collection">
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Result" max_length="32" name="result" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Passed" sequence="1" value="Passed"/>
+                <element inactive_on_update="false" label="Absent" sequence="4" value="Absent"/>
+                <element inactive_on_update="false" label="On Hold" sequence="3" value="On Hold"/>
+                <element inactive_on_update="false" label="Pending" sequence="0" value="Pending"/>
+                <element inactive_on_update="false" label="Failed" sequence="2" value="Failed"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Round No" mandatory="true" max_length="40" name="round_no" type="integer"/>
+        <element label="Feedback" max_length="255" name="feedback" type="string_full_utf8"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Registration" max_length="32" name="registration" reference="x_1790229_edusph_0_drive_registration" type="reference"/>
+        <element label="Scheduled At" max_length="40" name="scheduled_at" type="glide_date_time"/>
+        <element label="Interviewer" max_length="40" name="interviewer" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Round Name" max_length="40" name="round_name" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Group Discussion" sequence="4" value="Group Discussion"/>
+                <element inactive="true" inactive_on_update="true" label="-TBDTARGET-x_1790229_edusph_0_interview_round" sequence="0" value="-TBDTARGET-x_1790229_edusph_0_interview_round"/>
+                <element inactive_on_update="false" label="Other" sequence="7" value="Other"/>
+                <element inactive_on_update="false" label="Technical Interview" sequence="3" value="Technical Interview"/>
+                <element inactive_on_update="false" label="Coding Test" sequence="2" value="Coding Test"/>
+                <element inactive_on_update="false" label="Aptitude Test" sequence="0" value="Aptitude Test"/>
+                <element inactive_on_update="false" label="HR Interview" sequence="6" value="HR Interview"/>
+                <element inactive_on_update="false" label="Managerial Interview" sequence="5" value="Managerial Interview"/>
+                <element inactive_on_update="false" label="Written Test" sequence="1" value="Written Test"/>
+            </choice>
+        </element>
+        <index name="index">
+            <element name="registration"/>
+        </index>
+        <index name="index2">
+            <element name="result"/>
+        </index>
+    </element>
+</database>

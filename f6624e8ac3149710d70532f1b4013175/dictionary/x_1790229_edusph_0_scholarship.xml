@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="187ae326c3589b10d70532f1b40131c0" label="Scholarship" max_length="40" name="x_1790229_edusph_0_scholarship" type="collection">
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Type" mandatory="true" max_length="40" name="type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Government" sequence="4" value="Government"/>
+                <element inactive_on_update="false" label="Merit-Based" sequence="0" value="Merit-Based"/>
+                <element inactive_on_update="false" label="Sports" sequence="3" value="Sports"/>
+                <element inactive_on_update="false" label="Other" sequence="6" value="Other"/>
+                <element inactive_on_update="false" label="Category-Based" sequence="2" value="Category-Based"/>
+                <element inactive_on_update="false" label="Fee Waiver" sequence="5" value="Fee Waiver"/>
+                <element inactive_on_update="false" label="Need-Based" sequence="1" value="Need-Based"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Approved By" max_length="32" name="approved_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element label="Approved On" max_length="40" name="approved_on" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true,omit_sys_original=true" label="Waiver" max_length="20" name="waiver" type="currency"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" type="reference"/>
+        <element label="Decision Notes" max_length="255" name="decision_notes" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Status" mandatory="true" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Inactive" sequence="2" value="Inactive"/>
+                <element inactive_on_update="false" label="Draft" sequence="0" value="Draft"/>
+                <element inactive_on_update="false" label="Active" sequence="1" value="Active"/>
+                <element inactive_on_update="false" label="Expired" sequence="3" value="Expired"/>
+            </choice>
+        </element>
+        <index name="index">
+            <element name="approved_by"/>
+        </index>
+        <index name="index2">
+            <element name="student"/>
+        </index>
+    </element>
+</database>

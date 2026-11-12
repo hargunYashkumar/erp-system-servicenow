@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section action="DELETE" caption="Reason" section_id="5fa283acc3249310d70532f1b4013120" sys_domain="global" table="x_1790229_edusph_0_faculty_leave" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>reason</element>
+            <position>0</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 09:22:23</sys_created_on>
+            <sys_id>63a283acc3249310d70532f1b40131cc</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Reason" display_value="Reason" name="x_1790229_edusph_0_faculty_leave" sys_domain="global" view="Default view">5fa283acc3249310d70532f1b4013120</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 09:22:23</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.begin_split</element>
+            <position>1</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 09:22:23</sys_created_on>
+            <sys_id>efa283acc3249310d70532f1b40131cc</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Reason" display_value="Reason" name="x_1790229_edusph_0_faculty_leave" sys_domain="global" view="Default view">5fa283acc3249310d70532f1b4013120</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 09:22:23</sys_updated_on>
+            <sys_user/>
+            <type>.begin_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>submitted_on</element>
+            <position>2</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 09:22:23</sys_created_on>
+            <sys_id>6fa283acc3249310d70532f1b40131cd</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Reason" display_value="Reason" name="x_1790229_edusph_0_faculty_leave" sys_domain="global" view="Default view">5fa283acc3249310d70532f1b4013120</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 09:22:23</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>approver</element>
+            <position>3</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 09:22:23</sys_created_on>
+            <sys_id>eba283acc3249310d70532f1b40131ce</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Reason" display_value="Reason" name="x_1790229_edusph_0_faculty_leave" sys_domain="global" view="Default view">5fa283acc3249310d70532f1b4013120</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 09:22:23</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>4</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 09:22:23</sys_created_on>
+            <sys_id>6ba283acc3249310d70532f1b40131cf</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Reason" display_value="Reason" name="x_1790229_edusph_0_faculty_leave" sys_domain="global" view="Default view">5fa283acc3249310d70532f1b4013120</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 09:22:23</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>decision_on</element>
+            <position>5</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 09:22:23</sys_created_on>
+            <sys_id>e7a283acc3249310d70532f1b40131d0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Reason" display_value="Reason" name="x_1790229_edusph_0_faculty_leave" sys_domain="global" view="Default view">5fa283acc3249310d70532f1b4013120</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 09:22:23</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>decision_notes</element>
+            <position>6</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 09:22:23</sys_created_on>
+            <sys_id>67a283acc3249310d70532f1b40131d1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Reason" display_value="Reason" name="x_1790229_edusph_0_faculty_leave" sys_domain="global" view="Default view">5fa283acc3249310d70532f1b4013120</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 09:22:23</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="DELETE">
+            <caption>Reason</caption>
+            <header>false</header>
+            <name>x_1790229_edusph_0_faculty_leave</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-11 09:22:22</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>5fa283acc3249310d70532f1b4013120</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_1790229_edusph_0_faculty_leave</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+            <sys_update_name>sys_ui_section_5fa283acc3249310d70532f1b4013120</sys_update_name>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-11 09:22:22</sys_updated_on>
+            <sys_user/>
+            <title>false</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</application>
+        <file_path/>
+        <instance_id>899734a8db923d582f082a5913961960</instance_id>
+        <instance_name>dev199710</instance_name>
+        <name>sys_ui_section_5fa283acc3249310d70532f1b4013120</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_ui_section caption="Reason" section_id="5fa283acc3249310d70532f1b4013120" sys_domain="global" table="x_1790229_edusph_0_faculty_leave" version="3" view=""><sys_ui_element action="INSERT_OR_UPDATE"><element>reason</element><position>0</position><sys_created_by>Developer-Hemendra</sys_created_by><sys_created_on>2026-11-11 09:22:23</sys_created_on><sys_id>63a283acc3249310d70532f1b40131cc</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="Reason" display_value="Reason" name="x_1790229_edusph_0_faculty_leave" sys_domain="global" view="Default view">5fa283acc3249310d70532f1b4013120</sys_ui_section><sys_updated_by>Developer-Hemendra</sys_updated_by><sys_updated_on>2026-11-11 09:22:23</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>.begin_split</element><position>1</position><sys_created_by>Developer-Hemendra</sys_created_by><sys_created_on>2026-11-11 09:22:23</sys_created_on><sys_id>efa283acc3249310d70532f1b40131cc</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="Reason" display_value="Reason" name="x_1790229_edusph_0_faculty_leave" sys_domain="global" view="Default view">5fa283acc3249310d70532f1b4013120</sys_ui_section><sys_updated_by>Developer-Hemendra</sys_updated_by><sys_updated_on>2026-11-11 09:22:23</sys_updated_on><sys_user/><type>.begin_split</type></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>submitted_on</element><position>2</position><sys_created_by>Developer-Hemendra</sys_created_by><sys_created_on>2026-11-11 09:22:23</sys_created_on><sys_id>6fa283acc3249310d70532f1b40131cd</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="Reason" display_value="Reason" name="x_1790229_edusph_0_faculty_leave" sys_domain="global" view="Default view">5fa283acc3249310d70532f1b4013120</sys_ui_section><sys_updated_by>Developer-Hemendra</sys_updated_by><sys_updated_on>2026-11-11 09:22:23</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>approver</element><position>3</position><sys_created_by>Developer-Hemendra</sys_created_by><sys_created_on>2026-11-11 09:22:23</sys_created_on><sys_id>eba283acc3249310d70532f1b40131ce</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="Reason" display_value="Reason" name="x_1790229_edusph_0_faculty_leave" sys_domain="global" view="Default view">5fa283acc3249310d70532f1b4013120</sys_ui_section><sys_updated_by>Developer-Hemendra</sys_updated_by><sys_updated_on>2026-11-11 09:22:23</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>.split</element><position>4</position><sys_created_by>Developer-Hemendra</sys_created_by><sys_created_on>2026-11-11 09:22:23</sys_created_on><sys_id>6ba283acc3249310d70532f1b40131cf</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="Reason" display_value="Reason" name="x_1790229_edusph_0_faculty_leave" sys_domain="global" view="Default view">5fa283acc3249310d70532f1b4013120</sys_ui_section><sys_updated_by>Developer-Hemendra</sys_updated_by><sys_updated_on>2026-11-11 09:22:23</sys_updated_on><sys_user/><type>.split</type></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>decision_on</element><position>5</position><sys_created_by>Developer-Hemendra</sys_created_by><sys_created_on>2026-11-11 09:22:23</sys_created_on><sys_id>e7a283acc3249310d70532f1b40131d0</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="Reason" display_value="Reason" name="x_1790229_edusph_0_faculty_leave" sys_domain="global" view="Default view">5fa283acc3249310d70532f1b4013120</sys_ui_section><sys_updated_by>Developer-Hemendra</sys_updated_by><sys_updated_on>2026-11-11 09:22:23</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>decision_notes</element><position>6</position><sys_created_by>Developer-Hemendra</sys_created_by><sys_created_on>2026-11-11 09:22:23</sys_created_on><sys_id>67a283acc3249310d70532f1b40131d1</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="Reason" display_value="Reason" name="x_1790229_edusph_0_faculty_leave" sys_domain="global" view="Default view">5fa283acc3249310d70532f1b4013120</sys_ui_section><sys_updated_by>Developer-Hemendra</sys_updated_by><sys_updated_on>2026-11-11 09:22:23</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_section action="INSERT_OR_UPDATE"><caption>Reason</caption><header>false</header><name>x_1790229_edusph_0_faculty_leave</name><roles/><sys_class_name>sys_ui_section</sys_class_name><sys_created_by>Developer-Hemendra</sys_created_by><sys_created_on>2026-11-11 09:22:22</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>5fa283acc3249310d70532f1b4013120</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_1790229_edusph_0_faculty_leave</sys_name><sys_overrides/><sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package><sys_policy/><sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope><sys_update_name>sys_ui_section_5fa283acc3249310d70532f1b4013120</sys_update_name><sys_updated_by>Developer-Hemendra</sys_updated_by><sys_updated_on>2026-11-11 09:22:22</sys_updated_on><sys_user/><title>false</title><view display_value="Default view" name="NULL">Default view</view><view_name/></sys_ui_section></sys_ui_section></record_update>]]></payload>
+        <payload_hash>791216766</payload_hash>
+        <record_name>Faculty Leave</record_name>
+        <reverted_from/>
+        <source>9eef39dcc3201310d70532f1b40131d3</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>Developer-Hemendra</sys_created_by>
+        <sys_created_on>2026-11-11 09:22:23</sys_created_on>
+        <sys_id>2ba283acc3249310d70532f1b40131d5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a1c9ea61db0000001</sys_recorded_at>
+        <sys_updated_by>Developer-Hemendra</sys_updated_by>
+        <sys_updated_on>2026-11-11 09:22:23</sys_updated_on>
+        <type>Form Layout</type>
+        <update_guid>eba283ac5d2493109cc181ea8bc963d4</update_guid>
+        <update_guid_history>eba283ac5d2493109cc181ea8bc963d4:791216766</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>Developer-Hemendra</sys_created_by>
+        <sys_created_on>2026-11-11 09:22:28</sys_created_on>
+        <sys_db_object display_value="" name="sys_ui_section">sys_ui_section</sys_db_object>
+        <sys_id>61be480530da48048fefacb97a3ab604</sys_id>
+        <sys_metadata>5fa283acc3249310d70532f1b4013120</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Reason</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_parent display_value="Faculty Leave">7ef96ba2c3589b10d70532f1b401318f</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_scope_delete display_value="">496efbe1a9de4fe0a3807b4e0edc8400</sys_scope_delete>
+        <sys_update_name>sys_ui_section_5fa283acc3249310d70532f1b4013120</sys_update_name>
+        <sys_update_version display_value="sys_ui_section_5fa283acc3249310d70532f1b4013120">2ba283acc3249310d70532f1b40131d5</sys_update_version>
+        <sys_updated_by>Developer-Hemendra</sys_updated_by>
+        <sys_updated_on>2026-11-11 09:22:28</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

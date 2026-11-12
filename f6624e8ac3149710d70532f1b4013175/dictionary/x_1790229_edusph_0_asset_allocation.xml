@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="79838fecc3249310d70532f1b4013119" label="Asset Allocation" max_length="40" name="x_1790229_edusph_0_asset_allocation" type="collection">
+        <element label="To Date" max_length="40" name="to_date" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true" label="Allocated quantity" max_length="40" name="allocated_quantity" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Allocation status" mandatory="true" max_length="40" name="allocation_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Overdue" sequence="3" value="overdue"/>
+                <element inactive_on_update="false" label="Return Initiated" sequence="1" value="return_initiated"/>
+                <element inactive_on_update="false" label="Cancelled" sequence="4" value="cancelled"/>
+                <element inactive_on_update="false" label="Allocated" sequence="0" value="allocated"/>
+                <element inactive_on_update="false" label="Returned" sequence="2" value="returned"/>
+            </choice>
+        </element>
+        <element label="Returned on" max_length="40" name="returned_on" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Return condition" mandatory="true" max_length="40" name="return_condition" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Good" sequence="1" value="good"/>
+                <element inactive_on_update="false" label="Lost" sequence="5" value="lost"/>
+                <element inactive_on_update="false" label="Damaged" sequence="3" value="damaged"/>
+                <element inactive_on_update="false" label="Excellent" sequence="0" value="excellent"/>
+                <element inactive_on_update="false" label="Unserviceable" sequence="4" value="unserviceable"/>
+                <element inactive_on_update="false" label="Fair" sequence="2" value="fair"/>
+            </choice>
+        </element>
+        <element label="Return notes" max_length="255" name="return_notes" type="string"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Holder" max_length="32" name="holder" reference="sys_user" type="reference"/>
+        <element label="From Date" max_length="40" name="from_date" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Asset" max_length="32" name="asset" reference="alm_asset" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Allocated by" max_length="32" name="allocated_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <index name="index">
+            <element name="allocated_by"/>
+        </index>
+        <index name="index2">
+            <element name="asset"/>
+        </index>
+        <index name="index3">
+            <element name="holder"/>
+        </index>
+    </element>
+</database>

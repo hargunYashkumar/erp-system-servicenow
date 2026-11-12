@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="7ea9e762c3589b10d70532f1b401312d" label="Curriculum Course" max_length="40" name="x_1790229_edusph_0_curriculum_course" type="collection">
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Program" mandatory="true" max_length="32" name="program" reference="x_1790229_edusph_0_program" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Course" mandatory="true" max_length="32" name="course" reference="x_1790229_edusph_0_course" type="reference"/>
+        <element label="Sem No" mandatory="true" max_length="40" name="sem_no" type="string"/>
+        <index name="index">
+            <element name="course"/>
+        </index>
+        <index name="index2">
+            <element name="program"/>
+        </index>
+    </element>
+</database>

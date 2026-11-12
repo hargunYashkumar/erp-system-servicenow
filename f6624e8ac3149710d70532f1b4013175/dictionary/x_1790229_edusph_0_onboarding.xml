@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="d5b2358650a4410f9337bd602d788f61" label="College Onboarding" name="x_1790229_edusph_0_onboarding" type="collection">
-        <element label="Submitted On" name="submitted_on" type="glide_date_time"/>
-        <element choice="3" default="draft" label="Status" mandatory="true" name="status" type="choice">
+        <element label="Submitted On" max_length="40" name="submitted_on" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true" choice="3" default="draft" label="Status" mandatory="true" max_length="40" name="status" type="choice">
             <choice>
                 <element inactive_on_update="false" label="Submitted" sequence="2" value="submitted"/>
                 <element inactive_on_update="false" label="Draft" sequence="1" value="draft"/>
@@ -11,13 +11,13 @@
                 <element inactive_on_update="false" label="Approved" sequence="4" value="approved"/>
             </choice>
         </element>
-        <element label="Requested By" mandatory="true" name="requested_by" reference="sys_user" type="reference"/>
-        <element label="Documents" name="documents" type="attachment"/>
-        <element label="College" mandatory="true" name="college" reference="x_1790229_edusph_0_college" type="reference"/>
-        <element label="Go Live Date" name="go_live_date" type="glide_date"/>
-        <element label="Decision Notes" name="decision_notes" type="string"/>
-        <element label="Approved By" name="approved_by" reference="x_1790229_edusph_0_employee" type="reference"/>
-        <element label="Decision Date" name="decision_on" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Requested By" mandatory="true" max_length="32" name="requested_by" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Documents" max_length="40" name="documents" type="file_attachment"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="College" mandatory="true" max_length="32" name="college" reference="x_1790229_edusph_0_college" type="reference"/>
+        <element label="Go Live Date" max_length="40" name="go_live_date" type="glide_date"/>
+        <element label="Decision Notes" max_length="121" name="decision_notes" type="string"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Approved By" max_length="32" name="approved_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element label="Decision Date" max_length="40" name="decision_on" type="glide_date_time"/>
         <index name="index">
             <element name="approved_by"/>
         </index>

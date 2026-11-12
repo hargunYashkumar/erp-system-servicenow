@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="7ef96ba2c3589b10d70532f1b401318f" label="Faculty Leave" max_length="40" name="x_1790229_edusph_0_faculty_leave" type="collection">
+        <element label="Decision notes" max_length="255" name="decision_notes" type="string"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Approver" max_length="32" name="approver" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element label="Reason" max_length="255" name="reason" type="string"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Employee" mandatory="true" max_length="32" name="employee" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element label="To Date" max_length="40" name="to_date" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true" label="Attachment" max_length="40" name="attachment" type="file_attachment"/>
+        <element label="Days" max_length="255" name="days" type="string"/>
+        <element label="Lop Days" max_length="255" name="lop_days" type="string"/>
+        <element label="Decision on" max_length="40" name="decision_on" type="glide_date_time"/>
+        <element label="Half Day" max_length="255" name="half_day" type="string"/>
+        <element label="Submitted on" max_length="40" name="submitted_on" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Type" max_length="32" name="type" reference="x_1790229_edusph_0_leave_type" type="reference"/>
+        <element label="From Date" max_length="40" name="from_date" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Status" mandatory="true" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Cancelled" sequence="5" value="Cancelled"/>
+                <element inactive_on_update="false" label="Submitted" sequence="1" value="Submitted"/>
+                <element inactive_on_update="false" label="Rejected" sequence="4" value="Rejected"/>
+                <element inactive_on_update="false" label="Approved" sequence="3" value="Approved"/>
+                <element inactive_on_update="false" label="Pending Approval" sequence="2" value="Pending Approval"/>
+                <element inactive_on_update="false" label="Draft" sequence="0" value="Draft"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Is Emergency" mandatory="true" max_length="40" name="is_emergency" type="boolean"/>
+        <index name="index">
+            <element name="approver"/>
+        </index>
+        <index name="index2">
+            <element name="employee"/>
+        </index>
+        <index name="index3">
+            <element name="type"/>
+        </index>
+    </element>
+</database>

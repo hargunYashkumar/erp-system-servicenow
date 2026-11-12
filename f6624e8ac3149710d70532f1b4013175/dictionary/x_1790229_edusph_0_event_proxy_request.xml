@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="07f963e2c3589b10d70532f1b4013111" label="Event Proxy Request" max_length="40" name="x_1790229_edusph_0_event_proxy_request" type="collection">
+        <element label="Decision notes" max_length="255" name="decision_notes" type="string"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Event" mandatory="true" max_length="32" name="event" reference="x_1790229_edusph_0_event" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Status" mandatory="true" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Rejected" sequence="3" value="Rejected"/>
+                <element inactive_on_update="false" label="Submitted" sequence="0" value="Submitted"/>
+                <element inactive_on_update="false" label="Approved" sequence="2" value="Approved"/>
+                <element inactive_on_update="false" label="Pending Approval" sequence="1" value="Pending Approval"/>
+                <element inactive_on_update="false" label="Cancelled" sequence="4" value="Cancelled"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Proxy hours" max_length="15" name="proxy_hours" type="decimal"/>
+        <element label="Requested on" max_length="40" name="requested_on" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" type="reference"/>
+        <element label="Lectures" max_length="255" name="lectures" type="string"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Approver" max_length="32" name="approver" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element label="Decision on" max_length="40" name="decision_on" type="glide_date_time"/>
+        <index name="index">
+            <element name="approver"/>
+        </index>
+        <index name="index2">
+            <element name="event"/>
+        </index>
+        <index name="index3">
+            <element name="student"/>
+        </index>
+    </element>
+</database>

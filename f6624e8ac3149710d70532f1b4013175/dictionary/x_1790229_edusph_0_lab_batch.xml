@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="6ba92b62c3589b10d70532f1b401312b" label="Lab Batch" max_length="40" name="x_1790229_edusph_0_lab_batch" type="collection">
+        <element label="Label" max_length="100" name="label" type="string"/>
+        <element label="Roll From" max_length="40" name="roll_from" type="string"/>
+        <element label="Roll To" max_length="40" name="roll_to" type="string"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Section" mandatory="true" max_length="32" name="section" reference="x_1790229_edusph_0_section" type="reference"/>
+        <index name="index">
+            <element name="section"/>
+        </index>
+    </element>
+</database>

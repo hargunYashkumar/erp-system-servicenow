@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="9aa9a762c3589b10d70532f1b40131af" label="Course" max_length="40" name="x_1790229_edusph_0_course" type="collection">
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="University" mandatory="true" max_length="32" name="university" reference="x_1790229_edusph_0_university" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Credits" max_length="15" name="credits" type="decimal"/>
+        <element attributes="edge_encryption_enabled=true" label="Is Elective" mandatory="true" max_length="40" name="is_elective" type="boolean"/>
+        <element label="Name" mandatory="true" max_length="100" name="name" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Type" mandatory="true" max_length="40" name="type" type="choice">
+            <choice/>
+        </element>
+        <element label="Code" mandatory="true" max_length="40" name="code" type="string"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Prerequisite" max_length="32" name="prerequisite" reference="x_1790229_edusph_0_course" type="reference"/>
+        <index name="index">
+            <element name="prerequisite"/>
+        </index>
+        <index name="index2">
+            <element name="university"/>
+        </index>
+    </element>
+</database>

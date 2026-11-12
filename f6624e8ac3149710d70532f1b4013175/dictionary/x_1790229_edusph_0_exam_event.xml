@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="831a27e2c3589b10d70532f1b40131d4" label="Exam Event" max_length="40" name="x_1790229_edusph_0_exam_event" type="collection">
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Semester" mandatory="true" max_length="32" name="semester" reference="x_1790229_edusph_0_semester" type="reference"/>
+        <element label="End Date" mandatory="true" max_length="40" name="end_date" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="College" mandatory="true" max_length="32" name="college" reference="x_1790229_edusph_0_college" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Fee Check Required" mandatory="true" max_length="40" name="fee_check_required" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Type" mandatory="true" max_length="40" name="type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Backlog" sequence="3" value="backlog"/>
+                <element inactive_on_update="false" label="Mid-Semester 2" sequence="1" value="mid_semester_2"/>
+                <element inactive_on_update="false" label="Mid-Semester 1" sequence="0" value="mid_semester_1"/>
+                <element inactive_on_update="false" label="End-Semester" sequence="2" value="end_semester"/>
+            </choice>
+        </element>
+        <element label="Level" max_length="100" name="level" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Status" mandatory="true" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Draft" sequence="0" value="Draft"/>
+                <element inactive_on_update="false" label="Completed" sequence="4" value="Completed"/>
+                <element inactive_on_update="false" label="Ongoing" sequence="3" value="Ongoing"/>
+                <element inactive_on_update="false" label="Published" sequence="2" value="Published"/>
+                <element inactive_on_update="false" label="Scheduled" sequence="1" value="Scheduled"/>
+                <element inactive_on_update="false" label="Cancelled" sequence="5" value="Cancelled"/>
+            </choice>
+        </element>
+        <element label="Start Date" mandatory="true" max_length="40" name="start_date" type="glide_date"/>
+        <index name="index">
+            <element name="college"/>
+        </index>
+        <index name="index2">
+            <element name="semester"/>
+        </index>
+    </element>
+</database>

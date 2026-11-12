@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="4b4aabe2c3589b10d70532f1b4013124" label="Event Budget" max_length="40" name="x_1790229_edusph_0_event_budget" type="collection">
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Requested by" max_length="32" name="requested_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element label="Requested On" max_length="40" name="requested_on" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true,omit_sys_original=true" label="Requested Amount" max_length="20" name="requested_amount" type="currency"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Approver" max_length="32" name="approver" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element label="Decision On" max_length="40" name="decision_on" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Event" mandatory="true" max_length="32" name="event" reference="x_1790229_edusph_0_event" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,omit_sys_original=true" label="Approved Amount" max_length="20" name="approved_amount" type="currency"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Stauts" mandatory="true" max_length="40" name="stauts" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Rejected" sequence="4" value="Rejected"/>
+                <element inactive_on_update="false" label="Partially Approved" sequence="3" value="Partially Approved"/>
+                <element inactive_on_update="false" label="Approved" sequence="2" value="Approved"/>
+                <element inactive_on_update="false" label="Draft" sequence="0" value="Draft"/>
+                <element inactive_on_update="false" label="Cancelled" sequence="5" value="Cancelled"/>
+                <element inactive_on_update="false" label="Submitted" sequence="1" value="Submitted"/>
+            </choice>
+        </element>
+        <element label="Description" max_length="40" name="description" type="string"/>
+        <index name="index">
+            <element name="approver"/>
+        </index>
+        <index name="index2">
+            <element name="event"/>
+        </index>
+        <index name="index3">
+            <element name="requested_by"/>
+        </index>
+    </element>
+</database>

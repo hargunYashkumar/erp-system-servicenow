@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="2c4a2326c3589b10d70532f1b40131c4" label="Company" max_length="40" name="x_1790229_edusph_0_company" type="collection">
+        <element label="Company Url" max_length="40" name="company_url" type="string"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="University" mandatory="true" max_length="32" name="university" reference="x_1790229_edusph_0_university" type="reference"/>
+        <element label="Name" mandatory="true" max_length="255" name="name" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Company Status" max_length="40" name="company_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Inactive" sequence="1" value="Inactive"/>
+                <element inactive_on_update="false" label="Active" sequence="0" value="Active"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Contact Number" max_length="40" name="contact_number" type="phone_number_e164"/>
+        <element label="Contact Email" max_length="40" name="contact_email" type="string"/>
+        <element label="Criteria" max_length="1000" name="criteria" type="string"/>
+        <element label="Contact Person" max_length="40" name="contact_person" type="string"/>
+        <index name="index">
+            <element name="university"/>
+        </index>
+    </element>
+</database>

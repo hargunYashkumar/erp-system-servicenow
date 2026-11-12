@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="045a6726c3589b10d70532f1b4013189" label="Event Attendance" max_length="40" name="x_1790229_edusph_0_event_attendance" type="collection">
+        <element choice="1" label="Scan Result" mandatory="true" max_length="40" name="scan_result" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Duplicate" sequence="1" value="Duplicate"/>
+                <element inactive_on_update="false" label="Rejected" sequence="2" value="Rejected"/>
+                <element inactive_on_update="false" label="Accepted" sequence="0" value="Accepted"/>
+            </choice>
+        </element>
+        <element choice="1" label="Scan Method" mandatory="true" max_length="40" name="scan_method" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Manual" sequence="1" value="Manual"/>
+                <element inactive_on_update="false" label="QR" sequence="0" value="QR"/>
+            </choice>
+        </element>
+        <element label="Scanned At" max_length="40" name="scanned_at" type="glide_date_time"/>
+        <element label="Rejection Reason" max_length="255" name="rejection_reason" type="string"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Scanner" max_length="32" name="scanner" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Registration" max_length="32" name="registration" reference="x_1790229_edusph_0_event_registration" type="reference"/>
+        <index name="index">
+            <element name="registration"/>
+        </index>
+        <index name="index2">
+            <element name="scanner"/>
+        </index>
+    </element>
+</database>

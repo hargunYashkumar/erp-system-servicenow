@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="614a6326c3589b10d70532f1b40131e8" label="Drive Registration" max_length="40" name="x_1790229_edusph_0_drive_registration" type="collection">
+        <element label="Registered on" max_length="40" name="registered_on" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" type="reference"/>
+        <element choice="1" label="Status" mandatory="true" max_length="40" name="status" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Selected" sequence="4" value="Selected"/>
+                <element inactive="true" inactive_on_update="true" label="-TBDTARGET-x_1790229_edusph_0_drive_registration" sequence="0" value="-TBDTARGET-x_1790229_edusph_0_drive_registration"/>
+                <element inactive_on_update="false" label="Absent" sequence="3" value="Absent"/>
+                <element inactive_on_update="false" label="Registered" sequence="0" value="Registered"/>
+                <element inactive_on_update="false" label="Withdrawn" sequence="2" value="Withdrawn"/>
+                <element inactive_on_update="false" label="Rejected" sequence="5" value="Rejected"/>
+                <element inactive_on_update="false" label="In Progress" sequence="1" value="In Progress"/>
+            </choice>
+        </element>
+        <element label="No Show Marked On" max_length="40" name="no_show_marked_on" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Drive" max_length="32" name="drive" reference="x_1790229_edusph_0_placement_drive" type="reference"/>
+        <index name="index">
+            <element name="drive"/>
+        </index>
+        <index name="index2">
+            <element name="student"/>
+        </index>
+    </element>
+</database>

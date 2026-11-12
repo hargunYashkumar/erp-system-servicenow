@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="28d9e3a2c3589b10d70532f1b4013179" label="Student Document" max_length="40" name="x_1790229_edusph_0_student_document" type="collection">
+        <element label="Verification Notes" max_length="255" name="verification_notes" type="string"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Application" max_length="32" name="application" reference="x_1790229_edusph_0_admission_application" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Verify Status" max_length="40" name="verify_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Resubmission Required" sequence="4" value="Resubmission Required"/>
+                <element inactive_on_update="false" label="Rejected" sequence="3" value="Rejected"/>
+                <element inactive_on_update="false" label="Pending" sequence="0" value="Pending"/>
+                <element inactive_on_update="false" label="Verified" sequence="2" value="Verified"/>
+                <element inactive_on_update="false" label="Under Verification" sequence="1" value="Under Verification"/>
+            </choice>
+        </element>
+        <element label="Rejection Reason" max_length="255" name="rejection_reason" type="string"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Verified By" max_length="32" name="verified_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Attachment" max_length="40" name="attachment" type="file_attachment"/>
+        <element label="Doc Type" max_length="100" name="doc_type" type="string"/>
+        <index name="index">
+            <element name="application"/>
+        </index>
+        <index name="index2">
+            <element name="student"/>
+        </index>
+        <index name="index3">
+            <element name="verified_by"/>
+        </index>
+    </element>
+</database>

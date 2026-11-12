@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="4d7a2f26c3589b10d70532f1b40131dc" label="Payroll Record" max_length="40" name="x_1790229_edusph_0_payroll_record" type="collection">
+        <element label="Lop Days" max_length="255" name="lop_days" type="string"/>
+        <element attributes="edge_encryption_enabled=true,omit_sys_original=true" label="Manual Adjustment Amount" max_length="20" name="manual_adjustment_amount" type="currency"/>
+        <element label="Month" max_length="255" name="month" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Status" mandatory="true" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Paid" sequence="3" value="Paid"/>
+                <element inactive_on_update="false" label="Approved" sequence="2" value="Approved"/>
+                <element inactive_on_update="false" label="Failed" sequence="4" value="Failed"/>
+                <element inactive_on_update="false" label="Draft" sequence="0" value="Draft"/>
+                <element inactive_on_update="false" label="Pending Approval" sequence="1" value="Pending Approval"/>
+            </choice>
+        </element>
+        <element label="Working Days" max_length="255" name="working_days" type="string"/>
+        <element label="Paid on" max_length="40" name="paid_on" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Employee" mandatory="true" max_length="32" name="employee" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Salary slip" max_length="40" name="salary_slip" type="file_attachment"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Accounts Approver" max_length="32" name="accounts_approved_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element label="Manual Adjustment Reason" max_length="255" name="manual_adjustment_reason" type="string"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="HR approver" max_length="32" name="hr_approved_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element label="Net" max_length="255" name="net" type="string"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Principal Approver" max_length="32" name="principal_approved_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,omit_sys_original=true" label="Gross" max_length="20" name="gross" type="currency"/>
+        <index name="index">
+            <element name="accounts_approved_by"/>
+        </index>
+        <index name="index2">
+            <element name="employee"/>
+        </index>
+        <index name="index3">
+            <element name="hr_approved_by"/>
+        </index>
+        <index name="index4">
+            <element name="principal_approved_by"/>
+        </index>
+    </element>
+</database>

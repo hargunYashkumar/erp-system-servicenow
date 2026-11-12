@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="abc963a2c3589b10d70532f1b4013182" label="Admission Application" max_length="40" name="x_1790229_edusph_0_admission_application" type="collection">
+        <element label="Deferral Until" max_length="40" name="deferral_until" type="glide_date"/>
+        <element label="App No" mandatory="true" max_length="40" name="app_no" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Class 10 Percentage" max_length="15" name="class_10_percentage" type="decimal"/>
+        <element label="Date Of Birth" max_length="40" name="date_of_birth" type="glide_date"/>
+        <element label="Correction Reason" max_length="255" name="correction_reason" type="string"/>
+        <element label="Applied On" max_length="40" name="applied_on" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true" label="Email" mandatory="true" max_length="100" name="email" type="email"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Program" mandatory="true" max_length="32" name="program" reference="x_1790229_edusph_0_program" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Merit Score" max_length="15" name="merit_score" type="decimal"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Category" mandatory="true" max_length="40" name="category" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="economically weaker section" sequence="3" value="economically weaker section"/>
+                <element inactive="true" inactive_on_update="true" label="Submitted" sequence="1" value="Submitted"/>
+                <element inactive="true" inactive_on_update="true" label="Accepted" sequence="6" value="Accepted"/>
+                <element inactive_on_update="false" label="defense causality" sequence="5" value="defense causality"/>
+                <element inactive="true" inactive_on_update="true" label="Withdrawn" sequence="9" value="Withdrawn"/>
+                <element inactive="true" inactive_on_update="true" label="Offered" sequence="5" value="Offered"/>
+                <element inactive_on_update="false" label="backward class" sequence="2" value="backward class"/>
+                <element inactive_on_update="false" label="female" sequence="1" value="female"/>
+                <element inactive_on_update="false" label="person with disability" sequence="4" value="person with disability"/>
+                <element inactive="true" inactive_on_update="true" label="Waitlisted" sequence="8" value="Waitlisted"/>
+                <element inactive="true" inactive_on_update="true" label="In Merit" sequence="4" value="In Merit"/>
+                <element inactive="true" inactive_on_update="true" label="Document Pending" sequence="2" value="Document Pending"/>
+                <element inactive="true" inactive_on_update="true" label="Rejected" sequence="7" value="Rejected"/>
+                <element inactive="true" inactive_on_update="true" label="Verified" sequence="3" value="Verified"/>
+                <element inactive_on_update="false" label="general" sequence="0" value="general"/>
+                <element inactive="true" inactive_on_update="true" label="Draft" sequence="0" value="Draft"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Status" mandatory="true" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="in merit" sequence="4" value="in merit"/>
+                <element inactive_on_update="false" label="accepted" sequence="6" value="accepted"/>
+                <element inactive_on_update="false" label="withdrawn" sequence="9" value="withdrawn"/>
+                <element inactive_on_update="false" label="verified" sequence="3" value="verified"/>
+                <element inactive_on_update="false" label="draft" sequence="0" value="draft"/>
+                <element inactive_on_update="false" label="waitlisted" sequence="8" value="waitlisted"/>
+                <element inactive_on_update="false" label="document pending" sequence="2" value="document pending"/>
+                <element inactive_on_update="false" label="offered" sequence="5" value="offered"/>
+                <element inactive_on_update="false" label="rejected" sequence="7" value="rejected"/>
+                <element inactive_on_update="false" label="submitted" sequence="1" value="submitted"/>
+            </choice>
+        </element>
+        <element label="Withdrawal On" max_length="40" name="withdrawal_on" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true" label="Class 12 Percentage" max_length="15" name="class_12_percentage" type="decimal"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="College" mandatory="true" max_length="32" name="college" reference="x_1790229_edusph_0_college" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Jee Score" max_length="15" name="jee_score" type="decimal"/>
+        <element attributes="edge_encryption_enabled=true" label="Allocation Round" max_length="40" name="allocation_round" type="integer"/>
+        <element label="Mobile" max_length="40" name="mobile" type="string"/>
+        <element label="Name" mandatory="true" max_length="100" name="name" type="string"/>
+        <index name="index">
+            <element name="college"/>
+        </index>
+        <index name="index2">
+            <element name="program"/>
+        </index>
+    </element>
+</database>
