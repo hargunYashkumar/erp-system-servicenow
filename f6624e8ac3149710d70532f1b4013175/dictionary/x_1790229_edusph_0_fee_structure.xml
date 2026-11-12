@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="176aa726c3589b10d70532f1b401315f" label="Fee Structure" max_length="40" name="x_1790229_edusph_0_fee_structure" type="collection">
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Year" mandatory="true" max_length="32" name="year" reference="x_1790229_edusph_0_academic_year" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Year" max_length="32" name="year" reference="x_1790229_edusph_0_academic_year" type="reference"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Program" mandatory="true" max_length="32" name="program" reference="x_1790229_edusph_0_program" type="reference"/>
-        <element attributes="edge_encryption_enabled=true" label="Sem No" max_length="40" name="sem_no" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" label="Sem No" mandatory="true" max_length="40" name="sem_no" type="integer"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="College" mandatory="true" max_length="32" name="college" reference="x_1790229_edusph_0_college" type="reference"/>
         <element label="Effective From" max_length="40" name="effective_from" type="glide_date"/>
         <element attributes="edge_encryption_enabled=true" choice="1" label="Category" mandatory="true" max_length="40" name="category" type="choice">

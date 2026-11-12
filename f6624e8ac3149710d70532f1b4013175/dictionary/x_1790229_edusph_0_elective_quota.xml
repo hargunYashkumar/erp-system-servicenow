@@ -4,14 +4,7 @@
         <element label="Seats" max_length="40" name="seats" type="string"/>
         <element attributes="edge_encryption_enabled=true" choice="1" label="Category" mandatory="true" max_length="40" name="category" type="choice">
             <choice>
-                <element inactive_on_update="false" label="Assets" sequence="5" value="assets"/>
-                <element inactive_on_update="false" label="Examination" sequence="3" value="examination"/>
-                <element inactive_on_update="false" label="Attendance" sequence="1" value="attendance"/>
                 <element inactive_on_update="false" label="Other" sequence="7" value="other"/>
-                <element inactive_on_update="false" label="Academic" sequence="0" value="academic"/>
-                <element inactive_on_update="false" label="IT  Support" sequence="6" value="it_support"/>
-                <element inactive_on_update="false" label="Events" sequence="4" value="events"/>
-                <element inactive_on_update="false" label="Fees" sequence="2" value="fees"/>
             </choice>
         </element>
         <element label="Filled" max_length="40" name="filled" type="string"/>

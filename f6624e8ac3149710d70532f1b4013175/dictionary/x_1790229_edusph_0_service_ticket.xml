@@ -3,7 +3,7 @@
         <element choice="1" label="Resolution Code" max_length="40" name="resolution_code" type="string">
             <choice/>
         </element>
-        <element attributes="edge_encryption_enabled=true" choice="1" label="Category" max_length="40" name="category" type="choice">
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Category" mandatory="true" max_length="40" name="category" type="choice">
             <choice>
                 <element inactive_on_update="false" label="Events" sequence="4" value="events"/>
                 <element inactive_on_update="false" label="IT Support" sequence="6" value="it_support"/>
@@ -19,7 +19,7 @@
         <element attributes="edge_encryption_enabled=true" label="Attachment" max_length="40" name="attachment" type="file_attachment"/>
         <element label="Resolution Notes" max_length="1000" name="resolution_notes" type="string"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" display="true" label="Requester" mandatory="true" max_length="32" name="requester" reference="sys_user" type="reference"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="College" max_length="32" name="college" reference="x_1790229_edusph_0_college" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="College" mandatory="true" max_length="32" name="college" reference="x_1790229_edusph_0_college" type="reference"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Department" max_length="32" name="department" reference="x_1790229_edusph_0_department" type="reference"/>
     </element>
 </database>

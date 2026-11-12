@@ -3,9 +3,9 @@
         <element label="Effective from" max_length="40" name="effective_from" type="glide_date"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Employee" mandatory="true" max_length="32" name="employee" reference="x_1790229_edusph_0_employee" type="reference"/>
         <element attributes="edge_encryption_enabled=true,omit_sys_original=true" label="Deductions" max_length="20" name="deductions" type="currency"/>
-        <element attributes="edge_encryption_enabled=true,omit_sys_original=true" label="Allowances" max_length="255" name="allowances" type="currency"/>
+        <element attributes="edge_encryption_enabled=true,omit_sys_original=true" label="Allowances" max_length="38" name="allowances" type="currency"/>
         <element label="Effective to" max_length="40" name="effective_to" type="glide_date"/>
-        <element attributes="edge_encryption_enabled=true,omit_sys_original=true" label="Basic" max_length="255" name="basic" type="currency"/>
+        <element attributes="edge_encryption_enabled=true,omit_sys_original=true" label="Basic" max_length="38" name="basic" type="currency"/>
         <index name="index">
             <element name="employee"/>
         </index>

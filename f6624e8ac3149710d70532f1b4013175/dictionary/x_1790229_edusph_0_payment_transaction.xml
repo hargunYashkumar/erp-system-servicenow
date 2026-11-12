@@ -16,7 +16,7 @@
             </choice>
         </element>
         <element label="Failure Reason" max_length="255" name="failure_reason" type="string"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Fee" mandatory="true" max_length="32" name="fee" reference="x_1790229_edusph_0_student_fee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Fee" max_length="32" name="fee" reference="x_1790229_edusph_0_student_fee" type="reference"/>
         <element label="Webhook Event Id" max_length="100" name="webhook_event_id" type="string"/>
         <element label="Receipt" max_length="100" name="receipt" type="string"/>
         <element attributes="edge_encryption_enabled=true" label="Gateway Signature Verified" max_length="40" name="gateway_signature_verified" type="boolean"/>

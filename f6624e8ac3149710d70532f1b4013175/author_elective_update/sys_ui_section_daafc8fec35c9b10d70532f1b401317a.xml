@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section action="DELETE" caption="" section_id="daafc8fec35c9b10d70532f1b401317a" sys_domain="global" table="x_1790229_edusph_0_elective_quota" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.begin_split</element>
+            <position>0</position>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-05 09:50:51</sys_created_on>
+            <sys_id>5eafc8fec35c9b10d70532f1b401317f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_elective_quota" sys_domain="global" view="Default view">daafc8fec35c9b10d70532f1b401317a</sys_ui_section>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-05 09:50:51</sys_updated_on>
+            <sys_user/>
+            <type>.begin_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>offering</element>
+            <position>1</position>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-05 09:50:51</sys_created_on>
+            <sys_id>1aafc8fec35c9b10d70532f1b4013180</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_elective_quota" sys_domain="global" view="Default view">daafc8fec35c9b10d70532f1b401317a</sys_ui_section>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-05 09:50:51</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>program</element>
+            <position>2</position>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-05 09:50:51</sys_created_on>
+            <sys_id>d2afc8fec35c9b10d70532f1b4013181</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_elective_quota" sys_domain="global" view="Default view">daafc8fec35c9b10d70532f1b401317a</sys_ui_section>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-05 09:50:51</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>category</element>
+            <position>3</position>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-05 09:50:51</sys_created_on>
+            <sys_id>9eafc8fec35c9b10d70532f1b4013181</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_elective_quota" sys_domain="global" view="Default view">daafc8fec35c9b10d70532f1b401317a</sys_ui_section>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-05 09:50:51</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>4</position>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-05 09:50:51</sys_created_on>
+            <sys_id>5aafc8fec35c9b10d70532f1b4013182</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_elective_quota" sys_domain="global" view="Default view">daafc8fec35c9b10d70532f1b401317a</sys_ui_section>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-05 09:50:51</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>seats</element>
+            <position>5</position>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-05 09:50:51</sys_created_on>
+            <sys_id>16afc8fec35c9b10d70532f1b4013183</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_elective_quota" sys_domain="global" view="Default view">daafc8fec35c9b10d70532f1b401317a</sys_ui_section>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-05 09:50:51</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>filled</element>
+            <position>6</position>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-05 09:50:51</sys_created_on>
+            <sys_id>5eafc8fec35c9b10d70532f1b401319c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_elective_quota" sys_domain="global" view="Default view">daafc8fec35c9b10d70532f1b401317a</sys_ui_section>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-05 09:50:51</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.end_split</element>
+            <position>7</position>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-05 09:50:51</sys_created_on>
+            <sys_id>1aafc8fec35c9b10d70532f1b401319d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_elective_quota" sys_domain="global" view="Default view">daafc8fec35c9b10d70532f1b401317a</sys_ui_section>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-05 09:50:51</sys_updated_on>
+            <sys_user/>
+            <type>.end_split</type>
+        </sys_ui_element>
+        <sys_ui_section action="DELETE">
+            <caption/>
+            <header>false</header>
+            <name>x_1790229_edusph_0_elective_quota</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>Developer-Vayu</sys_created_by>
+            <sys_created_on>2026-11-05 09:50:51</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>daafc8fec35c9b10d70532f1b401317a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_1790229_edusph_0_elective_quota</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+            <sys_update_name>sys_ui_section_daafc8fec35c9b10d70532f1b401317a</sys_update_name>
+            <sys_updated_by>Developer-Vayu</sys_updated_by>
+            <sys_updated_on>2026-11-05 09:50:51</sys_updated_on>
+            <sys_user/>
+            <title>true</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</application>
+        <file_path/>
+        <instance_id>899734a8db923d582f082a5913961960</instance_id>
+        <instance_name>dev199710</instance_name>
+        <name>sys_ui_section_daafc8fec35c9b10d70532f1b401317a</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_ui_section caption="" section_id="daafc8fec35c9b10d70532f1b401317a" sys_domain="global" table="x_1790229_edusph_0_elective_quota" version="3" view=""><sys_ui_element action="INSERT_OR_UPDATE"><element>.begin_split</element><position>0</position><sys_created_by>Developer-Vayu</sys_created_by><sys_created_on>2026-11-05 09:50:51</sys_created_on><sys_id>5eafc8fec35c9b10d70532f1b401317f</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_elective_quota" sys_domain="global" view="Default view">daafc8fec35c9b10d70532f1b401317a</sys_ui_section><sys_updated_by>Developer-Vayu</sys_updated_by><sys_updated_on>2026-11-05 09:50:51</sys_updated_on><sys_user/><type>.begin_split</type></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>offering</element><position>1</position><sys_created_by>Developer-Vayu</sys_created_by><sys_created_on>2026-11-05 09:50:51</sys_created_on><sys_id>1aafc8fec35c9b10d70532f1b4013180</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_elective_quota" sys_domain="global" view="Default view">daafc8fec35c9b10d70532f1b401317a</sys_ui_section><sys_updated_by>Developer-Vayu</sys_updated_by><sys_updated_on>2026-11-05 09:50:51</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>program</element><position>2</position><sys_created_by>Developer-Vayu</sys_created_by><sys_created_on>2026-11-05 09:50:51</sys_created_on><sys_id>d2afc8fec35c9b10d70532f1b4013181</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_elective_quota" sys_domain="global" view="Default view">daafc8fec35c9b10d70532f1b401317a</sys_ui_section><sys_updated_by>Developer-Vayu</sys_updated_by><sys_updated_on>2026-11-05 09:50:51</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>category</element><position>3</position><sys_created_by>Developer-Vayu</sys_created_by><sys_created_on>2026-11-05 09:50:51</sys_created_on><sys_id>9eafc8fec35c9b10d70532f1b4013181</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_elective_quota" sys_domain="global" view="Default view">daafc8fec35c9b10d70532f1b401317a</sys_ui_section><sys_updated_by>Developer-Vayu</sys_updated_by><sys_updated_on>2026-11-05 09:50:51</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>.split</element><position>4</position><sys_created_by>Developer-Vayu</sys_created_by><sys_created_on>2026-11-05 09:50:51</sys_created_on><sys_id>5aafc8fec35c9b10d70532f1b4013182</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_elective_quota" sys_domain="global" view="Default view">daafc8fec35c9b10d70532f1b401317a</sys_ui_section><sys_updated_by>Developer-Vayu</sys_updated_by><sys_updated_on>2026-11-05 09:50:51</sys_updated_on><sys_user/><type>.split</type></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>seats</element><position>5</position><sys_created_by>Developer-Vayu</sys_created_by><sys_created_on>2026-11-05 09:50:51</sys_created_on><sys_id>16afc8fec35c9b10d70532f1b4013183</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_elective_quota" sys_domain="global" view="Default view">daafc8fec35c9b10d70532f1b401317a</sys_ui_section><sys_updated_by>Developer-Vayu</sys_updated_by><sys_updated_on>2026-11-05 09:50:51</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>filled</element><position>6</position><sys_created_by>Developer-Vayu</sys_created_by><sys_created_on>2026-11-05 09:50:51</sys_created_on><sys_id>5eafc8fec35c9b10d70532f1b401319c</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_elective_quota" sys_domain="global" view="Default view">daafc8fec35c9b10d70532f1b401317a</sys_ui_section><sys_updated_by>Developer-Vayu</sys_updated_by><sys_updated_on>2026-11-05 09:50:51</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>.end_split</element><position>7</position><sys_created_by>Developer-Vayu</sys_created_by><sys_created_on>2026-11-05 09:50:51</sys_created_on><sys_id>1aafc8fec35c9b10d70532f1b401319d</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_elective_quota" sys_domain="global" view="Default view">daafc8fec35c9b10d70532f1b401317a</sys_ui_section><sys_updated_by>Developer-Vayu</sys_updated_by><sys_updated_on>2026-11-05 09:50:51</sys_updated_on><sys_user/><type>.end_split</type></sys_ui_element><sys_ui_section action="INSERT_OR_UPDATE"><caption/><header>false</header><name>x_1790229_edusph_0_elective_quota</name><roles/><sys_class_name>sys_ui_section</sys_class_name><sys_created_by>Developer-Vayu</sys_created_by><sys_created_on>2026-11-05 09:50:51</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>daafc8fec35c9b10d70532f1b401317a</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_1790229_edusph_0_elective_quota</sys_name><sys_overrides/><sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package><sys_policy/><sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope><sys_update_name>sys_ui_section_daafc8fec35c9b10d70532f1b401317a</sys_update_name><sys_updated_by>Developer-Vayu</sys_updated_by><sys_updated_on>2026-11-05 09:50:51</sys_updated_on><sys_user/><title>true</title><view display_value="Default view" name="NULL">Default view</view><view_name/></sys_ui_section></sys_ui_section></record_update>]]></payload>
+        <payload_hash>71149919</payload_hash>
+        <record_name>Elective Quota</record_name>
+        <reverted_from/>
+        <source>99eb4f5ac3581b10d70532f1b40131b2</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>Developer-Vayu</sys_created_by>
+        <sys_created_on>2026-11-05 09:50:51</sys_created_on>
+        <sys_id>96afc8fec35c9b10d70532f1b40131a1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a1ab1e4b310000001</sys_recorded_at>
+        <sys_updated_by>Developer-Vayu</sys_updated_by>
+        <sys_updated_on>2026-11-05 09:50:51</sys_updated_on>
+        <type>Form Layout</type>
+        <update_guid>5aafc8fe6a5c9b10835f657e6afbbda0</update_guid>
+        <update_guid_history>5aafc8fe6a5c9b10835f657e6afbbda0:71149919,12afc8fef95c9b106edcc2ab07fd9b7f:-1772792567</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>Developer-Vayu</sys_created_by>
+        <sys_created_on>2026-11-12 10:56:24</sys_created_on>
+        <sys_db_object display_value="" name="sys_ui_section">sys_ui_section</sys_db_object>
+        <sys_id>3d168e64c3a840cd8608d52dd8897d69</sys_id>
+        <sys_metadata>daafc8fec35c9b10d70532f1b401317a</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1790229_edusph_0_elective_quota</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_parent display_value="Elective Quota">50b96b62c3589b10d70532f1b4013171</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_scope_delete display_value="">496efbe1a9de4fe0a3807b4e0edc8400</sys_scope_delete>
+        <sys_update_name>sys_ui_section_daafc8fec35c9b10d70532f1b401317a</sys_update_name>
+        <sys_update_version display_value="sys_ui_section_daafc8fec35c9b10d70532f1b401317a">96afc8fec35c9b10d70532f1b40131a1</sys_update_version>
+        <sys_updated_by>Developer-Vayu</sys_updated_by>
+        <sys_updated_on>2026-11-12 10:56:24</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

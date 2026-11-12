@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="dc53b13924e8445e8b687a63b21fe9ca" label="Program" name="x_1790229_edusph_0_program" type="collection">
         <element label="Name" mandatory="true" max_length="40" name="name" type="string"/>
-        <element label="Duration Sem" max_length="40" name="duration_sem" type="string"/>
+        <element label="Duration Sem" max_length="40" name="duration_sem" type="integer"/>
         <element label="Code" mandatory="true" max_length="40" name="code" type="string"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" display="true" label="University" mandatory="true" max_length="32" name="university" reference="x_1790229_edusph_0_university" type="reference"/>
         <index name="index">

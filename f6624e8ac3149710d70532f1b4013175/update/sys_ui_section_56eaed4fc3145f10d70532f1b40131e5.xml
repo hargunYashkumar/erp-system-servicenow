@@ -3,238 +3,210 @@
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>employee</element>
             <position>0</position>
-            <sys_created_by>Developer-NikhilN</sys_created_by>
-            <sys_created_on>2026-11-06 11:08:01</sys_created_on>
-            <sys_id>16eaed4fc3145f10d70532f1b40131fb</sys_id>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-12 08:03:09</sys_created_on>
+            <sys_id>ac2a7b34c3281710d70532f1b4013188</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
-            <sys_updated_by>Developer-NikhilN</sys_updated_by>
-            <sys_updated_on>2026-11-06 11:08:01</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>month</element>
-            <position>1</position>
-            <sys_created_by>Developer-NikhilN</sys_created_by>
-            <sys_created_on>2026-11-06 11:08:01</sys_created_on>
-            <sys_id>deeaed4fc3145f10d70532f1b40131fb</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
-            <sys_updated_by>Developer-NikhilN</sys_updated_by>
-            <sys_updated_on>2026-11-06 11:08:01</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>working_days</element>
-            <position>2</position>
-            <sys_created_by>Developer-NikhilN</sys_created_by>
-            <sys_created_on>2026-11-06 11:08:01</sys_created_on>
-            <sys_id>9aeaed4fc3145f10d70532f1b40131fc</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
-            <sys_updated_by>Developer-NikhilN</sys_updated_by>
-            <sys_updated_on>2026-11-06 11:08:01</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>lop_days</element>
-            <position>3</position>
-            <sys_created_by>Developer-NikhilN</sys_created_by>
-            <sys_created_on>2026-11-06 11:08:01</sys_created_on>
-            <sys_id>56eaed4fc3145f10d70532f1b40131fd</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
-            <sys_updated_by>Developer-NikhilN</sys_updated_by>
-            <sys_updated_on>2026-11-06 11:08:01</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>gross</element>
-            <position>4</position>
-            <sys_created_by>Developer-NikhilN</sys_created_by>
-            <sys_created_on>2026-11-06 11:08:01</sys_created_on>
-            <sys_id>12eaed4fc3145f10d70532f1b40131fe</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
-            <sys_updated_by>Developer-NikhilN</sys_updated_by>
-            <sys_updated_on>2026-11-06 11:08:01</sys_updated_on>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-12 08:03:09</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>net</element>
-            <position>5</position>
-            <sys_created_by>Developer-NikhilN</sys_created_by>
-            <sys_created_on>2026-11-06 11:08:01</sys_created_on>
-            <sys_id>daeaed4fc3145f10d70532f1b40131fe</sys_id>
+            <position>1</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-12 08:03:09</sys_created_on>
+            <sys_id>2c2a7b34c3281710d70532f1b4013189</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
-            <sys_updated_by>Developer-NikhilN</sys_updated_by>
-            <sys_updated_on>2026-11-06 11:08:01</sys_updated_on>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-12 08:03:09</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>.begin_split</element>
-            <position>6</position>
-            <sys_created_by>Developer-NikhilN</sys_created_by>
-            <sys_created_on>2026-11-06 11:08:01</sys_created_on>
-            <sys_id>96eaed4fc3145f10d70532f1b40131ff</sys_id>
+            <element>lop_days</element>
+            <position>2</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-12 08:03:09</sys_created_on>
+            <sys_id>a82a7b34c3281710d70532f1b401318a</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
-            <sys_updated_by>Developer-NikhilN</sys_updated_by>
-            <sys_updated_on>2026-11-06 11:08:01</sys_updated_on>
-            <sys_user/>
-            <type>.begin_split</type>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>status</element>
-            <position>7</position>
-            <sys_created_by>Developer-NikhilN</sys_created_by>
-            <sys_created_on>2026-11-06 11:08:01</sys_created_on>
-            <sys_id>52ea218fc3145f10d70532f1b4013100</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
-            <sys_updated_by>Developer-NikhilN</sys_updated_by>
-            <sys_updated_on>2026-11-06 11:08:01</sys_updated_on>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-12 08:03:09</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>hr_approved_by</element>
-            <position>8</position>
-            <sys_created_by>Developer-NikhilN</sys_created_by>
-            <sys_created_on>2026-11-06 11:08:01</sys_created_on>
-            <sys_id>1eea218fc3145f10d70532f1b4013100</sys_id>
+            <element>month</element>
+            <position>3</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-12 08:03:09</sys_created_on>
+            <sys_id>ec2a7b34c3281710d70532f1b4013197</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
-            <sys_updated_by>Developer-NikhilN</sys_updated_by>
-            <sys_updated_on>2026-11-06 11:08:01</sys_updated_on>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-12 08:03:09</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>accounts_approved_by</element>
+            <position>4</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-12 08:03:09</sys_created_on>
+            <sys_id>7c2a7b34c3281710d70532f1b4013198</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-12 08:03:09</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>paid_on</element>
-            <position>9</position>
-            <sys_created_by>Developer-NikhilN</sys_created_by>
-            <sys_created_on>2026-11-06 11:08:01</sys_created_on>
-            <sys_id>d6ea218fc3145f10d70532f1b4013101</sys_id>
+            <position>5</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-12 08:03:09</sys_created_on>
+            <sys_id>f82a7b34c3281710d70532f1b4013199</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
-            <sys_updated_by>Developer-NikhilN</sys_updated_by>
-            <sys_updated_on>2026-11-06 11:08:01</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>salary_slip</element>
-            <position>10</position>
-            <sys_created_by>Developer-NikhilN</sys_created_by>
-            <sys_created_on>2026-11-06 11:08:01</sys_created_on>
-            <sys_id>92ea218fc3145f10d70532f1b4013102</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
-            <sys_updated_by>Developer-NikhilN</sys_updated_by>
-            <sys_updated_on>2026-11-06 11:08:01</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>.split</element>
-            <position>11</position>
-            <sys_created_by>Developer-NikhilN</sys_created_by>
-            <sys_created_on>2026-11-06 11:08:01</sys_created_on>
-            <sys_id>5eea218fc3145f10d70532f1b4013102</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
-            <sys_updated_by>Developer-NikhilN</sys_updated_by>
-            <sys_updated_on>2026-11-06 11:08:01</sys_updated_on>
-            <sys_user/>
-            <type>.split</type>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>accounts_approved_by</element>
-            <position>12</position>
-            <sys_created_by>Developer-NikhilN</sys_created_by>
-            <sys_created_on>2026-11-06 11:08:01</sys_created_on>
-            <sys_id>1aea218fc3145f10d70532f1b4013103</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
-            <sys_updated_by>Developer-NikhilN</sys_updated_by>
-            <sys_updated_on>2026-11-06 11:08:01</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>principal_approved_by</element>
-            <position>13</position>
-            <sys_created_by>Developer-NikhilN</sys_created_by>
-            <sys_created_on>2026-11-06 11:08:01</sys_created_on>
-            <sys_id>d2ea218fc3145f10d70532f1b4013104</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
-            <sys_updated_by>Developer-NikhilN</sys_updated_by>
-            <sys_updated_on>2026-11-06 11:08:01</sys_updated_on>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-12 08:03:09</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>manual_adjustment_amount</element>
-            <position>14</position>
-            <sys_created_by>Developer-NikhilN</sys_created_by>
-            <sys_created_on>2026-11-06 11:08:01</sys_created_on>
-            <sys_id>9eea218fc3145f10d70532f1b4013104</sys_id>
+            <position>6</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-12 08:03:09</sys_created_on>
+            <sys_id>782a7b34c3281710d70532f1b401319a</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
-            <sys_updated_by>Developer-NikhilN</sys_updated_by>
-            <sys_updated_on>2026-11-06 11:08:01</sys_updated_on>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-12 08:03:09</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>.end_split</element>
-            <position>15</position>
-            <sys_created_by>Developer-NikhilN</sys_created_by>
-            <sys_created_on>2026-11-06 11:08:01</sys_created_on>
-            <sys_id>5aea218fc3145f10d70532f1b4013105</sys_id>
+            <element>.split</element>
+            <position>7</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-12 08:03:09</sys_created_on>
+            <sys_id>f42a7b34c3281710d70532f1b401319b</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
-            <sys_updated_by>Developer-NikhilN</sys_updated_by>
-            <sys_updated_on>2026-11-06 11:08:01</sys_updated_on>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-12 08:03:09</sys_updated_on>
             <sys_user/>
-            <type>.end_split</type>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>status</element>
+            <position>8</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-12 08:03:09</sys_created_on>
+            <sys_id>742a7b34c3281710d70532f1b401319c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-12 08:03:09</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>gross</element>
+            <position>9</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-12 08:03:09</sys_created_on>
+            <sys_id>f02a7b34c3281710d70532f1b401319d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-12 08:03:09</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>working_days</element>
+            <position>10</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-12 08:03:09</sys_created_on>
+            <sys_id>702a7b34c3281710d70532f1b401319e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-12 08:03:09</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>hr_approved_by</element>
+            <position>11</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-12 08:03:09</sys_created_on>
+            <sys_id>fc2a7b34c3281710d70532f1b401319e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-12 08:03:09</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>principal_approved_by</element>
+            <position>12</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-12 08:03:09</sys_created_on>
+            <sys_id>7c2a7b34c3281710d70532f1b401319f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-12 08:03:09</sys_updated_on>
+            <sys_user/>
+            <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>manual_adjustment_reason</element>
-            <position>16</position>
-            <sys_created_by>Developer-NikhilN</sys_created_by>
-            <sys_created_on>2026-11-06 11:08:01</sys_created_on>
-            <sys_id>16ea218fc3145f10d70532f1b4013106</sys_id>
+            <position>13</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-12 08:03:09</sys_created_on>
+            <sys_id>f82a7b34c3281710d70532f1b40131a0</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
-            <sys_updated_by>Developer-NikhilN</sys_updated_by>
-            <sys_updated_on>2026-11-06 11:08:01</sys_updated_on>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-12 08:03:09</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>salary_slip</element>
+            <position>14</position>
+            <sys_created_by>Developer-Hemendra</sys_created_by>
+            <sys_created_on>2026-11-12 08:03:09</sys_created_on>
+            <sys_id>782a7b34c3281710d70532f1b40131a1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_payroll_record" sys_domain="global" view="Default view">56eaed4fc3145f10d70532f1b40131e5</sys_ui_section>
+            <sys_updated_by>Developer-Hemendra</sys_updated_by>
+            <sys_updated_on>2026-11-12 08:03:09</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>

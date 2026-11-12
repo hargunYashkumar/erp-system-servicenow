@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
     <sys_ui_section caption="" section_id="a007a4bac3dc9b10d70532f1b40131e5" sys_domain="global" table="x_1790229_edusph_0_timetable" version="3" view="">
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>section</element>
+            <element>semester</element>
             <position>0</position>
             <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-11 10:37:55</sys_created_on>
-            <sys_id>46f35760c3e49310d70532f1b40131e7</sys_id>
+            <sys_created_on>2026-11-12 11:43:29</sys_created_on>
+            <sys_id>d09ca005c3ac1710d70532f1b4013121</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_timetable" sys_domain="global" view="Default view">a007a4bac3dc9b10d70532f1b40131e5</sys_ui_section>
             <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-11 10:37:55</sys_updated_on>
+            <sys_updated_on>2026-11-12 11:43:29</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -18,13 +18,13 @@
             <element>status</element>
             <position>1</position>
             <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-11 10:37:55</sys_created_on>
-            <sys_id>c2f35760c3e49310d70532f1b40131e8</sys_id>
+            <sys_created_on>2026-11-12 11:43:29</sys_created_on>
+            <sys_id>989ca005c3ac1710d70532f1b4013122</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_timetable" sys_domain="global" view="Default view">a007a4bac3dc9b10d70532f1b40131e5</sys_ui_section>
             <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-11 10:37:55</sys_updated_on>
+            <sys_updated_on>2026-11-12 11:43:29</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -32,13 +32,13 @@
             <element>approved_by</element>
             <position>2</position>
             <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-11 10:37:55</sys_created_on>
-            <sys_id>42f35760c3e49310d70532f1b40131e9</sys_id>
+            <sys_created_on>2026-11-12 11:43:29</sys_created_on>
+            <sys_id>189ca005c3ac1710d70532f1b4013123</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_timetable" sys_domain="global" view="Default view">a007a4bac3dc9b10d70532f1b40131e5</sys_ui_section>
             <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-11 10:37:55</sys_updated_on>
+            <sys_updated_on>2026-11-12 11:43:29</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -46,13 +46,13 @@
             <element>version</element>
             <position>3</position>
             <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-11 10:37:55</sys_created_on>
-            <sys_id>cef35760c3e49310d70532f1b40131e9</sys_id>
+            <sys_created_on>2026-11-12 11:43:29</sys_created_on>
+            <sys_id>5c9ca005c3ac1710d70532f1b4013130</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_timetable" sys_domain="global" view="Default view">a007a4bac3dc9b10d70532f1b40131e5</sys_ui_section>
             <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-11 10:37:55</sys_updated_on>
+            <sys_updated_on>2026-11-12 11:43:29</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -60,27 +60,27 @@
             <element>.split</element>
             <position>4</position>
             <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-11 10:37:55</sys_created_on>
-            <sys_id>4ef35760c3e49310d70532f1b40131ea</sys_id>
+            <sys_created_on>2026-11-12 11:43:29</sys_created_on>
+            <sys_id>d89ca005c3ac1710d70532f1b4013131</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_timetable" sys_domain="global" view="Default view">a007a4bac3dc9b10d70532f1b40131e5</sys_ui_section>
             <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-11 10:37:55</sys_updated_on>
+            <sys_updated_on>2026-11-12 11:43:29</sys_updated_on>
             <sys_user/>
             <type>.split</type>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>semester</element>
+            <element>section</element>
             <position>5</position>
             <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-11 10:37:55</sys_created_on>
-            <sys_id>caf35760c3e49310d70532f1b40131eb</sys_id>
+            <sys_created_on>2026-11-12 11:43:29</sys_created_on>
+            <sys_id>589ca005c3ac1710d70532f1b4013132</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_timetable" sys_domain="global" view="Default view">a007a4bac3dc9b10d70532f1b40131e5</sys_ui_section>
             <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-11 10:37:55</sys_updated_on>
+            <sys_updated_on>2026-11-12 11:43:29</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -88,13 +88,13 @@
             <element>published_on</element>
             <position>6</position>
             <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-11 10:37:55</sys_created_on>
-            <sys_id>4af35760c3e49310d70532f1b40131ec</sys_id>
+            <sys_created_on>2026-11-12 11:43:29</sys_created_on>
+            <sys_id>d49ca005c3ac1710d70532f1b4013133</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_timetable" sys_domain="global" view="Default view">a007a4bac3dc9b10d70532f1b40131e5</sys_ui_section>
             <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-11 10:37:55</sys_updated_on>
+            <sys_updated_on>2026-11-12 11:43:29</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -102,13 +102,13 @@
             <element>approved_on</element>
             <position>7</position>
             <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-11 10:37:55</sys_created_on>
-            <sys_id>c6f35760c3e49310d70532f1b40131ed</sys_id>
+            <sys_created_on>2026-11-12 11:43:29</sys_created_on>
+            <sys_id>549ca005c3ac1710d70532f1b4013134</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_timetable" sys_domain="global" view="Default view">a007a4bac3dc9b10d70532f1b40131e5</sys_ui_section>
             <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-11 10:37:55</sys_updated_on>
+            <sys_updated_on>2026-11-12 11:43:29</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
