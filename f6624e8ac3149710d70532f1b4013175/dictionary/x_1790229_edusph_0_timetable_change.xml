@@ -13,7 +13,7 @@
         </element>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Approved By" max_length="32" name="approved_by" reference="x_1790229_edusph_0_employee" reference_qual="roles=x_erp.hod^EQ" reference_qual_condition="roles=x_erp.hod^EQ" type="reference"/>
         <element label="Date" mandatory="true" max_length="40" name="date" type="glide_date"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Entry" max_length="32" name="entry" reference="x_1790229_edusph_0_timetable_entry" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Entry" max_length="32" name="entry" reference="x_1790229_edusph_0_timetable_entry" reference_qual="offering.status=active^EQ" reference_qual_condition="offering.status=active^EQ" type="reference"/>
         <index name="index">
             <element name="approved_by"/>
         </index>

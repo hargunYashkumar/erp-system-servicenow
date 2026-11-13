@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1790229_edusph_0.TimeTableRefQual</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>TimeTableRefQual</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[
+var TimeTableRefQual = Class.create();
+TimeTableRefQual.prototype = {
+
+    initialize: function() {},
+
+    // --------------------------------------------------
+    // 1. SECTION REFERENCE QUALIFIER
+    // --------------------------------------------------
+    // Filters sections using the selected semester's
+    // college, program and academic year.
+    // --------------------------------------------------
+
+    getSections: function(current) {
+
+        var noRecords = 'sys_id=-1';
+
+        if (!current) {
+            return noRecords;
+        }
+
+        var semesterId = current.getValue('semester');
+
+        if (!semesterId) {
+            return noRecords;
+        }
+
+        // Retrieve selected semester
+        var semesterGR = new GlideRecord(
+            'x_1790229_edusph_0_semester'
+        );
+
+        if (!semesterGR.get(semesterId)) {
+            return noRecords;
+        }
+
+        var collegeId = semesterGR.getValue('college');
+        var programId = semesterGR.getValue('program');
+        var academicYearId = semesterGR.getValue('year');
+
+        // College and Program are required for filtering
+        if (!collegeId || !programId) {
+            return noRecords;
+        }
+
+        // Find matching sections
+        var sectionGR = new GlideRecord(
+            'x_1790229_edusph_0_section'
+        );
+
+        sectionGR.addQuery('college', collegeId);
+        sectionGR.addQuery('program', programId);
+
+        // Match academic year when available
+        if (academicYearId) {
+            sectionGR.addQuery('year', academicYearId);
+        }
+
+        sectionGR.query();
+
+        var sectionIds = [];
+
+        while (sectionGR.next()) {
+            sectionIds.push(sectionGR.getUniqueValue());
+        }
+
+        if (sectionIds.length === 0) {
+            return noRecords;
+        }
+
+        return 'sys_idIN' + sectionIds.join(',');
+    },
+
+
+    // --------------------------------------------------
+    // 2. SEMESTER REFERENCE QUALIFIER
+    // --------------------------------------------------
+    // Filters semesters belonging to the active
+    // academic year.
+    // If a section is selected, also matches its
+    // college, program and academic year.
+    // --------------------------------------------------
+
+    getSemesters: function(current) {
+
+        var noRecords = 'sys_id=-1';
+
+        // Retrieve active academic years
+        var academicYearGR = new GlideRecord(
+            'x_1790229_edusph_0_academic_year'
+        );
+
+        academicYearGR.addQuery('active', true);
+        academicYearGR.query();
+
+        var academicYearIds = [];
+
+        while (academicYearGR.next()) {
+            academicYearIds.push(
+                academicYearGR.getUniqueValue()
+            );
+        }
+
+        if (academicYearIds.length === 0) {
+            return noRecords;
+        }
+
+        // Start filtering semesters by active academic year
+        var semesterGR = new GlideRecord(
+            'x_1790229_edusph_0_semester'
+        );
+
+        semesterGR.addQuery(
+            'year',
+            'IN',
+            academicYearIds.join(',')
+        );
+
+        // If a section has already been selected,
+        // further restrict semesters using its details.
+        var sectionId = current ?
+            current.getValue('section') : '';
+
+        if (sectionId) {
+
+            var sectionGR = new GlideRecord(
+                'x_1790229_edusph_0_section'
+            );
+
+            if (!sectionGR.get(sectionId)) {
+                return noRecords;
+            }
+
+            var collegeId = sectionGR.getValue('college');
+            var programId = sectionGR.getValue('program');
+            var academicYearId = sectionGR.getValue('year');
+
+            if (collegeId) {
+                semesterGR.addQuery('college', collegeId);
+            }
+
+            if (programId) {
+                semesterGR.addQuery('program', programId);
+            }
+
+            if (academicYearId) {
+                semesterGR.addQuery('year', academicYearId);
+            }
+        }
+
+        semesterGR.query();
+
+        var semesterIds = [];
+
+        while (semesterGR.next()) {
+            semesterIds.push(
+                semesterGR.getUniqueValue()
+            );
+        }
+
+        if (semesterIds.length === 0) {
+            return noRecords;
+        }
+
+        return 'sys_idIN' + semesterIds.join(',');
+    },
+
+    type: 'TimeTableRefQual'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Developer-NikhilP</sys_created_by>
+        <sys_created_on>2026-11-13 12:14:38</sys_created_on>
+        <sys_id>0b3df99dc3e0d710d70532f1b4013133</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>TimeTableRefQual</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_script_include_0b3df99dc3e0d710d70532f1b4013133</sys_update_name>
+        <sys_updated_by>Developer-NikhilP</sys_updated_by>
+        <sys_updated_on>2026-11-13 12:14:38</sys_updated_on>
+    </sys_script_include>
+</record_update>
