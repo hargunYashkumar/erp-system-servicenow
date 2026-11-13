@@ -3,7 +3,7 @@
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="College" mandatory="true" max_length="32" name="college" reference="x_1790229_edusph_0_college" reference_qual="status=active^EQ" reference_qual_condition="status=active^EQ" type="reference"/>
         <element label="Missed Drives" max_length="40" name="missed_drives" type="string"/>
         <element label="Admitted On" max_length="40" name="admitted_on" type="glide_date"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Section" mandatory="true" max_length="32" name="section" reference="x_1790229_edusph_0_section" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Section" mandatory="true" max_length="32" name="section" reference="x_1790229_edusph_0_section" reference_qual="javascript: new x_1790229_edusph_0.StudentRefQual().getSections(current)" type="reference" use_reference_qualifier="advanced"/>
         <element attributes="edge_encryption_enabled=true,omit_sys_original=true" label="Placed Package" max_length="20" name="placed_package" type="currency"/>
         <element attributes="edge_encryption_enabled=true" choice="1" label="Category" mandatory="true" max_length="40" name="category" type="choice">
             <choice>
@@ -29,7 +29,7 @@
             </choice>
         </element>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Lab Batch" max_length="32" name="lab_batch" reference="x_1790229_edusph_0_lab_batch" reference_qual="sectionSAMEASsection^EQ" reference_qual_condition="sectionSAMEASsection^EQ" type="reference"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Admission Application" max_length="32" name="admission_application" reference="x_1790229_edusph_0_admission_application" reference_qual="emailSAMEASemail^EQ" reference_qual_condition="emailSAMEASemail^EQ" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Admission Application" max_length="32" name="admission_application" reference="x_1790229_edusph_0_admission_application" reference_qual="javascript: new x_1790229_edusph_0.StudentRefQual().getAdmissionApplications(current)" type="reference" use_reference_qualifier="advanced"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Program" mandatory="true" max_length="32" name="program" reference="x_1790229_edusph_0_program" type="reference"/>
         <index name="index">
             <element name="admission_application"/>

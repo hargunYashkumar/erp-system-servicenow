@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1790229_edusph_0.StudentRefQual</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>StudentRefQual</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[
+var StudentRefQual = Class.create();
+StudentRefQual.prototype = {
+
+    initialize: function() {},
+
+    // --------------------------------------------------
+    // COMMON HELPER: GET STUDENT EMAIL
+    // --------------------------------------------------
+
+    getStudentEmail: function(studentGR) {
+
+        if (!studentGR || !studentGR.isValidRecord()) {
+            return '';
+        }
+
+        var userId = studentGR.getValue('user');
+
+        if (!userId) {
+            return '';
+        }
+
+        var userGR = new GlideRecord('sys_user');
+
+        if (!userGR.get(userId)) {
+            return '';
+        }
+
+        return userGR.getValue('email') || '';
+    },
+
+
+    // --------------------------------------------------
+    // 1. STUDENT - SECTION REFERENCE QUALIFIER
+    // --------------------------------------------------
+    // Filters sections based on student's college
+    // and program.
+    // --------------------------------------------------
+
+    getSections: function(current) {
+
+        var noRecords = 'sys_id=-1';
+
+        if (!current) {
+            return noRecords;
+        }
+
+        var collegeId = current.getValue('college');
+        var programId = current.getValue('program');
+
+        if (!collegeId || !programId) {
+            return noRecords;
+        }
+
+        var sectionGR = new GlideRecord(
+            'x_1790229_edusph_0_section'
+        );
+
+        sectionGR.addQuery('college', collegeId);
+        sectionGR.addQuery('program', programId);
+        sectionGR.query();
+
+        var sectionIds = [];
+
+        while (sectionGR.next()) {
+            sectionIds.push(sectionGR.getUniqueValue());
+        }
+
+        if (sectionIds.length === 0) {
+            return noRecords;
+        }
+
+        return 'sys_idIN' + sectionIds.join(',');
+    },
+
+
+    // --------------------------------------------------
+    // 2. STUDENT - ADMISSION APPLICATION QUALIFIER
+    // --------------------------------------------------
+    // Filters admission applications using the email
+    // address of the student's associated User record.
+    // --------------------------------------------------
+
+    getAdmissionApplications: function(current) {
+
+        var noRecords = 'sys_id=-1';
+
+        if (!current) {
+            return noRecords;
+        }
+
+        var email = this.getStudentEmail(current);
+
+        if (!email) {
+            return noRecords;
+        }
+
+        var applicationGR = new GlideRecord(
+            'x_1790229_edusph_0_admission_application'
+        );
+
+        applicationGR.addQuery('email', email);
+        applicationGR.query();
+
+        var applicationIds = [];
+
+        while (applicationGR.next()) {
+            applicationIds.push(
+                applicationGR.getUniqueValue()
+            );
+        }
+
+        if (applicationIds.length === 0) {
+            return noRecords;
+        }
+
+        return 'sys_idIN' + applicationIds.join(',');
+    },
+
+
+    // --------------------------------------------------
+    // 3. STUDENT DOCUMENT - APPLICATION QUALIFIER
+    // --------------------------------------------------
+    // Retrieves the selected Student's email through
+    // the associated User record and filters admission
+    // applications using that email.
+    // --------------------------------------------------
+
+    getDocumentApplications: function(current) {
+
+        var noRecords = 'sys_id=-1';
+
+        if (!current) {
+            return noRecords;
+        }
+
+        var studentId = current.getValue('student');
+
+        if (!studentId) {
+            return noRecords;
+        }
+
+        // Retrieve selected Student
+        var studentGR = new GlideRecord(
+            'x_1790229_edusph_0_student'
+        );
+
+        if (!studentGR.get(studentId)) {
+            return noRecords;
+        }
+
+        // Get student's email
+        var email = this.getStudentEmail(studentGR);
+
+        if (!email) {
+            return noRecords;
+        }
+
+        // Find matching admission applications
+        var applicationGR = new GlideRecord(
+            'x_1790229_edusph_0_admission_application'
+        );
+
+        applicationGR.addQuery('email', email);
+        applicationGR.query();
+
+        var applicationIds = [];
+
+        while (applicationGR.next()) {
+            applicationIds.push(
+                applicationGR.getUniqueValue()
+            );
+        }
+
+        if (applicationIds.length === 0) {
+            return noRecords;
+        }
+
+        return 'sys_idIN' + applicationIds.join(',');
+    },
+
+
+    type: 'StudentRefQual'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Developer-NikhilP</sys_created_by>
+        <sys_created_on>2026-11-13 12:24:32</sys_created_on>
+        <sys_id>f57f35d1c324d710d70532f1b4013123</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>StudentRefQual</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_script_include_f57f35d1c324d710d70532f1b4013123</sys_update_name>
+        <sys_updated_by>Developer-NikhilP</sys_updated_by>
+        <sys_updated_on>2026-11-13 12:24:32</sys_updated_on>
+    </sys_script_include>
+</record_update>
