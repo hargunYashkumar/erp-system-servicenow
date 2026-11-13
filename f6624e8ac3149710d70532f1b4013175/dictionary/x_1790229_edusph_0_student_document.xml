@@ -13,7 +13,7 @@
         </element>
         <element label="Rejection Reason" max_length="255" name="rejection_reason" type="string"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" type="reference"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Verified By" max_length="32" name="verified_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Verified By" max_length="32" name="verified_by" reference="x_1790229_edusph_0_employee" reference_qual="user.roles=x_erp.college_admin^EQ" reference_qual_condition="user.roles=x_erp.college_admin^EQ" type="reference"/>
         <element attributes="edge_encryption_enabled=true" label="Attachment" max_length="40" name="attachment" type="file_attachment"/>
         <element label="Doc Type" max_length="100" name="doc_type" type="string"/>
         <index name="index">
