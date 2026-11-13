@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="994a6326c3589b10d70532f1b401313a" label="Placement Drive" max_length="40" name="x_1790229_edusph_0_placement_drive" type="collection">
         <element attributes="edge_encryption_enabled=true,omit_sys_original=true" label="Package Lpa" max_length="20" name="package_lpa" type="currency"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="College" mandatory="true" max_length="32" name="college" reference="x_1790229_edusph_0_college" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="College" mandatory="true" max_length="32" name="college" reference="x_1790229_edusph_0_college" reference_qual="status=active^EQ" reference_qual_condition="status=active^EQ" type="reference"/>
         <element attributes="edge_encryption_enabled=true" label="Max Students" max_length="40" name="max_students" type="integer"/>
         <element label="Rules" max_length="1000" name="rules" type="string"/>
         <element label="Date" mandatory="true" max_length="40" name="date" type="glide_date"/>
@@ -14,7 +14,7 @@
                 <element inactive_on_update="false" label="Draft" sequence="0" value="Draft"/>
             </choice>
         </element>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Company" mandatory="true" max_length="32" name="company" reference="x_1790229_edusph_0_company" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Company" mandatory="true" max_length="32" name="company" reference="x_1790229_edusph_0_company" reference_qual="company_status=Active^EQ" reference_qual_condition="company_status=Active^EQ" type="reference"/>
         <index name="index">
             <element name="college"/>
         </index>

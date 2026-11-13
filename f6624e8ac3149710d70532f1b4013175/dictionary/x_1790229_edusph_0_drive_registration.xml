@@ -14,7 +14,7 @@
             </choice>
         </element>
         <element label="No Show Marked On" max_length="40" name="no_show_marked_on" type="glide_date_time"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Drive" max_length="32" name="drive" reference="x_1790229_edusph_0_placement_drive" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Drive" max_length="32" name="drive" reference="x_1790229_edusph_0_placement_drive" reference_qual="status=Open^EQ" reference_qual_condition="status=Open^EQ" type="reference"/>
         <index name="index">
             <element name="drive"/>
         </index>
