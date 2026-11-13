@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="1bc94c1fcec34474949440ae0746141d" label="Affiliation Record" name="x_1790229_edusph_0_affiliation" type="collection">
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="College" mandatory="true" max_length="32" name="college" reference="x_1790229_edusph_0_college" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="College" mandatory="true" max_length="32" name="college" reference="x_1790229_edusph_0_college" reference_qual="status=active^EQ" reference_qual_condition="status=active^EQ" type="reference"/>
         <element label="Valid To" mandatory="true" max_length="40" name="valid_to" type="glide_date"/>
         <element attributes="edge_encryption_enabled=true" choice="3" default="pending" label="Status" mandatory="true" max_length="40" name="status" type="choice">
             <choice>

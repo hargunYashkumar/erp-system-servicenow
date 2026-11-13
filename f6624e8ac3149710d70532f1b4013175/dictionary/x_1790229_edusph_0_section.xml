@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="0fa9ef22c3589b10d70532f1b40131d0" label="Section" max_length="40" name="x_1790229_edusph_0_section" type="collection">
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Batch Coordinator" max_length="32" name="batch_coordinator" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Batch Coordinator" max_length="32" name="batch_coordinator" reference="x_1790229_edusph_0_employee" reference_qual="active=true^user.roles=x_erp.batch_coordinator^EQ" reference_qual_condition="active=true^user.roles=x_erp.batch_coordinator^EQ" type="reference"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="College" mandatory="true" max_length="32" name="college" reference="x_1790229_edusph_0_college" type="reference"/>
         <element label="Strength" max_length="40" name="strength" type="string"/>
         <element label="Name" mandatory="true" max_length="100" name="name" type="string"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Year" max_length="32" name="year" reference="x_1790229_edusph_0_academic_year" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Year" max_length="32" name="year" reference="x_1790229_edusph_0_academic_year" reference_qual="active=true^EQ" reference_qual_condition="active=true^EQ" type="reference"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Program" mandatory="true" max_length="32" name="program" reference="x_1790229_edusph_0_program" type="reference"/>
         <index name="index">
             <element name="batch_coordinator"/>

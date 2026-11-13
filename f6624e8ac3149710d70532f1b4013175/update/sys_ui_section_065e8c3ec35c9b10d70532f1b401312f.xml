@@ -4,13 +4,13 @@
             <element>course</element>
             <position>0</position>
             <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-11 07:00:03</sys_created_on>
-            <sys_id>ee1222acc3209310d70532f1b4013184</sys_id>
+            <sys_created_on>2026-11-13 08:39:12</sys_created_on>
+            <sys_id>eafb4951c3ac9710d70532f1b4013134</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Course Offering Details" display_value="Course Offering Details" name="x_1790229_edusph_0_course_offering" sys_domain="global" view="Default view">065e8c3ec35c9b10d70532f1b401312f</sys_ui_section>
             <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-11 07:00:03</sys_updated_on>
+            <sys_updated_on>2026-11-13 08:39:12</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -18,13 +18,13 @@
             <element>semester</element>
             <position>1</position>
             <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-11 07:00:03</sys_created_on>
-            <sys_id>6e1222acc3209310d70532f1b4013185</sys_id>
+            <sys_created_on>2026-11-13 08:39:12</sys_created_on>
+            <sys_id>6afb4951c3ac9710d70532f1b4013135</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Course Offering Details" display_value="Course Offering Details" name="x_1790229_edusph_0_course_offering" sys_domain="global" view="Default view">065e8c3ec35c9b10d70532f1b401312f</sys_ui_section>
             <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-11 07:00:03</sys_updated_on>
+            <sys_updated_on>2026-11-13 08:39:12</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -32,13 +32,13 @@
             <element>status</element>
             <position>2</position>
             <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-11 07:00:03</sys_created_on>
-            <sys_id>ea1222acc3209310d70532f1b4013186</sys_id>
+            <sys_created_on>2026-11-13 08:39:12</sys_created_on>
+            <sys_id>e6fb4951c3ac9710d70532f1b4013136</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Course Offering Details" display_value="Course Offering Details" name="x_1790229_edusph_0_course_offering" sys_domain="global" view="Default view">065e8c3ec35c9b10d70532f1b401312f</sys_ui_section>
             <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-11 07:00:03</sys_updated_on>
+            <sys_updated_on>2026-11-13 08:39:12</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -46,41 +46,41 @@
             <element>.split</element>
             <position>3</position>
             <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-11 07:00:03</sys_created_on>
-            <sys_id>6a1222acc3209310d70532f1b4013187</sys_id>
+            <sys_created_on>2026-11-13 08:39:12</sys_created_on>
+            <sys_id>66fb4951c3ac9710d70532f1b4013137</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Course Offering Details" display_value="Course Offering Details" name="x_1790229_edusph_0_course_offering" sys_domain="global" view="Default view">065e8c3ec35c9b10d70532f1b401312f</sys_ui_section>
             <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-11 07:00:03</sys_updated_on>
+            <sys_updated_on>2026-11-13 08:39:12</sys_updated_on>
             <sys_user/>
             <type>.split</type>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>section</element>
+            <element>college</element>
             <position>4</position>
             <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-11 07:00:03</sys_created_on>
-            <sys_id>e61222acc3209310d70532f1b4013188</sys_id>
+            <sys_created_on>2026-11-13 08:39:12</sys_created_on>
+            <sys_id>e2fb4951c3ac9710d70532f1b4013138</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Course Offering Details" display_value="Course Offering Details" name="x_1790229_edusph_0_course_offering" sys_domain="global" view="Default view">065e8c3ec35c9b10d70532f1b401312f</sys_ui_section>
             <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-11 07:00:03</sys_updated_on>
+            <sys_updated_on>2026-11-13 08:39:12</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>college</element>
+            <element>section</element>
             <position>5</position>
             <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-11 07:00:03</sys_created_on>
-            <sys_id>661222acc3209310d70532f1b4013189</sys_id>
+            <sys_created_on>2026-11-13 08:39:12</sys_created_on>
+            <sys_id>62fb4951c3ac9710d70532f1b4013139</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Course Offering Details" display_value="Course Offering Details" name="x_1790229_edusph_0_course_offering" sys_domain="global" view="Default view">065e8c3ec35c9b10d70532f1b401312f</sys_ui_section>
             <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-11 07:00:03</sys_updated_on>
+            <sys_updated_on>2026-11-13 08:39:12</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -88,13 +88,13 @@
             <element>faculty</element>
             <position>6</position>
             <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-11 07:00:03</sys_created_on>
-            <sys_id>e21222acc3209310d70532f1b401318a</sys_id>
+            <sys_created_on>2026-11-13 08:39:12</sys_created_on>
+            <sys_id>eefb4951c3ac9710d70532f1b4013139</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Course Offering Details" display_value="Course Offering Details" name="x_1790229_edusph_0_course_offering" sys_domain="global" view="Default view">065e8c3ec35c9b10d70532f1b401312f</sys_ui_section>
             <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-11 07:00:03</sys_updated_on>
+            <sys_updated_on>2026-11-13 08:39:12</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
