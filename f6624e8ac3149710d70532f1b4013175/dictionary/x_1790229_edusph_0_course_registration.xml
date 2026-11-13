@@ -9,7 +9,7 @@
                 <element inactive_on_update="false" label="Audit" sequence="2" value="Audit"/>
             </choice>
         </element>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Offering" mandatory="true" max_length="32" name="offering" reference="x_1790229_edusph_0_course_offering" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Offering" mandatory="true" max_length="32" name="offering" reference="x_1790229_edusph_0_course_offering" reference_qual="status=active^EQ" reference_qual_condition="status=active^EQ" type="reference"/>
         <element attributes="edge_encryption_enabled=true,omit_sys_original=true" label="Late Registration Fee" max_length="20" name="late_registration_fee" type="currency"/>
         <element label="Approved On" max_length="40" name="approved_on" type="glide_date_time"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Approver" max_length="32" name="approver" reference="x_1790229_edusph_0_employee" type="reference"/>
@@ -24,7 +24,7 @@
                 <element inactive_on_update="false" label="Approved" sequence="3" value="Approved"/>
             </choice>
         </element>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" reference_qual="user.roles=x_erp.student^EQ" reference_qual_condition="user.roles=x_erp.student^EQ" type="reference"/>
         <element label="Registered On" max_length="40" name="registered_on" type="glide_date_time"/>
         <index name="index">
             <element name="approver"/>
