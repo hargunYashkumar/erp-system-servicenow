@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1790229_edusph_0.EmployeeRefQual</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>EmployeeRefQual</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[
+var EmployeeRefQual = Class.create();
+
+EmployeeRefQual.prototype = {
+
+    initialize: function() {},
+
+    EMPLOYEE_TABLE: 'x_1790229_edusph_0_employee',
+    DEPARTMENT_TABLE: 'x_1790229_edusph_0_department',
+    EMPLOYEE_ROLE: 'x_erp.faculty',
+
+    /**
+     * Returns active Employee records' User IDs
+     * that have the Faculty role.
+     */
+    _getFacultyUserIds: function(collegeId) {
+
+        var userIds = [];
+
+        if (!collegeId)
+            return userIds;
+
+        // Get active employees belonging to the college.
+        var employeeGR = new GlideRecord(this.EMPLOYEE_TABLE);
+        employeeGR.addQuery('college', collegeId);
+        employeeGR.addQuery('active', true);
+        employeeGR.addNotNullQuery('user');
+        employeeGR.query();
+
+        while (employeeGR.next()) {
+
+            var userId = employeeGR.getValue('user');
+
+            if (userId && userIds.indexOf(userId) === -1)
+                userIds.push(userId);
+        }
+
+        if (userIds.length === 0)
+            return [];
+
+        // Keep only users having the Faculty role.
+        var roleGR = new GlideRecord('sys_user_has_role');
+        roleGR.addQuery('user', 'IN', userIds.join(','));
+        roleGR.addQuery('role.name', this.EMPLOYEE_ROLE);
+        roleGR.query();
+
+        var facultyUserIds = [];
+
+        while (roleGR.next()) {
+
+            var facultyUserId = roleGR.getValue('user');
+
+            if (facultyUserId &&
+                facultyUserIds.indexOf(facultyUserId) === -1) {
+
+                facultyUserIds.push(facultyUserId);
+            }
+        }
+
+        return facultyUserIds;
+    },
+
+    /**
+     * ID 87 - User
+     * Users with Faculty role from the same college.
+     */
+    getUsers: function(current) {
+
+        var noRecords = 'sys_id=-1';
+
+        if (!current)
+            return noRecords;
+
+        var collegeId = current.getValue('college');
+
+        if (!collegeId)
+            return noRecords;
+
+        var facultyUserIds = this._getFacultyUserIds(collegeId);
+
+        if (facultyUserIds.length === 0)
+            return noRecords;
+
+        return 'sys_idIN' + facultyUserIds.join(',');
+    },
+
+    /**
+     * ID 88 - Reports To
+     * Employee records whose linked users have
+     * the Faculty role and belong to the same college.
+     */
+    getReportsTo: function(current) {
+
+        var noRecords = 'sys_id=-1';
+
+        if (!current)
+            return noRecords;
+
+        var collegeId = current.getValue('college');
+
+        if (!collegeId)
+            return noRecords;
+
+        var facultyUserIds = this._getFacultyUserIds(collegeId);
+
+        if (facultyUserIds.length === 0)
+            return noRecords;
+
+        var employeeGR = new GlideRecord(this.EMPLOYEE_TABLE);
+        employeeGR.addQuery('college', collegeId);
+        employeeGR.addQuery('active', true);
+        employeeGR.addQuery('user', 'IN', facultyUserIds.join(','));
+
+        // Prevent an employee from reporting to themselves.
+        if (!current.isNewRecord())
+            employeeGR.addQuery('sys_id', '!=', current.getUniqueValue());
+
+        employeeGR.query();
+
+        var employeeIds = [];
+
+        while (employeeGR.next()) {
+
+            employeeIds.push(employeeGR.getUniqueValue());
+        }
+
+        if (employeeIds.length === 0)
+            return noRecords;
+
+        return 'sys_idIN' + employeeIds.join(',');
+    },
+
+    /**
+     * ID 89 - Department
+     * Departments belonging to the same college.
+     */
+    getDepartments: function(current) {
+
+        var noRecords = 'sys_id=-1';
+
+        if (!current)
+            return noRecords;
+
+        var collegeId = current.getValue('college');
+
+        if (!collegeId)
+            return noRecords;
+
+        var departmentGR = new GlideRecord(this.DEPARTMENT_TABLE);
+        departmentGR.addQuery('college', collegeId);
+        departmentGR.query();
+
+        var departmentIds = [];
+
+        while (departmentGR.next()) {
+
+            departmentIds.push(departmentGR.getUniqueValue());
+        }
+
+        if (departmentIds.length === 0)
+            return noRecords;
+
+        return 'sys_idIN' + departmentIds.join(',');
+    },
+
+    type: 'EmployeeRefQual'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Developer-NikhilP</sys_created_by>
+        <sys_created_on>2026-11-13 12:56:00</sys_created_on>
+        <sys_id>84b60215c364d710d70532f1b40131a9</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>EmployeeRefQual</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_script_include_84b60215c364d710d70532f1b40131a9</sys_update_name>
+        <sys_updated_by>Developer-NikhilP</sys_updated_by>
+        <sys_updated_on>2026-11-13 13:07:03</sys_updated_on>
+    </sys_script_include>
+</record_update>
