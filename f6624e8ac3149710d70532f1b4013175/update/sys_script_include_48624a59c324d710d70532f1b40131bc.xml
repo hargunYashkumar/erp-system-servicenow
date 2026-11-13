@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1790229_edusph_0.AcademicStructureRefQual</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>AcademicStructureRefQual</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[
+var AcademicStructureRefQual = Class.create();
+
+AcademicStructureRefQual.prototype = {
+
+    initialize: function() {},
+
+    // --------------------------------------------------
+    // COMMON HELPER: GET CURRENT EMPLOYEE
+    // --------------------------------------------------
+
+    getCurrentEmployee: function() {
+
+        var employeeGR = new GlideRecord(
+            'x_1790229_edusph_0_employee'
+        );
+
+        employeeGR.addQuery('user', gs.getUserID());
+        employeeGR.addQuery('active', true);
+        employeeGR.setLimit(1);
+        employeeGR.query();
+
+        if (employeeGR.next()) {
+            return employeeGR;
+        }
+
+        return null;
+    },
+
+
+    // --------------------------------------------------
+    // 83. PROGRAM - DEPARTMENT
+    // --------------------------------------------------
+    // Uses Coll Prog mapping to retrieve departments
+    // associated with the selected Program.
+    // If College is available on the current record,
+    // it applies that filter as well.
+    // --------------------------------------------------
+
+    getDepartments: function(current) {
+
+        var noRecords = 'sys_id=-1';
+
+        if (!current) {
+            return noRecords;
+        }
+
+        var programId = current.getUniqueValue();
+
+        if (!programId) {
+            return noRecords;
+        }
+
+        var mappingGR = new GlideRecord(
+            'x_1790229_edusph_0_coll_prog'
+        );
+
+        mappingGR.addQuery('program', programId);
+
+        // College is not present in the supplied
+        // Program table definition.
+        // Apply it only if available on the form.
+        if (current.isValidField('college')) {
+
+            var collegeId = current.getValue('college');
+
+            if (collegeId) {
+                mappingGR.addQuery('college', collegeId);
+            }
+        }
+
+        mappingGR.query();
+
+        var departmentIds = [];
+
+        while (mappingGR.next()) {
+
+            var departmentId = mappingGR.getValue('department');
+
+            if (departmentId &&
+                departmentIds.indexOf(departmentId) === -1) {
+
+                departmentIds.push(departmentId);
+            }
+        }
+
+        if (departmentIds.length === 0) {
+            return noRecords;
+        }
+
+        return 'sys_idIN' + departmentIds.join(',');
+    },
+
+
+    // --------------------------------------------------
+    // 93. SEMESTER - YEAR
+    // --------------------------------------------------
+    // Retrieves Academic Years that are currently valid
+    // according to their start and end dates.
+    // --------------------------------------------------
+
+    getAcademicYears: function(current) {
+
+        var noRecords = 'sys_id=-1';
+
+        var today = gs.nowDate();
+
+        var academicYearGR = new GlideRecord(
+            'x_1790229_edusph_0_academic_year'
+        );
+
+        academicYearGR.addQuery('active', true);
+        academicYearGR.addNotNullQuery('start_date');
+        academicYearGR.addNotNullQuery('end_date');
+
+        academicYearGR.addQuery('start_date', '<=', today);
+        academicYearGR.addQuery('end_date', '>=', today);
+
+        academicYearGR.query();
+
+        var academicYearIds = [];
+
+        while (academicYearGR.next()) {
+            academicYearIds.push(
+                academicYearGR.getUniqueValue()
+            );
+        }
+
+        if (academicYearIds.length === 0) {
+            return noRecords;
+        }
+
+        return 'sys_idIN' + academicYearIds.join(',');
+    },
+
+
+    // --------------------------------------------------
+    // 102. LAB BATCH - SECTION
+    // --------------------------------------------------
+    // Retrieves Sections belonging to the logged-in
+    // Employee's College.
+    // --------------------------------------------------
+
+    getLabBatchSections: function(current) {
+
+        var noRecords = 'sys_id=-1';
+
+        var employeeGR = this.getCurrentEmployee();
+
+        if (!employeeGR) {
+            return noRecords;
+        }
+
+        var collegeId = employeeGR.getValue('college');
+
+        if (!collegeId) {
+            return noRecords;
+        }
+
+        var sectionGR = new GlideRecord(
+            'x_1790229_edusph_0_section'
+        );
+
+        sectionGR.addQuery('college', collegeId);
+        sectionGR.query();
+
+        var sectionIds = [];
+
+        while (sectionGR.next()) {
+            sectionIds.push(
+                sectionGR.getUniqueValue()
+            );
+        }
+
+        if (sectionIds.length === 0) {
+            return noRecords;
+        }
+
+        return 'sys_idIN' + sectionIds.join(',');
+    },
+
+
+    // --------------------------------------------------
+    // 108. COURSE OFFERING - SECTION
+    // --------------------------------------------------
+    // Retrieves Sections belonging to the College
+    // selected on the Course Offering record.
+    // --------------------------------------------------
+
+    getCourseOfferingSections: function(current) {
+
+        var noRecords = 'sys_id=-1';
+
+        if (!current) {
+            return noRecords;
+        }
+
+        var collegeId = current.getValue('college');
+
+        if (!collegeId) {
+            return noRecords;
+        }
+
+        var sectionGR = new GlideRecord(
+            'x_1790229_edusph_0_section'
+        );
+
+        sectionGR.addQuery('college', collegeId);
+        sectionGR.query();
+
+        var sectionIds = [];
+
+        while (sectionGR.next()) {
+            sectionIds.push(
+                sectionGR.getUniqueValue()
+            );
+        }
+
+        if (sectionIds.length === 0) {
+            return noRecords;
+        }
+
+        return 'sys_idIN' + sectionIds.join(',');
+    },
+
+
+    // --------------------------------------------------
+    // 109. COURSE OFFERING - SEMESTER
+    // --------------------------------------------------
+    // Retrieves Semesters belonging to the College
+    // selected on the Course Offering record.
+    // --------------------------------------------------
+
+    getCourseOfferingSemesters: function(current) {
+
+        var noRecords = 'sys_id=-1';
+
+        if (!current) {
+            return noRecords;
+        }
+
+        var collegeId = current.getValue('college');
+
+        if (!collegeId) {
+            return noRecords;
+        }
+
+        var semesterGR = new GlideRecord(
+            'x_1790229_edusph_0_semester'
+        );
+
+        semesterGR.addQuery('college', collegeId);
+        semesterGR.query();
+
+        var semesterIds = [];
+
+        while (semesterGR.next()) {
+            semesterIds.push(
+                semesterGR.getUniqueValue()
+            );
+        }
+
+        if (semesterIds.length === 0) {
+            return noRecords;
+        }
+
+        return 'sys_idIN' + semesterIds.join(',');
+    },
+
+
+    // --------------------------------------------------
+    // 111. COURSE OFFERING - FACULTY
+    // --------------------------------------------------
+    // Retrieves Employees belonging to the College
+    // selected on the Course Offering record.
+    // --------------------------------------------------
+
+    getCourseOfferingFaculty: function(current) {
+
+        var noRecords = 'sys_id=-1';
+
+        if (!current) {
+            return noRecords;
+        }
+
+        var collegeId = current.getValue('college');
+
+        if (!collegeId) {
+            return noRecords;
+        }
+
+        var employeeGR = new GlideRecord(
+            'x_1790229_edusph_0_employee'
+        );
+
+        employeeGR.addQuery('college', collegeId);
+        employeeGR.addQuery('active', true);
+        employeeGR.query();
+
+        var employeeIds = [];
+
+        while (employeeGR.next()) {
+            employeeIds.push(
+                employeeGR.getUniqueValue()
+            );
+        }
+
+        if (employeeIds.length === 0) {
+            return noRecords;
+        }
+
+        return 'sys_idIN' + employeeIds.join(',');
+    },
+
+
+    type: 'AcademicStructureRefQual'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Developer-NikhilP</sys_created_by>
+        <sys_created_on>2026-11-13 12:37:10</sys_created_on>
+        <sys_id>48624a59c324d710d70532f1b40131bc</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>AcademicStructureRefQual</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_script_include_48624a59c324d710d70532f1b40131bc</sys_update_name>
+        <sys_updated_by>Developer-NikhilP</sys_updated_by>
+        <sys_updated_on>2026-11-13 12:37:10</sys_updated_on>
+    </sys_script_include>
+</record_update>
