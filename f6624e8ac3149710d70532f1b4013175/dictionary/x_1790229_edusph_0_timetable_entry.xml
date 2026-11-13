@@ -4,7 +4,7 @@
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Offering" mandatory="true" max_length="32" name="offering" reference="x_1790229_edusph_0_course_offering" type="reference"/>
         <element label="Day" max_length="40" name="day" type="string"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Period" mandatory="true" max_length="32" name="period" reference="x_1790229_edusph_0_period" type="reference"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Faculty" max_length="32" name="faculty" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Faculty" max_length="32" name="faculty" reference="x_1790229_edusph_0_employee" reference_qual="collegeSAMEAScollege^user.roles=x_erp.faculty^EQ" reference_qual_condition="collegeSAMEAScollege^user.roles=x_erp.faculty^EQ" type="reference"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Room" mandatory="true" max_length="32" name="room" reference="x_1790229_edusph_0_room" type="reference"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Lab Batch" max_length="32" name="lab_batch" reference="x_1790229_edusph_0_lab_batch" type="reference"/>
         <index name="index">
