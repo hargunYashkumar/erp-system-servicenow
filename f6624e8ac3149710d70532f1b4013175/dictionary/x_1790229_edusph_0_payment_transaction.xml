@@ -16,7 +16,7 @@
             </choice>
         </element>
         <element label="Failure Reason" max_length="255" name="failure_reason" type="string"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Fee" max_length="32" name="fee" reference="x_1790229_edusph_0_student_fee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Fee" max_length="32" name="fee" reference="x_1790229_edusph_0_student_fee" reference_qual="javascript:new PaymentsPayrollRefQual().getFeesForCurrentUser()" type="reference" use_reference_qualifier="advanced"/>
         <element label="Webhook Event Id" max_length="100" name="webhook_event_id" type="string"/>
         <element label="Receipt" max_length="100" name="receipt" type="string"/>
         <element attributes="edge_encryption_enabled=true" label="Gateway Signature Verified" max_length="40" name="gateway_signature_verified" type="boolean"/>
@@ -30,7 +30,7 @@
             </choice>
         </element>
         <element attributes="edge_encryption_enabled=true,omit_sys_original=true" label="Refund Amount" max_length="20" name="refund_amount" type="currency"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Verified By" max_length="32" name="verified_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Verified By" max_length="32" name="verified_by" reference="x_1790229_edusph_0_employee" reference_qual="javascript:new PaymentsPayrollRefQual().getAccountsEmployeesForVerification()" type="reference" use_reference_qualifier="advanced"/>
         <element attributes="edge_encryption_enabled=true" choice="1" label="Status" mandatory="true" max_length="40" name="status" type="choice">
             <choice>
                 <element inactive_on_update="false" label="Failed" sequence="1" value="Failed"/>

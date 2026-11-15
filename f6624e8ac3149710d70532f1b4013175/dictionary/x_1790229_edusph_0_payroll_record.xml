@@ -14,13 +14,13 @@
         </element>
         <element label="Working Days" max_length="255" name="working_days" type="string"/>
         <element label="Paid on" max_length="40" name="paid_on" type="glide_date_time"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Employee" mandatory="true" max_length="32" name="employee" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Employee" mandatory="true" max_length="32" name="employee" reference="x_1790229_edusph_0_employee" reference_qual="javascript:new PaymentsPayrollRefQual().getActiveEmployeesForPayroll()" type="reference" use_reference_qualifier="advanced"/>
         <element attributes="edge_encryption_enabled=true" label="Salary slip" max_length="40" name="salary_slip" type="file_attachment"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Accounts Approver" max_length="32" name="accounts_approved_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Accounts Approver" max_length="32" name="accounts_approved_by" reference="x_1790229_edusph_0_employee" reference_qual="javascript:new PaymentsPayrollRefQual().getAccountsApprovers()" type="reference" use_reference_qualifier="advanced"/>
         <element label="Manual Adjustment Reason" max_length="255" name="manual_adjustment_reason" type="string"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="HR approver" max_length="32" name="hr_approved_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="HR approver" max_length="32" name="hr_approved_by" reference="x_1790229_edusph_0_employee" reference_qual="javascript:new PaymentsPayrollRefQual().getHRApprovers()" type="reference" use_reference_qualifier="advanced"/>
         <element label="Net" max_length="255" name="net" type="string"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Principal Approver" max_length="32" name="principal_approved_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Principal Approver" max_length="32" name="principal_approved_by" reference="x_1790229_edusph_0_employee" reference_qual="javascript:new PaymentsPayrollRefQual().getPrincipalApprovers()" type="reference" use_reference_qualifier="advanced"/>
         <element attributes="edge_encryption_enabled=true,omit_sys_original=true" label="Gross" max_length="20" name="gross" type="currency"/>
         <index name="index">
             <element name="accounts_approved_by"/>

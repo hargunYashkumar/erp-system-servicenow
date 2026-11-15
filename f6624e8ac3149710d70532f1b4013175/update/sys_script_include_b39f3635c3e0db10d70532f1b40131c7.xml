@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1790229_edusph_0.PaymentsPayrollRefQual</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>PaymentsPayrollRefQual</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[
+var PaymentsPayrollRefQual = Class.create();
+
+PaymentsPayrollRefQual.prototype = {
+    initialize: function() {},
+
+    // ==========================================
+    // 1. STUDENT FEE -> STUDENT
+    // ==========================================
+    getStudentsForCurrentEmployeeCollege: function() {
+        var userId = gs.getUserID();
+
+        var employeeGR = new GlideRecord('x_1790229_edusph_0_employee');
+        employeeGR.addQuery('user', userId);
+        employeeGR.setLimit(1);
+        employeeGR.query();
+
+        if (!employeeGR.next()) {
+            return 'sys_idISEMPTY';
+        }
+
+        var collegeId = employeeGR.getValue('college');
+
+        if (!collegeId) {
+            return 'sys_idISEMPTY';
+        }
+
+        return 'college=' + collegeId;
+    },
+
+
+    // ==========================================
+    // 2. STUDENT FEE -> STRUCTURE
+    // ==========================================
+    getActiveFeeStructuresForCurrentEmployeeCollege: function() {
+        var userId = gs.getUserID();
+
+        var employeeGR = new GlideRecord('x_1790229_edusph_0_employee');
+        employeeGR.addQuery('user', userId);
+        employeeGR.setLimit(1);
+        employeeGR.query();
+
+        if (!employeeGR.next()) {
+            return 'sys_idISEMPTY';
+        }
+
+        var collegeId = employeeGR.getValue('college');
+
+        if (!collegeId) {
+            return 'sys_idISEMPTY';
+        }
+
+        return 'college=' + collegeId + '^active=true';
+    },
+
+
+    // ==========================================
+    // COMMON HELPER: CURRENT EMPLOYEE COLLEGE
+    // ==========================================
+    _getCurrentEmployeeCollege: function() {
+        var employeeGR = new GlideRecord('x_1790229_edusph_0_employee');
+        employeeGR.addQuery('user', gs.getUserID());
+        employeeGR.setLimit(1);
+        employeeGR.query();
+
+        if (!employeeGR.next()) {
+            return '';
+        }
+
+        return employeeGR.getValue('college') || '';
+    },
+
+
+    // ==========================================
+    // COMMON HELPER: USERS WITH ACTUAL ROLE
+    // ==========================================
+    _getUsersWithRole: function(roleName) {
+        var userIds = [];
+
+        var roleGR = new GlideRecord('sys_user_has_role');
+        roleGR.addQuery('role.name', roleName);
+        roleGR.query();
+
+        while (roleGR.next()) {
+            var userId = roleGR.getValue('user');
+
+            if (userId && userIds.indexOf(userId) === -1) {
+                userIds.push(userId);
+            }
+        }
+
+        return userIds;
+    },
+
+
+    // ==========================================
+    // COMMON HELPER: EMPLOYEES IN COLLEGE
+    // WITH OPTIONAL ROLE FILTER
+    // ==========================================
+    _getEmployeesForCurrentCollege: function(roleName) {
+        var collegeId = this._getCurrentEmployeeCollege();
+
+        if (!collegeId) {
+            return 'sys_idISEMPTY';
+        }
+
+        var employeeGR = new GlideRecord('x_1790229_edusph_0_employee');
+
+        employeeGR.addQuery('active', true);
+        employeeGR.addQuery('college', collegeId);
+
+        if (roleName) {
+            var userIds = this._getUsersWithRole(roleName);
+
+            if (userIds.length === 0) {
+                return 'sys_idISEMPTY';
+            }
+
+            employeeGR.addQuery('user', 'IN', userIds.join(','));
+        }
+
+        employeeGR.query();
+
+        var employeeIds = [];
+
+        while (employeeGR.next()) {
+            employeeIds.push(employeeGR.getUniqueValue());
+        }
+
+        if (employeeIds.length === 0) {
+            return 'sys_idISEMPTY';
+        }
+
+        return 'sys_idIN' + employeeIds.join(',');
+    },
+
+
+    // ==========================================
+    // 3. PAYMENT TRANSACTION -> FEE
+    // ==========================================
+    getFeesForCurrentUser: function() {
+
+        // First check whether logged-in user is a Student
+        var studentGR = new GlideRecord('x_1790229_edusph_0_student');
+        studentGR.addQuery('user', gs.getUserID());
+        studentGR.setLimit(1);
+        studentGR.query();
+
+        if (studentGR.next()) {
+            return 'student=' + studentGR.getUniqueValue();
+        }
+
+        // If no Student record, use Employee college
+        var collegeId = this._getCurrentEmployeeCollege();
+
+        if (!collegeId) {
+            return 'sys_idISEMPTY';
+        }
+
+        return 'student.college=' + collegeId;
+    },
+
+
+    // ==========================================
+    // 4. PAYMENT TRANSACTION -> VERIFIED BY
+    // ==========================================
+    getAccountsEmployeesForVerification: function() {
+        return this._getEmployeesForCurrentCollege('x_erp.accounts');
+    },
+
+
+    // ==========================================
+    // 5. SCHOLARSHIP -> STUDENT
+    // ==========================================
+    getStudentsForScholarship: function() {
+        var collegeId = this._getCurrentEmployeeCollege();
+
+        if (!collegeId) {
+            return 'sys_idISEMPTY';
+        }
+
+        return 'college=' + collegeId;
+    },
+
+
+    // ==========================================
+    // 6. SCHOLARSHIP -> APPROVED BY
+    // ==========================================
+    getScholarshipApprovers: function() {
+        return this._getEmployeesForCurrentCollege('x_erp.scholarship_comm');
+    },
+
+
+    // ==========================================
+    // 7. SALARY STRUCTURE -> EMPLOYEE
+    // ==========================================
+    getActiveEmployeesForSalaryStructure: function() {
+        return this._getEmployeesForCurrentCollege(null);
+    },
+
+
+    // ==========================================
+    // 8. PAYROLL RECORD -> EMPLOYEE
+    // ==========================================
+    getActiveEmployeesForPayroll: function() {
+        return this._getEmployeesForCurrentCollege(null);
+    },
+
+
+    // ==========================================
+    // 9. PAYROLL RECORD -> HR APPROVED BY
+    // ==========================================
+    getHRApprovers: function() {
+        return this._getEmployeesForCurrentCollege('x_erp.hr');
+    },
+
+
+    // ==========================================
+    // 10. PAYROLL RECORD -> ACCOUNTS APPROVED BY
+    // ==========================================
+    getAccountsApprovers: function() {
+        return this._getEmployeesForCurrentCollege('x_erp.accounts');
+    },
+
+
+    // ==========================================
+    // 11. PAYROLL RECORD -> PRINCIPAL APPROVER
+    // ==========================================
+    getPrincipalApprovers: function() {
+        return this._getEmployeesForCurrentCollege('x_erp.principal');
+    },
+
+
+    type: 'PaymentsPayrollRefQual'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Developer-Hemendra</sys_created_by>
+        <sys_created_on>2026-11-15 06:24:12</sys_created_on>
+        <sys_id>b39f3635c3e0db10d70532f1b40131c7</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>PaymentsPayrollRefQual</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_script_include_b39f3635c3e0db10d70532f1b40131c7</sys_update_name>
+        <sys_updated_by>Developer-Hemendra</sys_updated_by>
+        <sys_updated_on>2026-11-15 07:04:24</sys_updated_on>
+    </sys_script_include>
+</record_update>

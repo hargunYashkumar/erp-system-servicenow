@@ -11,10 +11,10 @@
                 <element inactive_on_update="false" label="Need-Based" sequence="1" value="Need-Based"/>
             </choice>
         </element>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Approved By" max_length="32" name="approved_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Approved By" max_length="32" name="approved_by" reference="x_1790229_edusph_0_employee" reference_qual="javascript:new PaymentsPayrollRefQual().getScholarshipApprovers()" type="reference" use_reference_qualifier="advanced"/>
         <element label="Approved On" max_length="40" name="approved_on" type="glide_date_time"/>
         <element attributes="edge_encryption_enabled=true,omit_sys_original=true" label="Waiver" max_length="20" name="waiver" type="currency"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" reference_qual="javascript:new PaymentsPayrollRefQual().getStudentsForScholarship()" type="reference" use_reference_qualifier="advanced"/>
         <element label="Decision Notes" max_length="255" name="decision_notes" type="string"/>
         <element attributes="edge_encryption_enabled=true" choice="1" label="Status" mandatory="true" max_length="40" name="status" type="choice">
             <choice>
