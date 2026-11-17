@@ -11,7 +11,7 @@
                 <element inactive_on_update="false" label="Approved" sequence="4" value="approved"/>
             </choice>
         </element>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Requested By" mandatory="true" max_length="32" name="requested_by" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Requested By" mandatory="true" max_length="32" name="requested_by" reference="sys_user" reference_qual="javascript:new CollegeReferenceQualifier().getDirectorBySelectedCollege(current);" type="reference" use_reference_qualifier="advanced"/>
         <element attributes="edge_encryption_enabled=true" label="Documents" max_length="40" name="documents" type="file_attachment"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="College" mandatory="true" max_length="32" name="college" reference="x_1790229_edusph_0_college" reference_qual="status=onboarding^EQ" reference_qual_condition="status=onboarding^EQ" type="reference"/>
         <element label="Go Live Date" max_length="40" name="go_live_date" type="glide_date"/>
