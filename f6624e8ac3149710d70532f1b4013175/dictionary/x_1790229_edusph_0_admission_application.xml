@@ -11,36 +11,36 @@
         <element attributes="edge_encryption_enabled=true" label="Merit Score" max_length="15" name="merit_score" type="decimal"/>
         <element attributes="edge_encryption_enabled=true" choice="1" label="Category" mandatory="true" max_length="40" name="category" type="choice">
             <choice>
-                <element inactive_on_update="false" label="economically weaker section" sequence="3" value="economically weaker section"/>
-                <element inactive="true" inactive_on_update="true" label="Submitted" sequence="1" value="Submitted"/>
-                <element inactive="true" inactive_on_update="true" label="Accepted" sequence="6" value="Accepted"/>
-                <element inactive_on_update="false" label="defense causality" sequence="5" value="defense causality"/>
-                <element inactive="true" inactive_on_update="true" label="Withdrawn" sequence="9" value="Withdrawn"/>
-                <element inactive="true" inactive_on_update="true" label="Offered" sequence="5" value="Offered"/>
-                <element inactive_on_update="false" label="backward class" sequence="2" value="backward class"/>
-                <element inactive_on_update="false" label="female" sequence="1" value="female"/>
-                <element inactive_on_update="false" label="person with disability" sequence="4" value="person with disability"/>
-                <element inactive="true" inactive_on_update="true" label="Waitlisted" sequence="8" value="Waitlisted"/>
-                <element inactive="true" inactive_on_update="true" label="In Merit" sequence="4" value="In Merit"/>
-                <element inactive="true" inactive_on_update="true" label="Document Pending" sequence="2" value="Document Pending"/>
-                <element inactive="true" inactive_on_update="true" label="Rejected" sequence="7" value="Rejected"/>
-                <element inactive="true" inactive_on_update="true" label="Verified" sequence="3" value="Verified"/>
-                <element inactive_on_update="false" label="general" sequence="0" value="general"/>
+                <element inactive_on_update="false" label="Backward Class" sequence="4" value="backward_class"/>
+                <element inactive_on_update="false" label="Person With Disability" sequence="9" value="person_with_disability"/>
+                <element inactive="true" inactive_on_update="true" label="Submitted" sequence="3" value="Submitted"/>
+                <element inactive="true" inactive_on_update="true" label="Accepted" sequence="12" value="Accepted"/>
+                <element inactive="true" inactive_on_update="true" label="Withdrawn" sequence="15" value="Withdrawn"/>
+                <element inactive="true" inactive_on_update="true" label="Offered" sequence="11" value="Offered"/>
+                <element inactive_on_update="false" label="Defense Causality" sequence="10" value="defense_causality"/>
+                <element inactive_on_update="false" label="Economically Weaker Section" sequence="6" value="economically_weaker_section"/>
+                <element inactive_on_update="false" label="Female" sequence="2" value="female"/>
+                <element inactive="true" inactive_on_update="true" label="Waitlisted" sequence="14" value="Waitlisted"/>
+                <element inactive="true" inactive_on_update="true" label="In Merit" sequence="8" value="In Merit"/>
+                <element inactive="true" inactive_on_update="true" label="Document Pending" sequence="5" value="Document Pending"/>
+                <element inactive="true" inactive_on_update="true" label="Rejected" sequence="13" value="Rejected"/>
+                <element inactive="true" inactive_on_update="true" label="Verified" sequence="7" value="Verified"/>
+                <element inactive_on_update="false" label="General" sequence="1" value="general"/>
                 <element inactive="true" inactive_on_update="true" label="Draft" sequence="0" value="Draft"/>
             </choice>
         </element>
         <element attributes="edge_encryption_enabled=true" choice="1" label="Status" mandatory="true" max_length="40" name="status" type="choice">
             <choice>
-                <element inactive_on_update="false" label="in merit" sequence="4" value="in merit"/>
-                <element inactive_on_update="false" label="accepted" sequence="6" value="accepted"/>
-                <element inactive_on_update="false" label="withdrawn" sequence="9" value="withdrawn"/>
-                <element inactive_on_update="false" label="verified" sequence="3" value="verified"/>
-                <element inactive_on_update="false" label="draft" sequence="0" value="draft"/>
-                <element inactive_on_update="false" label="waitlisted" sequence="8" value="waitlisted"/>
-                <element inactive_on_update="false" label="document pending" sequence="2" value="document pending"/>
-                <element inactive_on_update="false" label="offered" sequence="5" value="offered"/>
-                <element inactive_on_update="false" label="rejected" sequence="7" value="rejected"/>
-                <element inactive_on_update="false" label="submitted" sequence="1" value="submitted"/>
+                <element inactive_on_update="false" label="Accepted" sequence="6" value="accepted"/>
+                <element inactive_on_update="false" label="Document Pending" sequence="2" value="document_pending"/>
+                <element inactive_on_update="false" label="In Merit" sequence="4" value="in_merit"/>
+                <element inactive_on_update="false" label="Withdrawn" sequence="9" value="withdrawn"/>
+                <element inactive_on_update="false" label="Verified" sequence="3" value="verified"/>
+                <element inactive_on_update="false" label="Draft" sequence="0" value="draft"/>
+                <element inactive_on_update="false" label="Waitlisted" sequence="8" value="waitlisted"/>
+                <element inactive_on_update="false" label="Offered" sequence="5" value="offered"/>
+                <element inactive_on_update="false" label="Rejected" sequence="7" value="rejected"/>
+                <element inactive_on_update="false" label="Submitted" sequence="1" value="submitted"/>
             </choice>
         </element>
         <element label="Withdrawal On" max_length="40" name="withdrawal_on" type="glide_date"/>

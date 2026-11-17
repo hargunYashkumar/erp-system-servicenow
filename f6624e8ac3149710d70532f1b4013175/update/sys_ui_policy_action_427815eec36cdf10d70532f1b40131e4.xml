@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action">
+    <sys_ui_policy_action action="INSERT_OR_UPDATE">
+        <cleared>false</cleared>
+        <disabled>true</disabled>
+        <field>name</field>
+        <field_message/>
+        <field_message_type>none</field_message_type>
+        <mandatory>ignore</mandatory>
+        <sys_class_name>sys_ui_policy_action</sys_class_name>
+        <sys_created_by>Developer-Rakshit</sys_created_by>
+        <sys_created_on>2026-11-17 06:46:27</sys_created_on>
+        <sys_id>427815eec36cdf10d70532f1b40131e4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>name</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_ui_policy_action_427815eec36cdf10d70532f1b40131e4</sys_update_name>
+        <sys_updated_by>Developer-Rakshit</sys_updated_by>
+        <sys_updated_on>2026-11-17 06:46:27</sys_updated_on>
+        <table>x_1790229_edusph_0_admission_application</table>
+        <ui_policy display_value="status is Submitted  OR status is Approved some field are Read only ">ab77156ec36cdf10d70532f1b40131c4</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
+        <visible>ignore</visible>
+    </sys_ui_policy_action>
+    <sys_translated_text action="delete_multiple" query="documentkey=427815eec36cdf10d70532f1b40131e4"/>
+</record_update>

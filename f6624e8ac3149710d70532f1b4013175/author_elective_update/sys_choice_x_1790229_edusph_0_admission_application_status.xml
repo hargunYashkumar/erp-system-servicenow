@@ -20,7 +20,7 @@
             <element>status</element>
             <hint/>
             <inactive>false</inactive>
-            <label>draft</label>
+            <label>Draft</label>
             <language>en</language>
             <name>x_1790229_edusph_0_admission_application</name>
             <sequence>0</sequence>
@@ -29,9 +29,9 @@
             <sys_created_on>2026-11-05 10:10:47</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>developer.abhinav</sys_updated_by>
-            <sys_updated_on>2026-11-05 10:10:47</sys_updated_on>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-17 06:38:47</sys_updated_on>
             <value>draft</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
@@ -39,7 +39,7 @@
             <element>status</element>
             <hint/>
             <inactive>false</inactive>
-            <label>submitted</label>
+            <label>Submitted</label>
             <language>en</language>
             <name>x_1790229_edusph_0_admission_application</name>
             <sequence>1</sequence>
@@ -48,9 +48,9 @@
             <sys_created_on>2026-11-05 10:10:47</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>developer.abhinav</sys_updated_by>
-            <sys_updated_on>2026-11-05 10:10:47</sys_updated_on>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-17 06:38:47</sys_updated_on>
             <value>submitted</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
@@ -58,26 +58,26 @@
             <element>status</element>
             <hint/>
             <inactive>false</inactive>
-            <label>document pending</label>
+            <label>Document Pending</label>
             <language>en</language>
             <name>x_1790229_edusph_0_admission_application</name>
             <sequence>2</sequence>
             <synonyms/>
-            <sys_created_by>developer.abhinav</sys_created_by>
-            <sys_created_on>2026-11-05 10:10:47</sys_created_on>
+            <sys_created_by>Developer-Rakshit</sys_created_by>
+            <sys_created_on>2026-11-17 06:38:47</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>developer.abhinav</sys_updated_by>
-            <sys_updated_on>2026-11-05 10:10:47</sys_updated_on>
-            <value>document pending</value>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-17 06:38:47</sys_updated_on>
+            <value>document_pending</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
             <element>status</element>
             <hint/>
             <inactive>false</inactive>
-            <label>verified</label>
+            <label>Verified</label>
             <language>en</language>
             <name>x_1790229_edusph_0_admission_application</name>
             <sequence>3</sequence>
@@ -86,9 +86,9 @@
             <sys_created_on>2026-11-05 10:10:47</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>developer.abhinav</sys_updated_by>
-            <sys_updated_on>2026-11-05 10:10:47</sys_updated_on>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-17 06:38:47</sys_updated_on>
             <value>verified</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
@@ -96,26 +96,26 @@
             <element>status</element>
             <hint/>
             <inactive>false</inactive>
-            <label>in merit</label>
+            <label>In Merit</label>
             <language>en</language>
             <name>x_1790229_edusph_0_admission_application</name>
             <sequence>4</sequence>
             <synonyms/>
-            <sys_created_by>developer.abhinav</sys_created_by>
-            <sys_created_on>2026-11-05 10:10:47</sys_created_on>
+            <sys_created_by>Developer-Rakshit</sys_created_by>
+            <sys_created_on>2026-11-17 06:38:47</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>developer.abhinav</sys_updated_by>
-            <sys_updated_on>2026-11-05 10:10:47</sys_updated_on>
-            <value>in merit</value>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-17 06:38:47</sys_updated_on>
+            <value>in_merit</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
             <element>status</element>
             <hint/>
             <inactive>false</inactive>
-            <label>offered</label>
+            <label>Offered</label>
             <language>en</language>
             <name>x_1790229_edusph_0_admission_application</name>
             <sequence>5</sequence>
@@ -124,9 +124,9 @@
             <sys_created_on>2026-11-05 10:10:47</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>developer.abhinav</sys_updated_by>
-            <sys_updated_on>2026-11-05 10:10:47</sys_updated_on>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-17 06:38:47</sys_updated_on>
             <value>offered</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
@@ -134,7 +134,7 @@
             <element>status</element>
             <hint/>
             <inactive>false</inactive>
-            <label>accepted</label>
+            <label>Accepted</label>
             <language>en</language>
             <name>x_1790229_edusph_0_admission_application</name>
             <sequence>6</sequence>
@@ -143,9 +143,9 @@
             <sys_created_on>2026-11-05 10:10:47</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>developer.abhinav</sys_updated_by>
-            <sys_updated_on>2026-11-05 10:10:47</sys_updated_on>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-17 06:38:47</sys_updated_on>
             <value>accepted</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
@@ -153,7 +153,7 @@
             <element>status</element>
             <hint/>
             <inactive>false</inactive>
-            <label>rejected</label>
+            <label>Rejected</label>
             <language>en</language>
             <name>x_1790229_edusph_0_admission_application</name>
             <sequence>7</sequence>
@@ -162,9 +162,9 @@
             <sys_created_on>2026-11-05 10:10:47</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>developer.abhinav</sys_updated_by>
-            <sys_updated_on>2026-11-05 10:10:47</sys_updated_on>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-17 06:38:47</sys_updated_on>
             <value>rejected</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
@@ -172,7 +172,7 @@
             <element>status</element>
             <hint/>
             <inactive>false</inactive>
-            <label>waitlisted</label>
+            <label>Waitlisted</label>
             <language>en</language>
             <name>x_1790229_edusph_0_admission_application</name>
             <sequence>8</sequence>
@@ -181,9 +181,9 @@
             <sys_created_on>2026-11-05 10:10:47</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>developer.abhinav</sys_updated_by>
-            <sys_updated_on>2026-11-05 10:10:47</sys_updated_on>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-17 06:38:47</sys_updated_on>
             <value>waitlisted</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
@@ -191,7 +191,7 @@
             <element>status</element>
             <hint/>
             <inactive>false</inactive>
-            <label>withdrawn</label>
+            <label>Withdrawn</label>
             <language>en</language>
             <name>x_1790229_edusph_0_admission_application</name>
             <sequence>9</sequence>
@@ -200,9 +200,9 @@
             <sys_created_on>2026-11-05 10:10:47</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>developer.abhinav</sys_updated_by>
-            <sys_updated_on>2026-11-05 10:10:47</sys_updated_on>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-17 06:38:47</sys_updated_on>
             <value>withdrawn</value>
         </sys_choice>
     </sys_choice>

@@ -18,7 +18,7 @@
         <element label="Graduated On" max_length="40" name="graduated_on" type="glide_date"/>
         <element label="Roll No" mandatory="true" max_length="40" name="roll_no" type="string"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Previous Enrollment" max_length="32" name="previous_enrollment" reference="x_1790229_edusph_0_student" reference_qual="userSAMEASuser^EQ" reference_qual_condition="userSAMEASuser^EQ" type="reference"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="User" mandatory="true" max_length="32" name="user" reference="sys_user" reference_qual="roles=x_erp.student^EQ" reference_qual_condition="roles=x_erp.student^EQ" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" display="true" label="User" mandatory="true" max_length="32" name="user" reference="sys_user" reference_qual="roles=x_erp.student^EQ" reference_qual_condition="roles=x_erp.student^EQ" type="reference"/>
         <element attributes="edge_encryption_enabled=true" choice="1" label="Status" mandatory="true" max_length="40" name="status" type="choice">
             <choice>
                 <element inactive_on_update="false" label="Alumini" sequence="1" value="Alumini"/>

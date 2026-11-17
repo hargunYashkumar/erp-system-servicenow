@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_policy">
+    <sys_ui_policy action="DELETE">
+        <active>true</active>
+        <conditions table="x_1790229_edusph_0_student">sectionNSAMEASsection...^EQ<item endquery="false" field="section" goto="false" newquery="false" operator="NSAMEAS" or="false" value="section..."/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </conditions>
+        <description/>
+        <global>true</global>
+        <inherit>false</inherit>
+        <isolate_script>true</isolate_script>
+        <model_id/>
+        <model_table/>
+        <on_load>true</on_load>
+        <order>100</order>
+        <reverse_if_false>true</reverse_if_false>
+        <run_scripts>false</run_scripts>
+        <script_false><![CDATA[function onCondition() {
+
+}]]></script_false>
+        <script_true><![CDATA[function onCondition() {
+
+}]]></script_true>
+        <set_values/>
+        <short_description>when section change lab batch empty </short_description>
+        <sys_class_name>sys_ui_policy</sys_class_name>
+        <sys_created_by>Developer-Rakshit</sys_created_by>
+        <sys_created_on>2026-11-17 07:24:58</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>dd216da2c3ecdf10d70532f1b40131cc</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>when section change lab batch empty </sys_name>
+        <sys_overrides/>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_ui_policy_dd216da2c3ecdf10d70532f1b40131cc</sys_update_name>
+        <sys_updated_by>Developer-Rakshit</sys_updated_by>
+        <sys_updated_on>2026-11-17 07:24:58</sys_updated_on>
+        <table>x_1790229_edusph_0_student</table>
+        <ui_type>0</ui_type>
+        <view/>
+    </sys_ui_policy>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</application>
+        <file_path/>
+        <instance_id>899734a8db923d582f082a5913961960</instance_id>
+        <instance_name>dev199710</instance_name>
+        <name>sys_ui_policy_dd216da2c3ecdf10d70532f1b40131cc</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update sys_domain="global" table="sys_ui_policy"&gt;&lt;sys_ui_policy action="INSERT_OR_UPDATE"&gt;&lt;active&gt;true&lt;/active&gt;&lt;conditions table="x_1790229_edusph_0_student"&gt;sectionNSAMEASsection...^EQ&lt;item endquery="false" field="section" goto="false" newquery="false" operator="NSAMEAS" or="false" value="section..."/&gt;&lt;item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/&gt;&lt;/conditions&gt;&lt;description/&gt;&lt;global&gt;true&lt;/global&gt;&lt;inherit&gt;false&lt;/inherit&gt;&lt;isolate_script&gt;true&lt;/isolate_script&gt;&lt;model_id/&gt;&lt;model_table/&gt;&lt;on_load&gt;true&lt;/on_load&gt;&lt;order&gt;100&lt;/order&gt;&lt;reverse_if_false&gt;true&lt;/reverse_if_false&gt;&lt;run_scripts&gt;false&lt;/run_scripts&gt;&lt;script_false&gt;&lt;![CDATA[function onCondition() {
+
+}]]&gt;&lt;/script_false&gt;&lt;script_true&gt;&lt;![CDATA[function onCondition() {
+
+}]]&gt;&lt;/script_true&gt;&lt;set_values/&gt;&lt;short_description&gt;when section change lab batch empty &lt;/short_description&gt;&lt;sys_class_name&gt;sys_ui_policy&lt;/sys_class_name&gt;&lt;sys_created_by&gt;Developer-Rakshit&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2026-11-17 07:24:58&lt;/sys_created_on&gt;&lt;sys_domain&gt;global&lt;/sys_domain&gt;&lt;sys_domain_path&gt;/&lt;/sys_domain_path&gt;&lt;sys_id&gt;dd216da2c3ecdf10d70532f1b40131cc&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;when section change lab batch empty &lt;/sys_name&gt;&lt;sys_overrides/&gt;&lt;sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0"&gt;f6624e8ac3149710d70532f1b4013175&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="EduSphere University ERP System"&gt;f6624e8ac3149710d70532f1b4013175&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_ui_policy_dd216da2c3ecdf10d70532f1b40131cc&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;Developer-Rakshit&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2026-11-17 07:24:58&lt;/sys_updated_on&gt;&lt;table&gt;x_1790229_edusph_0_student&lt;/table&gt;&lt;ui_type&gt;0&lt;/ui_type&gt;&lt;view/&gt;&lt;/sys_ui_policy&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-1697953545</payload_hash>
+        <record_name>when section change lab batch empty </record_name>
+        <reverted_from/>
+        <source>ffa2b334c3e41710d70532f1b4013170</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>Developer-Rakshit</sys_created_by>
+        <sys_created_on>2026-11-17 07:24:58</sys_created_on>
+        <sys_id>0251e1e2c3ecdf10d70532f1b401317a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a1e8650b400000001</sys_recorded_at>
+        <sys_updated_by>Developer-Rakshit</sys_updated_by>
+        <sys_updated_on>2026-11-17 07:24:58</sys_updated_on>
+        <type>UI Policy</type>
+        <update_guid>ce51e1e217ecdf105aafef64649c1c78</update_guid>
+        <update_guid_history>ce51e1e217ecdf105aafef64649c1c78:-1697953545</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>Developer-Rakshit</sys_created_by>
+        <sys_created_on>2026-11-17 07:27:06</sys_created_on>
+        <sys_db_object display_value="" name="sys_ui_policy">sys_ui_policy</sys_db_object>
+        <sys_id>4aae1e43ffe94640b698180ea15b1000</sys_id>
+        <sys_metadata>dd216da2c3ecdf10d70532f1b40131cc</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>when section change lab batch empty </sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_parent display_value="Student">08d9a3a2c3589b10d70532f1b40131bf</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_scope_delete display_value="">496efbe1a9de4fe0a3807b4e0edc8400</sys_scope_delete>
+        <sys_update_name>sys_ui_policy_dd216da2c3ecdf10d70532f1b40131cc</sys_update_name>
+        <sys_update_version display_value="sys_ui_policy_dd216da2c3ecdf10d70532f1b40131cc">0251e1e2c3ecdf10d70532f1b401317a</sys_update_version>
+        <sys_updated_by>Developer-Rakshit</sys_updated_by>
+        <sys_updated_on>2026-11-17 07:27:06</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

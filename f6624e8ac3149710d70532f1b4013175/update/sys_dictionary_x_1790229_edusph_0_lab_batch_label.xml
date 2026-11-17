@@ -21,7 +21,7 @@
         <delete_roles/>
         <dependent/>
         <dependent_on_field/>
-        <display>false</display>
+        <display>true</display>
         <dynamic_creation>false</dynamic_creation>
         <dynamic_creation_script/>
         <dynamic_default_value/>
@@ -58,8 +58,8 @@
         <sys_policy/>
         <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
         <sys_update_name>sys_dictionary_x_1790229_edusph_0_lab_batch_label</sys_update_name>
-        <sys_updated_by>Developer-Vayu</sys_updated_by>
-        <sys_updated_on>2026-11-05 07:29:36</sys_updated_on>
+        <sys_updated_by>Developer-Rakshit</sys_updated_by>
+        <sys_updated_on>2026-11-17 08:19:59</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>
