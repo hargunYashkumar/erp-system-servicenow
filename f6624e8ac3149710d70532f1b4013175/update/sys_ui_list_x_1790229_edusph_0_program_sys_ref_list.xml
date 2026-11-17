@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_list parent="" relationship="" sys_domain="global" table="x_1790229_edusph_0_program" version="2" view="sys_ref_list">
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>university</element>
+            <list_id display_value="x_1790229_edusph_0_program" element="NULL" name="x_1790229_edusph_0_program" parent="NULL" relationship="NULL" sys_domain="global" view="7c10f2738c1103100a22deb6dd2b4e04">a25585d2c3ec5f10d70532f1b40131dc</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>0</position>
+            <sum>false</sum>
+            <sys_created_by>developer.abhinav</sys_created_by>
+            <sys_created_on>2026-11-16 10:44:11</sys_created_on>
+            <sys_id>625585d2c3ec5f10d70532f1b40131dd</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>developer.abhinav</sys_updated_by>
+            <sys_updated_on>2026-11-16 10:44:11</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>active</element>
+            <list_id display_value="x_1790229_edusph_0_program" element="NULL" name="x_1790229_edusph_0_program" parent="NULL" relationship="NULL" sys_domain="global" view="7c10f2738c1103100a22deb6dd2b4e04">a25585d2c3ec5f10d70532f1b40131dc</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>1</position>
+            <sum>false</sum>
+            <sys_created_by>developer.abhinav</sys_created_by>
+            <sys_created_on>2026-11-16 10:44:11</sys_created_on>
+            <sys_id>e65585d2c3ec5f10d70532f1b40131dd</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>developer.abhinav</sys_updated_by>
+            <sys_updated_on>2026-11-16 10:44:11</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>code</element>
+            <list_id display_value="x_1790229_edusph_0_program" element="NULL" name="x_1790229_edusph_0_program" parent="NULL" relationship="NULL" sys_domain="global" view="7c10f2738c1103100a22deb6dd2b4e04">a25585d2c3ec5f10d70532f1b40131dc</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>2</position>
+            <sum>false</sum>
+            <sys_created_by>developer.abhinav</sys_created_by>
+            <sys_created_on>2026-11-16 10:44:11</sys_created_on>
+            <sys_id>6e5585d2c3ec5f10d70532f1b40131dd</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>developer.abhinav</sys_updated_by>
+            <sys_updated_on>2026-11-16 10:44:11</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>duration_sem</element>
+            <list_id display_value="x_1790229_edusph_0_program" element="NULL" name="x_1790229_edusph_0_program" parent="NULL" relationship="NULL" sys_domain="global" view="7c10f2738c1103100a22deb6dd2b4e04">a25585d2c3ec5f10d70532f1b40131dc</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>3</position>
+            <sum>false</sum>
+            <sys_created_by>developer.abhinav</sys_created_by>
+            <sys_created_on>2026-11-16 10:44:11</sys_created_on>
+            <sys_id>e25585d2c3ec5f10d70532f1b40131de</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>developer.abhinav</sys_updated_by>
+            <sys_updated_on>2026-11-16 10:44:11</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>name</element>
+            <list_id display_value="x_1790229_edusph_0_program" element="NULL" name="x_1790229_edusph_0_program" parent="NULL" relationship="NULL" sys_domain="global" view="7c10f2738c1103100a22deb6dd2b4e04">a25585d2c3ec5f10d70532f1b40131dc</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>4</position>
+            <sum>false</sum>
+            <sys_created_by>developer.abhinav</sys_created_by>
+            <sys_created_on>2026-11-16 10:44:11</sys_created_on>
+            <sys_id>6a5585d2c3ec5f10d70532f1b40131de</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>developer.abhinav</sys_updated_by>
+            <sys_updated_on>2026-11-16 10:44:11</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element/>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <name>x_1790229_edusph_0_program</name>
+            <parent/>
+            <position/>
+            <relationship/>
+            <sum>false</sum>
+            <sys_class_name>sys_ui_list</sys_class_name>
+            <sys_created_by>developer.abhinav</sys_created_by>
+            <sys_created_on>2026-11-16 10:44:11</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>a25585d2c3ec5f10d70532f1b40131dc</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_1790229_edusph_0_program</sys_name>
+            <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+            <sys_update_name>sys_ui_list_x_1790229_edusph_0_program_sys_ref_list</sys_update_name>
+            <sys_updated_by>developer.abhinav</sys_updated_by>
+            <sys_updated_on>2026-11-16 10:44:11</sys_updated_on>
+            <sys_user/>
+            <view display_value="Reference List" name="sys_ref_list">7c10f2738c1103100a22deb6dd2b4e04</view>
+            <view_name/>
+        </sys_ui_list>
+    </sys_ui_list>
+</record_update>

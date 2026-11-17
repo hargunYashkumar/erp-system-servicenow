@@ -1,0 +1,859 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[
+api.controller = function($scope, spUtil) {
+  var c = this;
+  c.currentStep = 0;
+  c.submitted = false;
+  c.submitting = false;
+  c.saving = false;
+
+  c.categories = [
+    { value: 'general', label: 'General (Unreserved)' },
+    { value: 'female', label: 'Female Supernumerary Quota' },
+    { value: 'backward class', label: 'OBC / Backward Class (Non-Creamy Layer)' },
+    { value: 'economically weaker section', label: 'EWS (Economically Weaker Section)' },
+    { value: 'person with disability', label: 'Person with Disability (PwD)' },
+    { value: 'defense causality', label: 'Defence Priority / Wards of Armed Forces' }
+  ];
+
+  c.form = angular.copy(c.data.application) || {};
+  if (!c.form.category) c.form.category = 'general';
+
+  // Format Date for input[type=date] if it was string
+  if (c.form.date_of_birth && typeof c.form.date_of_birth === 'string') {
+    var raw = c.form.date_of_birth.split('T')[0];
+    c.form.date_of_birth = new Date(raw);
+  }
+
+  c.filteredPrograms = [];
+
+  c.onCollegeChange = function() {
+    c.filteredPrograms = [];
+    c.form.program = '';
+    if (!c.form.college) return;
+    angular.forEach(c.data.collegePrograms, function(cp) {
+      if (cp.college_id === c.form.college) {
+        c.filteredPrograms.push(cp);
+      }
+    });
+  };
+
+  if (c.form.college) c.onCollegeChange();
+
+  c.getCategoryLabel = function(val) {
+    for (var i = 0; i < c.categories.length; i++) {
+      if (c.categories[i].value === val) return c.categories[i].label;
+    }
+    return val || '—';
+  };
+
+  c.formatDOB = function(dt) {
+    if (!dt) return '—';
+    if (typeof dt === 'string') {
+      dt = dt.split('T')[0];
+      var p = dt.split('-');
+      if (p.length === 3) {
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return p[2] + ' ' + (months[parseInt(p[1],10)-1] || p[1]) + ' ' + p[0];
+      }
+      return dt;
+    }
+    if (dt instanceof Date) {
+      var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return ('0' + dt.getDate()).slice(-2) + ' ' + months[dt.getMonth()] + ' ' + dt.getFullYear();
+    }
+    return dt;
+  };
+
+  c.getMeritScore = function() {
+    var a = parseFloat(c.form.class_10_percentage) || 0;
+    var b = parseFloat(c.form.class_12_percentage) || 0;
+    var j = parseFloat(c.form.jee_score) || 0;
+    if (a && b && j) return ((a + b + j) / 3).toFixed(2);
+    return '—';
+  };
+
+  c.getCollegeName = function() {
+    if (!c.form.college) return '—';
+    for (var i = 0; i < c.data.colleges.length; i++) {
+      if (c.data.colleges[i].sys_id === c.form.college) return c.data.colleges[i].name;
+    }
+    return '—';
+  };
+
+  c.getProgramName = function() {
+    if (!c.form.program) return '—';
+    for (var i = 0; i < c.data.collegePrograms.length; i++) {
+      if (c.data.collegePrograms[i].program_id === c.form.program) return c.data.collegePrograms[i].program_name;
+    }
+    return '—';
+  };
+
+  c.serializeDOB = function() {
+    if (c.form.date_of_birth instanceof Date) {
+      var y = c.form.date_of_birth.getFullYear();
+      var m = ('0' + (c.form.date_of_birth.getMonth() + 1)).slice(-2);
+      var d = ('0' + c.form.date_of_birth.getDate()).slice(-2);
+      return y + '-' + m + '-' + d;
+    }
+    return c.form.date_of_birth;
+  };
+
+  c.saveDraft = function() {
+    c.saving = true;
+    var payload = angular.copy(c.form);
+    payload.date_of_birth = c.serializeDOB();
+    c.server.get({ action: 'save_draft', formData: payload }).then(function(r) {
+      c.saving = false;
+      if (r.data.application && r.data.application.sys_id) c.form.sys_id = r.data.application.sys_id;
+      if (r.data.appNo) c.data.appNo = r.data.appNo;
+    });
+  };
+
+  c.nextStep = function() {
+    if (c.currentStep < 3) {
+      c.saveDraft();
+      c.currentStep++;
+    }
+  };
+
+  c.prevStep = function() {
+    if (c.currentStep > 0) c.currentStep--;
+  };
+
+  c.submitApplication = function() {
+    c.submitting = true;
+    var payload = angular.copy(c.form);
+    payload.date_of_birth = c.serializeDOB();
+    c.server.get({ action: 'submit_application', formData: payload }).then(function(r) {
+      c.submitting = false;
+      if (r.data.submitted) {
+        c.submitted = true;
+        if (r.data.appNo) c.data.appNo = r.data.appNo;
+      } else {
+        spUtil.addErrorMessage("Submission failed. Please check required fields.");
+      }
+    });
+  };
+};
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>
+.edu-wizard-root {
+  width: 100vw !important;
+  position: relative !important;
+  left: 50% !important;
+  right: 50% !important;
+  margin-left: -50vw !important;
+  margin-right: -50vw !important;
+  background: #f8fafc;
+  min-height: 100vh;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  padding-bottom: 80px;
+}
+
+/* NAVBAR */
+.edu-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0 32px;
+}
+.edu-nav-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 70px;
+}
+.edu-nav-brand {
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none !important; color: #ffffff !important;
+  font-weight: 800; font-size: 19px;
+}
+.edu-nav-logo {
+  width: 40px; height: 40px; border-radius: 12px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 800; font-size: 18px;
+}
+.edu-nav-links { display: flex; gap: 8px; }
+.edu-nav-link {
+  padding: 8px 18px; border-radius: 10px;
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-size: 14.5px; font-weight: 600; text-decoration: none !important;
+}
+.edu-nav-link.active { color: #fff !important; background: rgba(255, 255, 255, 0.12); }
+.edu-nav-actions { display: flex; align-items: center; gap: 12px; }
+.edu-nav-user { display: flex; align-items: center; gap: 10px; color: #fff; font-size: 14px; font-weight: 600; }
+.edu-nav-avatar {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: linear-gradient(135deg, #6366f1, #06b6d4);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; color: white;
+}
+
+/* WIZARD WRAPPER */
+.edu-wizard-wrap {
+  max-width: 920px; margin: 0 auto;
+  padding: 110px 24px 40px;
+}
+.edu-wizard-header { text-align: center; margin-bottom: 36px; }
+.edu-wizard-title { font-size: 32px; font-weight: 800; color: #0f172a; margin: 0 0 8px; letter-spacing: -0.02em; }
+.edu-wizard-subtitle { font-size: 15px; color: #64748b; margin: 0; }
+.edu-autosave-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #6366f1; font-weight: 600; margin-top: 8px; }
+.edu-dot { width: 6px; height: 6px; border-radius: 50%; background: #6366f1; }
+
+/* STEPPER */
+.edu-stepper-box {
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 36px; background: #ffffff; padding: 20px 30px;
+  border-radius: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.04);
+  border: 1px solid #e2e8f0;
+}
+.edu-step-item { display: flex; align-items: center; gap: 10px; }
+.edu-step-circle {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800; background: #f1f5f9; color: #94a3b8;
+  border: 2px solid #e2e8f0; transition: all 0.3s ease;
+}
+.edu-step-name { font-size: 13.5px; font-weight: 700; color: #94a3b8; }
+.edu-step-item.active .edu-step-circle {
+  background: #6366f1; color: white; border-color: #6366f1;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+}
+.edu-step-item.active .edu-step-name { color: #6366f1; }
+.edu-step-item.completed .edu-step-circle { background: #10b981; color: white; border-color: #10b981; }
+.edu-step-item.completed .edu-step-name { color: #10b981; }
+.edu-step-connector { flex: 1; height: 3px; background: #e2e8f0; margin: 0 16px; border-radius: 2px; }
+.edu-step-connector.completed { background: #10b981; }
+
+/* CARD FORM */
+.edu-card-form {
+  background: #ffffff; border-radius: 24px; padding: 44px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
+  margin-bottom: 24px;
+}
+.edu-card-title-bar { margin-bottom: 30px; border-bottom: 1px solid #f1f5f9; padding-bottom: 18px; }
+.edu-card-title-bar h2 { font-size: 22px; font-weight: 800; color: #0f172a; margin: 0 0 6px; }
+.edu-card-title-bar p { font-size: 14.5px; color: #64748b; margin: 0; }
+
+/* FORM ELEMENTS */
+.edu-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.edu-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+.edu-span-2 { grid-column: span 2; }
+
+.edu-group { display: flex; flex-direction: column; }
+.edu-label {
+  font-size: 13.5px; font-weight: 700; color: #334155;
+  margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.03em;
+}
+.edu-input, .edu-select {
+  height: 52px !important;
+  border: 2px solid #e2e8f0 !important;
+  border-radius: 14px !important;
+  padding: 0 18px !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  color: #1e293b !important;
+  background: #f8fafc !important;
+  outline: none !important;
+  transition: all 0.2s ease !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+.edu-input:focus, .edu-select:focus {
+  background: #ffffff !important;
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15) !important;
+}
+.edu-help { font-size: 12.5px; color: #6366f1; margin-top: 6px; font-weight: 600; }
+
+/* MERIT CALLOUT */
+.edu-merit-callout {
+  background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+  border: 1.5px solid #c7d2fe; border-radius: 18px;
+  padding: 24px 30px; margin-top: 30px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.edu-merit-meta h3 { font-size: 20px; color: #312e81; margin: 8px 0 4px; font-weight: 800; }
+.edu-merit-meta p { font-size: 13.5px; color: #6366f1; margin: 0; }
+.edu-merit-circle {
+  width: 76px; height: 76px; border-radius: 50%;
+  background: #4f46e5; color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; font-weight: 900;
+  box-shadow: 0 10px 20px rgba(79, 70, 229, 0.35);
+}
+
+/* REVIEW BOX */
+.edu-review-box { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.edu-review-card { background: #f8fafc; border-radius: 16px; padding: 24px; border: 1px solid #e2e8f0; }
+.edu-review-card h3 { font-size: 16px; font-weight: 800; color: #4f46e5; margin: 0 0 16px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; }
+.edu-review-line { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; font-size: 14px; }
+.edu-review-line span { color: #64748b; font-weight: 500; }
+.edu-review-line strong { color: #0f172a; font-weight: 700; }
+.edu-highlight-line { background: #e0e7ff; padding: 10px 14px; border-radius: 10px; }
+.edu-merit-accent { font-size: 20px; color: #4338ca !important; }
+
+/* LOCK WARNING */
+.edu-lock-warning {
+  margin-top: 24px; background: #fffbeb; border: 1.5px solid #fde68a;
+  border-radius: 16px; padding: 20px; display: flex; gap: 16px; align-items: flex-start;
+}
+.edu-warning-icon { font-size: 28px; line-height: 1; }
+.edu-lock-warning h4 { font-size: 15px; font-weight: 800; color: #92400e; margin: 0 0 4px; }
+.edu-lock-warning p { font-size: 13.5px; color: #b45309; margin: 0; line-height: 1.5; }
+
+/* =========================================================================
+   STUNNING MODERN BUTTONS (NAVIGATION)
+   ========================================================================= */
+.edu-wizard-nav {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-top: 36px !important;
+  padding-top: 24px !important;
+  border-top: 1px solid #e2e8f0 !important;
+  gap: 16px !important;
+}
+
+/* SLEEK MODERN BACK BUTTON */
+.edu-btn-back {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  height: 48px !important;
+  padding: 0 24px !important;
+  border-radius: 12px !important;
+  font-size: 14.5px !important;
+  font-weight: 600 !important;
+  color: #475569 !important;
+  background: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+  cursor: pointer !important;
+  outline: none !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.edu-btn-back:hover {
+  background: #f8fafc !important;
+  border-color: #94a3b8 !important;
+  color: #0f172a !important;
+  transform: translateX(-3px) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08) !important;
+}
+
+.edu-btn-back:active {
+  transform: translateX(0) !important;
+}
+
+/* PRIMARY CONTINUE BUTTON */
+.edu-btn-primary {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  height: 48px !important;
+  padding: 0 28px !important;
+  border-radius: 12px !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%) !important;
+  border: none !important;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35) !important;
+  cursor: pointer !important;
+  outline: none !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.edu-btn-primary:hover {
+  background: linear-gradient(135deg, #4338ca 0%, #4f46e5 100%) !important;
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.45) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ULTRA-PREMIUM SUBMIT &amp; FREEZE BUTTON */
+.edu-btn-submit {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  height: 52px !important;
+  padding: 0 34px !important;
+  border-radius: 14px !important;
+  font-size: 15.5px !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #059669 0%, #10b981 60%, #34d399 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 10px 25px -4px rgba(16, 185, 129, 0.45), 0 4px 10px -2px rgba(16, 185, 129, 0.2) !important;
+  cursor: pointer !important;
+  outline: none !important;
+  letter-spacing: 0.02em !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.edu-btn-submit:hover {
+  background: linear-gradient(135deg, #047857 0%, #059669 60%, #10b981 100%) !important;
+  box-shadow: 0 14px 30px -4px rgba(16, 185, 129, 0.55), 0 6px 14px -2px rgba(16, 185, 129, 0.3) !important;
+  transform: translateY(-2px) !important;
+}
+
+.edu-btn-submit:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+}
+
+.edu-btn-submit:disabled {
+  opacity: 0.65 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.edu-btn-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.edu-submit-check {
+  font-size: 17px;
+  font-weight: 900;
+}
+
+/* BADGES */
+.edu-badge {
+  display: inline-flex; align-items: center; padding: 4px 12px;
+  border-radius: 50px; font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.edu-badge-primary { background: #e0e7ff; color: #4f46e5; }
+.edu-badge-success { background: #dcfce7; color: #15803d; }
+
+/* MODAL */
+.edu-modal-backdrop { position: fixed; inset: 0; z-index: 2000; background: rgba(15,23,42,0.7); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; }
+.edu-success-modal { background: white; border-radius: 24px; padding: 48px; text-align: center; max-width: 480px; box-shadow: 0 25px 60px rgba(0,0,0,0.2); }
+.edu-success-icon { font-size: 60px; margin-bottom: 16px; }
+.edu-success-modal h2 { font-size: 24px; font-weight: 800; color: #0f172a; margin: 0 0 10px; }
+.edu-success-modal p { font-size: 15px; color: #64748b; margin: 0 0 8px; }
+
+@media (max-width: 768px) {
+  .edu-grid-2, .edu-grid-3, .edu-review-box { grid-template-columns: 1fr; }
+  .edu-span-2 { grid-column: span 1; }
+  .edu-stepper-box { display: none; }
+  .edu-card-form { padding: 24px; }
+}
+
+
+
+.edu-nav-logo-img {
+  width: 46px !important;
+  height: 46px !important;
+  object-fit: contain !important;
+  filter: drop-shadow(0 2px 8px rgba(194, 136, 47, 0.4)) !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  display: block !important;
+}
+
+.edu-nav-brand:hover .edu-nav-logo-img {
+  transform: scale(1.08) !important;
+  filter: drop-shadow(0 4px 14px rgba(194, 136, 47, 0.6)) !important;
+}
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>edusphere-application-wizard</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>EduSphere Application Wizard</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[
+(function() {
+  data.isLoggedIn = gs.isLoggedIn();
+  data.userName = gs.getUserDisplayName() || gs.getUserName();
+  data.userInitial = data.userName ? data.userName.charAt(0).toUpperCase() : 'U';
+  data.appNo = '';
+  data.application = {};
+
+  if (!data.isLoggedIn) return;
+
+  // Colleges
+  data.colleges = [];
+  var grCol = new GlideRecord('x_1790229_edusph_0_college');
+  grCol.addQuery('status', 'active');
+  grCol.query();
+  while (grCol.next()) {
+    data.colleges.push({
+      sys_id: grCol.getUniqueValue(),
+      name: grCol.getValue('name') || grCol.getDisplayValue()
+    });
+  }
+
+  // College Programs with reliable Name Resolution
+  data.collegePrograms = [];
+  var grCP = new GlideRecord('x_1790229_edusph_0_coll_prog');
+  grCP.addQuery('approved', true);
+  grCP.query();
+  while (grCP.next()) {
+    var pName = grCP.program.name ? grCP.program.name.toString() : grCP.program.getDisplayValue();
+    if (!pName) pName = "B.Tech Engineering";
+    data.collegePrograms.push({
+      college_id: grCP.getValue('college'),
+      program_id: grCP.getValue('program'),
+      program_name: pName,
+      seats: parseInt(grCP.getValue('intake_seats')) || 60
+    });
+  }
+
+  // Existing Application
+  var userEmail = gs.getUser().getEmail();
+  var grApp = new GlideRecord('x_1790229_edusph_0_admission_application');
+  grApp.addQuery('email', userEmail);
+  grApp.orderByDesc('sys_created_on');
+  grApp.setLimit(1);
+  grApp.query();
+  if (grApp.next()) {
+    data.appNo = grApp.getValue('app_no') || '';
+    data.application = {
+      sys_id: grApp.getUniqueValue(),
+      name: grApp.getValue('name') || '',
+      email: grApp.getValue('email') || userEmail,
+      mobile: grApp.getValue('mobile') || '',
+      date_of_birth: grApp.getValue('date_of_birth') || '',
+      category: grApp.getValue('category') || 'general',
+      class_10_percentage: parseFloat(grApp.getValue('class_10_percentage')) || '',
+      class_12_percentage: parseFloat(grApp.getValue('class_12_percentage')) || '',
+      jee_score: parseFloat(grApp.getValue('jee_score')) || '',
+      college: grApp.getValue('college') || '',
+      program: grApp.getValue('program') || '',
+      status: grApp.getValue('status') || 'draft'
+    };
+  }
+
+  // Save Draft Action
+  if (input && input.action === 'save_draft') {
+    var f = input.formData || {};
+    var appGR = new GlideRecord('x_1790229_edusph_0_admission_application');
+    if (f.sys_id && appGR.get(f.sys_id)) {
+      // update
+    } else {
+      appGR.initialize();
+      appGR.setValue('status', 'draft');
+    }
+
+    var fields = ['name','email','mobile','date_of_birth','category','class_10_percentage','class_12_percentage','jee_score','college','program'];
+    for (var i = 0; i < fields.length; i++) {
+      if (f[fields[i]] !== undefined && f[fields[i]] !== '') {
+        appGR.setValue(fields[i], f[fields[i]]);
+      }
+    }
+
+    // Auto-calculate merit
+    var a10 = parseFloat(f.class_10_percentage) || 0;
+    var a12 = parseFloat(f.class_12_percentage) || 0;
+    var aJee = parseFloat(f.jee_score) || 0;
+    if (a10 && a12 && aJee) {
+      appGR.setValue('merit_score', ((a10 + a12 + aJee) / 3).toFixed(2));
+    }
+
+    var resId = f.sys_id ? appGR.update() : appGR.insert();
+    data.appNo = appGR.getValue('app_no');
+    data.application.sys_id = appGR.getUniqueValue();
+    data.saved = true;
+  }
+
+  // Submit Application Action
+  if (input && input.action === 'submit_application') {
+    var s = input.formData || {};
+    var subGR = new GlideRecord('x_1790229_edusph_0_admission_application');
+    if (s.sys_id && subGR.get(s.sys_id)) {
+      var sFields = ['name','email','mobile','date_of_birth','category','class_10_percentage','class_12_percentage','jee_score','college','program'];
+      for (var j = 0; j < sFields.length; j++) {
+        if (s[sFields[j]] !== undefined && s[sFields[j]] !== '') {
+          subGR.setValue(sFields[j], s[sFields[j]]);
+        }
+      }
+      subGR.setValue('status', 'submitted');
+      subGR.setValue('applied_on', new GlideDateTime().getDate().getByFormat('yyyy-MM-dd'));
+      var m1 = parseFloat(s.class_10_percentage) || 0;
+      var m2 = parseFloat(s.class_12_percentage) || 0;
+      var mj = parseFloat(s.jee_score) || 0;
+      var compMerit = (m1 + m2 + mj) / 3;
+      subGR.setValue('merit_score', compMerit.toFixed(2));
+      subGR.update();
+      data.appNo = subGR.getValue('app_no');
+      data.submitted = true;
+    }
+  }
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>developer.abhinav</sys_created_by>
+        <sys_created_on>2026-11-16 10:31:54</sys_created_on>
+        <sys_id>2a8289dac3ac5f10d70532f1b40131fa</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>EduSphere Application Wizard</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sp_widget_2a8289dac3ac5f10d70532f1b40131fa</sys_update_name>
+        <sys_updated_by>developer.abhinav</sys_updated_by>
+        <sys_updated_on>2026-11-16 12:41:21</sys_updated_on>
+        <template><![CDATA[
+<div class="edu-wizard-root">
+  <!-- NAVBAR -->
+  <nav class="edu-nav">
+    <div class="edu-nav-inner">
+      <a href="?id=admission_home" class="edu-nav-brand">
+        <img src="x_1790229_edusph_0.Edusphere%20Logo.svg?v=68ce119ac3a09f10d70532f1b40131b4" alt="EduSphere" class="edu-nav-logo-img" />
+        <span>EduSphere Admissions</span>
+      </a>
+      <div class="edu-nav-links">
+        <a href="?id=admission_home" class="edu-nav-link">Home</a>
+        <a href="?id=admission_apply" class="edu-nav-link active">Apply</a>
+        <a href="?id=admission_dashboard" class="edu-nav-link">Track Status</a>
+      </div>
+      <div class="edu-nav-actions">
+        <div class="edu-nav-user">
+          <div class="edu-nav-avatar">{{c.data.userInitial}}</div>
+          <span>{{c.data.userName}}</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- WIZARD CONTAINER -->
+  <div class="edu-wizard-wrap">
+    <div class="edu-wizard-header">
+      <h1 class="edu-wizard-title">Prospective Student Application Form</h1>
+      <p class="edu-wizard-subtitle" ng-if="c.data.appNo">Application No: <strong>{{c.data.appNo}}</strong> &bull; Session 2026-27</p>
+      <div class="edu-autosave-badge" ng-if="c.saving">
+        <span class="edu-dot"></span> Autosaving Draft...
+      </div>
+    </div>
+
+    <!-- PROGRESS STEPPER -->
+    <div class="edu-stepper-box">
+      <div class="edu-step-item" ng-class="{'completed': c.currentStep > 0, 'active': c.currentStep === 0}">
+        <div class="edu-step-circle">1</div>
+        <span class="edu-step-name">Personal Details</span>
+      </div>
+      <div class="edu-step-connector" ng-class="{'completed': c.currentStep > 0}"></div>
+
+      <div class="edu-step-item" ng-class="{'completed': c.currentStep > 1, 'active': c.currentStep === 1}">
+        <div class="edu-step-circle">2</div>
+        <span class="edu-step-name">Academic Marks</span>
+      </div>
+      <div class="edu-step-connector" ng-class="{'completed': c.currentStep > 1}"></div>
+
+      <div class="edu-step-item" ng-class="{'completed': c.currentStep > 2, 'active': c.currentStep === 2}">
+        <div class="edu-step-circle">3</div>
+        <span class="edu-step-name">College &amp; Program</span>
+      </div>
+      <div class="edu-step-connector" ng-class="{'completed': c.currentStep > 2}"></div>
+
+      <div class="edu-step-item" ng-class="{'completed': c.currentStep === 3, 'active': c.currentStep === 3}">
+        <div class="edu-step-circle">4</div>
+        <span class="edu-step-name">Review &amp; Lock</span>
+      </div>
+    </div>
+
+    <!-- STEP 1: PERSONAL DETAILS -->
+    <div ng-if="c.currentStep === 0" class="edu-card-form">
+      <div class="edu-card-title-bar">
+        <h2>Personal Coordinates &amp; Category</h2>
+        <p>Ensure legal name matches exactly with your Class 10th Certificate.</p>
+      </div>
+
+      <div class="edu-grid-2">
+        <div class="edu-group">
+          <label class="edu-label">Full Legal Name *</label>
+          <input class="edu-input" type="text" ng-model="c.form.name" placeholder="e.g. Abhinav Kumar Yadav" required />
+        </div>
+
+        <div class="edu-group">
+          <label class="edu-label">Email Address *</label>
+          <input class="edu-input" type="email" ng-model="c.form.email" placeholder="name@example.com" required />
+        </div>
+
+        <div class="edu-group">
+          <label class="edu-label">Mobile Number *</label>
+          <input class="edu-input" type="tel" ng-model="c.form.mobile" placeholder="10-digit mobile number" maxlength="10" required />
+        </div>
+
+        <div class="edu-group">
+          <label class="edu-label">Date of Birth *</label>
+          <input class="edu-input" type="date" ng-model="c.form.date_of_birth" required />
+          <small class="edu-help" ng-if="c.form.date_of_birth">Selected: {{c.formatDOB(c.form.date_of_birth)}}</small>
+        </div>
+
+        <div class="edu-group edu-span-2">
+          <label class="edu-label">Reservation Category Quota *</label>
+          <select class="edu-select" ng-model="c.form.category" ng-options="cat.value as cat.label for cat in c.categories" required>
+          </select>
+          <small class="edu-help">Selecting an affirmative category (OBC, EWS, PwD, Defence) requires verified supporting documents.</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: ACADEMIC QUALIFICATIONS -->
+    <div ng-if="c.currentStep === 1" class="edu-card-form">
+      <div class="edu-card-title-bar">
+        <h2>Academic Qualifications &amp; Entrance Scores</h2>
+        <p>Input normalized percentages. These feed directly into the automated merit ranking engine.</p>
+      </div>
+
+      <div class="edu-grid-3">
+        <div class="edu-group">
+          <label class="edu-label">Class 10th Percentage (%) *</label>
+          <input class="edu-input" type="number" step="0.01" min="0" max="100" ng-model="c.form.class_10_percentage" placeholder="e.g. 88.50" required />
+        </div>
+
+        <div class="edu-group">
+          <label class="edu-label">Class 12th Percentage (%) *</label>
+          <input class="edu-input" type="number" step="0.01" min="0" max="100" ng-model="c.form.class_12_percentage" placeholder="e.g. 91.20" required />
+        </div>
+
+        <div class="edu-group">
+          <label class="edu-label">JEE Mains Percentile Score *</label>
+          <input class="edu-input" type="number" step="0.01" min="0" max="100" ng-model="c.form.jee_score" placeholder="e.g. 95.75" required />
+        </div>
+      </div>
+
+      <!-- COMPOSITE MERIT SCORE CALLOUT -->
+      <div class="edu-merit-callout" ng-if="c.form.class_10_percentage && c.form.class_12_percentage && c.form.jee_score">
+        <div class="edu-merit-meta">
+          <span class="edu-badge edu-badge-primary">Composite Merit Formula</span>
+          <h3>Estimated Composite Score: <strong>{{c.getMeritScore()}}</strong></h3>
+          <p>Score = (Class 10th % + Class 12th % + JEE Score) / 3</p>
+        </div>
+        <div class="edu-merit-circle">
+          {{c.getMeritScore()}}
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: COLLEGE & PROGRAM SELECTION -->
+    <div ng-if="c.currentStep === 2" class="edu-card-form">
+      <div class="edu-card-title-bar">
+        <h2>Target College &amp; Academic Program</h2>
+        <p>Choose your preferred affiliated college and degree branch.</p>
+      </div>
+
+      <div class="edu-grid-2">
+        <div class="edu-group">
+          <label class="edu-label">Affiliated College *</label>
+          <select class="edu-select" ng-model="c.form.college" ng-change="c.onCollegeChange()" required>
+            <option value="">-- Choose Approved College --</option>
+            <option ng-repeat="col in c.data.colleges" value="{{col.sys_id}}">{{col.name}}</option>
+          </select>
+        </div>
+
+        <div class="edu-group">
+          <label class="edu-label">Degree Program &amp; Branch *</label>
+          <select class="edu-select" ng-model="c.form.program" ng-disabled="!c.form.college" required>
+            <option value="">-- Choose Academic Program --</option>
+            <option ng-repeat="p in c.filteredPrograms" value="{{p.program_id}}">{{p.program_name}} ({{p.seats}} Seats)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="edu-selected-summary" ng-if="c.form.college && c.form.program">
+        <p>Selected Choice: <strong>{{c.getCollegeName()}}</strong> &bull; <strong>{{c.getProgramName()}}</strong></p>
+      </div>
+    </div>
+
+    <!-- STEP 4: REVIEW & SUBMIT -->
+    <div ng-if="c.currentStep === 3" class="edu-card-form">
+      <div class="edu-card-title-bar">
+        <h2>Review &amp; Lock Application</h2>
+        <p>Verify all entered data. Upon submission, records are frozen for administrative verification.</p>
+      </div>
+
+      <div class="edu-review-box">
+        <div class="edu-review-card">
+          <h3>Candidate Profile</h3>
+          <div class="edu-review-line"><span>Full Name</span><strong>{{c.form.name}}</strong></div>
+          <div class="edu-review-line"><span>Email</span><strong>{{c.form.email}}</strong></div>
+          <div class="edu-review-line"><span>Mobile</span><strong>{{c.form.mobile}}</strong></div>
+          <div class="edu-review-line"><span>Date of Birth</span><strong>{{c.formatDOB(c.form.date_of_birth)}}</strong></div>
+          <div class="edu-review-line"><span>Reservation Quota</span><strong class="edu-badge edu-badge-primary">{{c.getCategoryLabel(c.form.category)}}</strong></div>
+        </div>
+
+        <div class="edu-review-card">
+          <h3>Academic Performance</h3>
+          <div class="edu-review-line"><span>Class 10th</span><strong>{{c.form.class_10_percentage}}%</strong></div>
+          <div class="edu-review-line"><span>Class 12th</span><strong>{{c.form.class_12_percentage}}%</strong></div>
+          <div class="edu-review-line"><span>JEE Mains Score</span><strong>{{c.form.jee_score}} Percentile</strong></div>
+          <div class="edu-review-line edu-highlight-line"><span>Composite Merit</span><strong class="edu-merit-accent">{{c.getMeritScore()}}</strong></div>
+        </div>
+
+        <div class="edu-review-card edu-span-2">
+          <h3>Program Preference</h3>
+          <div class="edu-review-line"><span>Institution</span><strong>{{c.getCollegeName()}}</strong></div>
+          <div class="edu-review-line"><span>Selected Degree</span><strong>{{c.getProgramName()}}</strong></div>
+        </div>
+      </div>
+
+      <div class="edu-lock-warning">
+        <div class="edu-warning-icon">&#9888;&#65039;</div>
+        <div>
+          <h4>Immutable Record Policy</h4>
+          <p>Once you click <strong>Submit &amp; Freeze Application</strong>, your profile and choices are locked from direct editing. Subsequent changes require submitting an administrative correction request.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAVIGATION FOOTER -->
+    <div class="edu-wizard-nav">
+      <button type="button" ng-if="c.currentStep > 0" class="edu-btn edu-btn-back" ng-click="c.prevStep()">
+        <span class="edu-btn-icon">&larr;</span> Back
+      </button>
+      <div style="flex: 1;"></div>
+      <button type="button" ng-if="c.currentStep < 3" class="edu-btn edu-btn-primary" ng-click="c.nextStep()">
+        Continue <span class="edu-btn-icon">&rarr;</span>
+      </button>
+      <button type="button" ng-if="c.currentStep === 3" class="edu-btn edu-btn-submit" ng-click="c.submitApplication()" ng-disabled="c.submitting">
+        <span ng-if="!c.submitting" class="edu-btn-inner">
+          <span class="edu-submit-check">&#10003;</span>
+          <span>Submit &amp; Freeze Application</span>
+        </span>
+        <span ng-if="c.submitting" class="edu-btn-inner">
+          <span class="edu-btn-spinner">&#8987;</span>
+          <span>Securing Application...</span>
+        </span>
+      </button>
+    </div>
+
+    <!-- SUBMISSION MODAL SUCCESS -->
+    <div ng-if="c.submitted" class="edu-modal-backdrop">
+      <div class="edu-success-modal">
+        <div class="edu-success-icon">&#9989;</div>
+        <h2>Application Submitted Successfully!</h2>
+        <p>Your application number is <strong>{{c.data.appNo}}</strong>.</p>
+        <p>Proceed to your dashboard to complete document uploads and track your admission progress.</p>
+        <a href="?id=admission_dashboard" class="edu-btn edu-btn-primary" style="margin-top:20px; display:inline-flex;">
+          Go to Applicant Dashboard &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

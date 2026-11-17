@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_1790229_edusph_0.SeatAllocationEngine</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>SeatAllocationEngine</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var SeatAllocationEngine = Class.create();
+SeatAllocationEngine.prototype = {
+    initialize: function() {},
+
+    /**
+     * Multi-Round Quota Allocation
+     * General (75%), Female (8.3%), OBC (6.7%), EWS (6.7%), PwD (3.3%)
+     */
+    runRoundAllocation: function(collegeId, programId, roundNumber) {
+        roundNumber = roundNumber || 1;
+
+        // 1. Get total intake seats
+        var totalSeats = 60;
+        var grCP = new GlideRecord('x_1790229_edusph_0_coll_prog');
+        grCP.addQuery('college', collegeId);
+        grCP.addQuery('program', programId);
+        grCP.setLimit(1);
+        grCP.query();
+        if (grCP.next()) {
+            totalSeats = parseInt(grCP.getValue('intake_seats')) || 60;
+        }
+
+        // 2. Calculate category quotas scaled to batch
+        var factor = totalSeats / 60.0;
+        var quotas = {
+            'general': Math.round(45 * factor),
+            'female': Math.round(5 * factor),
+            'backward class': Math.round(4 * factor),
+            'economically weaker section': Math.round(4 * factor),
+            'person with disability': Math.round(2 * factor)
+        };
+
+        // 3. Rank applicants
+        var meritEngine = new AdmissionMeritEngine();
+        var ranked = meritEngine.rankApplicants(collegeId, programId);
+
+        // 4. Allocate by quotas
+        var allocatedCount = {};
+        for (var cat in quotas) allocatedCount[cat] = 0;
+
+        var offeredSysIds = [];
+        var waitlistedSysIds = [];
+
+        for (var i = 0; i < ranked.length; i++) {
+            var cand = ranked[i];
+            var cCat = cand.category || 'general';
+
+            if (quotas[cCat] && allocatedCount[cCat] < quotas[cCat]) {
+                allocatedCount[cCat]++;
+                offeredSysIds.push(cand.sys_id);
+            } else if (allocatedCount['general'] < quotas['general']) {
+                // Open General fallback
+                allocatedCount['general']++;
+                offeredSysIds.push(cand.sys_id);
+            } else {
+                waitlistedSysIds.push(cand.sys_id);
+            }
+        }
+
+        // 5. Update statuses
+        for (var o = 0; o < offeredSysIds.length; o++) {
+            var grOffer = new GlideRecord('x_1790229_edusph_0_admission_application');
+            if (grOffer.get(offeredSysIds[o])) {
+                grOffer.setValue('status', 'offered');
+                grOffer.setValue('allocation_round', roundNumber);
+                grOffer.update();
+            }
+        }
+
+        for (var w = 0; w < waitlistedSysIds.length; w++) {
+            var grWait = new GlideRecord('x_1790229_edusph_0_admission_application');
+            if (grWait.get(waitlistedSysIds[w])) {
+                grWait.setValue('status', 'waitlisted');
+                grWait.setValue('allocation_round', roundNumber);
+                grWait.update();
+            }
+        }
+
+        return {
+            totalSeats: totalSeats,
+            round: roundNumber,
+            offered: offeredSysIds.length,
+            waitlisted: waitlistedSysIds.length
+        };
+    },
+
+    type: 'SeatAllocationEngine'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>developer.abhinav</sys_created_by>
+        <sys_created_on>2026-11-16 10:34:48</sys_created_on>
+        <sys_id>8d3301dec3ac5f10d70532f1b4013190</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>SeatAllocationEngine</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_script_include_8d3301dec3ac5f10d70532f1b4013190</sys_update_name>
+        <sys_updated_by>developer.abhinav</sys_updated_by>
+        <sys_updated_on>2026-11-16 10:34:48</sys_updated_on>
+    </sys_script_include>
+</record_update>

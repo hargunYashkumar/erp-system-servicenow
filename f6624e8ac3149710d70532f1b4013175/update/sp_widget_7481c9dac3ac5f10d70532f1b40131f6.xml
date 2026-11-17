@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[
+api.controller = function($scope) {
+  var c = this;
+  var icons = [']]>💻<![CDATA[', '⚙️', ']]>📡<![CDATA[', ']]>🔬<![CDATA[', ']]>🔧<![CDATA[', ']]>🌐<![CDATA['];
+  c.getIcon = function(idx) { return icons[idx % icons.length]; };
+};
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>
+.edu-landing-root {
+  width: 100vw !important;
+  position: relative !important;
+  left: 50% !important;
+  right: 50% !important;
+  margin-left: -50vw !important;
+  margin-right: -50vw !important;
+  background: #0f172a;
+  overflow-x: hidden;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+/* NAVBAR */
+.edu-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0 32px;
+}
+.edu-nav-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 70px;
+}
+.edu-nav-brand {
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none !important; color: #ffffff !important;
+  font-weight: 800; font-size: 19px; letter-spacing: -0.02em;
+}
+.edu-nav-logo {
+  width: 40px; height: 40px; border-radius: 12px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 800; font-size: 18px;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+.edu-nav-links { display: flex; gap: 8px; }
+.edu-nav-link {
+  padding: 8px 18px; border-radius: 10px;
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-size: 14.5px; font-weight: 600;
+  text-decoration: none !important; transition: all 0.2s ease;
+}
+.edu-nav-link:hover, .edu-nav-link.active {
+  color: #ffffff !important; background: rgba(255, 255, 255, 0.1);
+}
+.edu-nav-actions { display: flex; align-items: center; gap: 14px; }
+.edu-nav-user { display: flex; align-items: center; gap: 10px; color: #fff; font-size: 14px; font-weight: 600; }
+.edu-nav-avatar {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: linear-gradient(135deg, #6366f1, #06b6d4);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 14px; color: white;
+}
+
+/* HERO */
+.edu-hero {
+  position: relative;
+  background: radial-gradient(circle at 50% 20%, #1e1b4b 0%, #0f172a 70%);
+  padding: 160px 24px 90px;
+  text-align: center; color: white;
+  min-height: 85vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.edu-hero-grid {
+  position: absolute; inset: 0; opacity: 0.04;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.4) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255, 255, 255, 0.4) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+.edu-hero-bg-orb {
+  position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none;
+}
+.edu-hero-orb-1 {
+  width: 600px; height: 600px; top: -150px; right: -100px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.35) 0%, transparent 70%);
+}
+.edu-hero-orb-2 {
+  width: 500px; height: 500px; bottom: -100px; left: -100px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.25) 0%, transparent 70%);
+}
+.edu-hero-content { position: relative; z-index: 2; max-width: 860px; margin: 0 auto; }
+.edu-hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50px; padding: 8px 22px; font-size: 13.5px; font-weight: 600;
+  margin-bottom: 28px; backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  animation: edu-badge-float 3.2s ease-in-out infinite;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  will-change: transform;
+}
+
+.edu-hero-badge:hover {
+  animation-play-state: paused;
+  transform: translateY(-9px) scale(1.02);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 16px 36px rgba(16, 185, 129, 0.35), 0 0 25px rgba(99, 102, 241, 0.3);
+}
+
+@keyframes edu-badge-float {
+  0%, 100% {
+    transform: translateY(0);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+  50% {
+    transform: translateY(-8px);
+    box-shadow: 0 14px 28px rgba(16, 185, 129, 0.28), 0 0 20px rgba(99, 102, 241, 0.22);
+  }
+}
+
+.edu-hero-badge-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: #10b981;
+  box-shadow: 0 0 10px #10b981;
+  animation: edu-dot-pulse 2s ease-in-out infinite;
+}
+
+@keyframes edu-dot-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 0 10px #10b981;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.85;
+    box-shadow: 0 0 18px #10b981, 0 0 25px rgba(16, 185, 129, 0.6);
+  }
+}
+.edu-hero-title {
+  font-size: 64px; font-weight: 800; line-height: 1.1;
+  margin: 0 0 24px; letter-spacing: -0.03em; color: white;
+}
+.edu-hero-gradient-text {
+  background: linear-gradient(135deg, #a5b4fc 0%, #38bdf8 50%, #34d399 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.edu-hero-subtitle {
+  font-size: 19px; line-height: 1.6; color: rgba(255, 255, 255, 0.75);
+  margin: 0 auto 40px; max-width: 620px;
+}
+
+/* HERO BUTTONS */
+.edu-hero-actions {
+  display: flex !important;
+  gap: 18px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+}
+.edu-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  padding: 16px 36px !important;
+  border-radius: 14px !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  cursor: pointer !important;
+  text-decoration: none !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border: none !important;
+}
+.edu-btn-hero-primary {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 10px 25px -4px rgba(99, 102, 241, 0.5), 0 4px 6px -2px rgba(99, 102, 241, 0.3) !important;
+}
+.edu-btn-hero-primary:hover {
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 20px 35px -5px rgba(99, 102, 241, 0.65) !important;
+  color: #ffffff !important;
+}
+.edu-btn-hero-outline {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(12px) !important;
+}
+.edu-btn-hero-outline:hover {
+  background: rgba(255, 255, 255, 0.18) !important;
+  border-color: rgba(255, 255, 255, 0.65) !important;
+  transform: translateY(-3px) !important;
+  color: #ffffff !important;
+}
+.edu-btn-sm { padding: 9px 20px !important; font-size: 13.5px !important; border-radius: 10px !important; }
+.edu-btn-primary { background: linear-gradient(135deg, #6366f1, #8b5cf6) !important; color: white !important; }
+
+/* STATS BAR */
+.edu-stats-bar {
+  display: flex; align-items: center; justify-content: space-around;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px; padding: 24px 40px; margin-top: 60px;
+  width: 100%; max-width: 980px; position: relative; z-index: 2;
+}
+.edu-stat-item { text-align: center; flex: 1; }
+.edu-stat-num { font-size: 34px; font-weight: 800; color: #ffffff; letter-spacing: -0.02em; }
+.edu-stat-label { font-size: 13.5px; color: rgba(255, 255, 255, 0.6); margin-top: 4px; font-weight: 500; }
+.edu-stat-divider { width: 1px; height: 42px; background: rgba(255, 255, 255, 0.12); }
+
+/* PROGRAMS SECTION */
+.edu-programs-section { padding: 90px 24px; background: #f8fafc; }
+.edu-section-inner { max-width: 1200px; margin: 0 auto; }
+.edu-section-header { text-align: center; margin-bottom: 50px; }
+.edu-section-header h2 { font-size: 38px; color: #0f172a; margin: 12px 0 8px; font-weight: 800; letter-spacing: -0.02em; }
+.edu-section-header p { font-size: 16px; color: #64748b; max-width: 580px; margin: 0 auto; }
+
+.edu-program-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+}
+.edu-program-card {
+  background: #ffffff; border-radius: 20px; padding: 28px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.edu-program-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(99, 102, 241, 0.12);
+  border-color: #a5b4fc;
+}
+.edu-program-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.edu-program-icon { font-size: 30px; }
+.edu-program-name { font-size: 19px; font-weight: 800; color: #1e293b; margin: 0 0 8px; line-height: 1.3; }
+.edu-program-college { font-size: 14px; color: #64748b; margin: 0 0 20px; font-weight: 500; }
+.edu-program-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 16px; border-top: 1px solid #f1f5f9;
+}
+.edu-seat-tag { display: flex; align-items: center; gap: 6px; font-size: 13.5px; color: #475569; }
+.edu-apply-link { color: #6366f1; font-weight: 700; font-size: 14px; text-decoration: none; }
+
+/* BADGES */
+.edu-badge {
+  display: inline-flex; align-items: center; padding: 5px 14px;
+  border-radius: 50px; font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.edu-badge-primary { background: #e0e7ff; color: #4f46e5; }
+.edu-badge-success { background: #dcfce7; color: #15803d; }
+
+/* STEPS */
+.edu-steps-section { padding: 90px 24px; background: #ffffff; }
+.edu-steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+.edu-step-card {
+  background: #f8fafc; border-radius: 20px; padding: 32px 24px;
+  border: 1px solid #e2e8f0; position: relative;
+  transition: all 0.3s;
+}
+.edu-step-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.06); }
+.edu-step-num { font-size: 42px; font-weight: 900; color: rgba(99, 102, 241, 0.12); margin-bottom: 8px; }
+.edu-step-icon { font-size: 32px; margin-bottom: 12px; }
+.edu-step-card h3 { font-size: 17px; font-weight: 700; color: #0f172a; margin: 0 0 8px; }
+.edu-step-card p { font-size: 14px; color: #64748b; line-height: 1.5; margin: 0; }
+
+/* FOOTER */
+.edu-footer { background: #0f172a; padding: 40px 24px; border-top: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); }
+.edu-footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.edu-footer-brand { display: flex; align-items: center; gap: 12px; font-weight: 700; color: white; }
+.edu-footer-copy { font-size: 13.5px; margin: 0; }
+
+@media (max-width: 768px) {
+  .edu-hero-title { font-size: 40px; }
+  .edu-stats-bar { flex-direction: column; gap: 20px; padding: 24px; }
+  .edu-stat-divider { display: none; }
+  .edu-program-grid { grid-template-columns: 1fr; }
+  .edu-nav-links { display: none; }
+}
+
+
+
+.edu-nav-logo-img {
+  width: 46px !important;
+  height: 46px !important;
+  object-fit: contain !important;
+  filter: drop-shadow(0 2px 8px rgba(194, 136, 47, 0.4)) !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  display: block !important;
+}
+
+.edu-nav-brand:hover .edu-nav-logo-img {
+  transform: scale(1.08) !important;
+  filter: drop-shadow(0 4px 14px rgba(194, 136, 47, 0.6)) !important;
+}
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>edusphere-hero-landing</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>EduSphere Hero Landing</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[
+(function() {
+  data.isLoggedIn = gs.isLoggedIn();
+  data.userName = gs.getUserDisplayName() || gs.getUserName();
+  data.userInitial = data.userName ? data.userName.charAt(0).toUpperCase() : 'U';
+
+  // Stats
+  data.stats = { programs: 0, colleges: 0, seats: 0, applications: 0 };
+
+  var grProg = new GlideAggregate('x_1790229_edusph_0_program');
+  grProg.addQuery('active', true);
+  grProg.addAggregate('COUNT');
+  grProg.query();
+  if (grProg.next()) data.stats.programs = parseInt(grProg.getAggregate('COUNT')) || 0;
+
+  var grCol = new GlideAggregate('x_1790229_edusph_0_college');
+  grCol.addQuery('status', 'active');
+  grCol.addAggregate('COUNT');
+  grCol.query();
+  if (grCol.next()) data.stats.colleges = parseInt(grCol.getAggregate('COUNT')) || 0;
+
+  var grSeats = new GlideAggregate('x_1790229_edusph_0_coll_prog');
+  grSeats.addQuery('approved', true);
+  grSeats.addAggregate('SUM', 'intake_seats');
+  grSeats.query();
+  if (grSeats.next()) data.stats.seats = parseInt(grSeats.getAggregate('SUM', 'intake_seats')) || 0;
+
+  var grApps = new GlideAggregate('x_1790229_edusph_0_admission_application');
+  grApps.addAggregate('COUNT');
+  grApps.query();
+  if (grApps.next()) data.stats.applications = parseInt(grApps.getAggregate('COUNT')) || 0;
+
+  // College Programs with explicit Program Name resolution
+  data.collegePrograms = [];
+  var grCP = new GlideRecord('x_1790229_edusph_0_coll_prog');
+  grCP.addQuery('approved', true);
+  grCP.query();
+  while (grCP.next()) {
+    var progName = grCP.program.name ? grCP.program.name.toString() : grCP.program.getDisplayValue();
+    var colName = grCP.college.name ? grCP.college.name.toString() : grCP.college.getDisplayValue();
+    if (!progName) {
+      // Fallback
+      progName = "B.Tech Engineering Program";
+    }
+    data.collegePrograms.push({
+      sys_id: grCP.getUniqueValue(),
+      college_name: colName,
+      program_name: progName,
+      seats: parseInt(grCP.getValue('intake_seats')) || 60,
+      approved: true
+    });
+  }
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>developer.abhinav</sys_created_by>
+        <sys_created_on>2026-11-16 10:27:25</sys_created_on>
+        <sys_id>7481c9dac3ac5f10d70532f1b40131f6</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>EduSphere Hero Landing</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sp_widget_7481c9dac3ac5f10d70532f1b40131f6</sys_update_name>
+        <sys_updated_by>developer.abhinav</sys_updated_by>
+        <sys_updated_on>2026-11-16 12:41:12</sys_updated_on>
+        <template><![CDATA[
+<div class="edu-landing-root">
+  <!-- CUSTOM NAVBAR -->
+  <nav class="edu-nav">
+    <div class="edu-nav-inner">
+      <a href="?id=admission_home" class="edu-nav-brand">
+        <img src="x_1790229_edusph_0.Edusphere%20Logo.svg?v=68ce119ac3a09f10d70532f1b40131b4" alt="EduSphere" class="edu-nav-logo-img" />
+        <span>EduSphere Admissions</span>
+      </a>
+      <div class="edu-nav-links">
+        <a href="?id=admission_home" class="edu-nav-link active">Home</a>
+        <a href="?id=admission_apply" class="edu-nav-link">Apply Now</a>
+        <a href="?id=admission_dashboard" class="edu-nav-link">Track Application</a>
+      </div>
+      <div class="edu-nav-actions">
+        <a ng-if="!c.data.isLoggedIn" href="?id=admission_login" class="edu-btn edu-btn-sm edu-btn-primary">Sign In</a>
+        <div ng-if="c.data.isLoggedIn" class="edu-nav-user">
+          <div class="edu-nav-avatar">{{c.data.userInitial}}</div>
+          <span>{{c.data.userName}}</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="edu-hero">
+    <div class="edu-hero-bg-orb edu-hero-orb-1"></div>
+    <div class="edu-hero-bg-orb edu-hero-orb-2"></div>
+    <div class="edu-hero-grid"></div>
+
+    <div class="edu-hero-content">
+      <div class="edu-hero-badge">
+        <span class="edu-hero-badge-dot"></span>
+        Admissions Open &bull; Academic Year 2026-27
+      </div>
+      <h1 class="edu-hero-title">
+        Shape Your<br>
+        <span class="edu-hero-gradient-text">Future Today</span>
+      </h1>
+      <p class="edu-hero-subtitle">
+        Apply to accredited engineering programs across university-affiliated colleges. Fast, transparent, and merit-based.
+      </p>
+
+      <!-- PROMINENT CALL TO ACTION BUTTONS -->
+      <div class="edu-hero-actions">
+        <a href="?id=admission_apply" class="edu-btn edu-btn-hero-primary">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          Start Application
+        </a>
+        <a href="?id=admission_dashboard" class="edu-btn edu-btn-hero-outline">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+          Track My Status
+        </a>
+      </div>
+    </div>
+
+    <!-- LIVE STATS COUNTER BAR -->
+    <div class="edu-stats-bar">
+      <div class="edu-stat-item">
+        <div class="edu-stat-num">{{c.data.stats.programs}}</div>
+        <div class="edu-stat-label">Engineering Programs</div>
+      </div>
+      <div class="edu-stat-divider"></div>
+      <div class="edu-stat-item">
+        <div class="edu-stat-num">{{c.data.stats.colleges}}</div>
+        <div class="edu-stat-label">Active Constituent Colleges</div>
+      </div>
+      <div class="edu-stat-divider"></div>
+      <div class="edu-stat-item">
+        <div class="edu-stat-num">{{c.data.stats.seats}}+</div>
+        <div class="edu-stat-label">Sanctioned Seats</div>
+      </div>
+      <div class="edu-stat-divider"></div>
+      <div class="edu-stat-item">
+        <div class="edu-stat-num">{{c.data.stats.applications}}</div>
+        <div class="edu-stat-label">Applicants Enrolled</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AVAILABLE PROGRAMS SECTION -->
+  <section class="edu-programs-section">
+    <div class="edu-section-inner">
+      <div class="edu-section-header">
+        <span class="edu-badge edu-badge-primary">Explore Offerings</span>
+        <h2>Available Programs &amp; Seat Matrix</h2>
+        <p>Review accredited degree programs offered across affiliated colleges for 2026-27 intake.</p>
+      </div>
+
+      <div class="edu-program-grid">
+        <div ng-repeat="cp in c.data.collegePrograms track by $index" class="edu-program-card">
+          <div class="edu-program-header">
+            <div class="edu-program-icon">{{c.getIcon($index)}}</div>
+            <span class="edu-badge edu-badge-success">Approved Intake</span>
+          </div>
+          <h3 class="edu-program-name">{{cp.program_name}}</h3>
+          <p class="edu-program-college">&#127979; {{cp.college_name}}</p>
+          <div class="edu-program-footer">
+            <div class="edu-seat-tag">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+              <strong>{{cp.seats}}</strong> Seats Allocated
+            </div>
+            <a href="?id=admission_apply" class="edu-apply-link">Apply &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS STEPPER -->
+  <section class="edu-steps-section">
+    <div class="edu-section-inner">
+      <div class="edu-section-header">
+        <span class="edu-badge edu-badge-primary">Admission Process</span>
+        <h2>Simple 4-Step Intake Workflow</h2>
+        <p>From initial registration to official student roll-number generation.</p>
+      </div>
+
+      <div class="edu-steps-grid">
+        <div class="edu-step-card">
+          <div class="edu-step-num">01</div>
+          <div class="edu-step-icon">&#128221;</div>
+          <h3>Fill Online Form</h3>
+          <p>Complete academic marks, personal coordinates, and category reservations.</p>
+        </div>
+        <div class="edu-step-card">
+          <div class="edu-step-num">02</div>
+          <div class="edu-step-icon">&#128196;</div>
+          <h3>Upload Documents</h3>
+          <p>Attach 10th/12th marksheets and category certificates for admin audit.</p>
+        </div>
+        <div class="edu-step-card">
+          <div class="edu-step-num">03</div>
+          <div class="edu-step-icon">&#9878;&#65039;</div>
+          <h3>Merit Ranking</h3>
+          <p>Composite score computed with automated 4-tier tie-breaking waterfall.</p>
+        </div>
+        <div class="edu-step-card">
+          <div class="edu-step-num">04</div>
+          <div class="edu-step-icon">&#127891;</div>
+          <h3>Seat Confirmation</h3>
+          <p>Accept seat offer within 48 hours to generate your permanent student roll number.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="edu-footer">
+    <div class="edu-footer-inner">
+      <div class="edu-footer-brand">
+        <img src="x_1790229_edusph_0.Edusphere%20Logo.svg?v=68ce119ac3a09f10d70532f1b40131b4" alt="EduSphere" class="edu-nav-logo-img" />
+        <span>EduSphere University ERP &bull; Admissions Portal</span>
+      </div>
+      <p class="edu-footer-copy">&copy; 2026 EduSphere University. All rights reserved.</p>
+    </div>
+  </footer>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

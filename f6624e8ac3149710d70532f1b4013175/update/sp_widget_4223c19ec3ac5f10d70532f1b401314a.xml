@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[
+api.controller = function($scope, spUtil, $location) {
+  var c = this;
+  c.tab = 'register';
+  c.loading = false;
+  c.reg = {};
+  c.login = {};
+
+  c.registerApplicant = function() {
+    c.loading = true;
+    c.server.get({ action: 'register_applicant', reg: c.reg }).then(function(r) {
+      c.loading = false;
+      if (r.data.registered) {
+        spUtil.addInfoMessage("Registration complete! Starting application wizard...");
+        $location.search({ id: 'admission_apply' });
+      }
+    });
+  };
+
+  c.loginApplicant = function() {
+    c.loading = true;
+    // Standard portal authentication
+    window.location.href = '/login.do?sysparm_login_url=' + encodeURIComponent('/admission?id=admission_dashboard');
+  };
+};
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>
+.edu-landing-root { margin: -15px -15px 0 -15px; overflow-x: hidden; }
+.edu-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(15,23,42,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 0 32px; }
+.edu-nav-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.edu-nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none !important; color: #fff !important; font-weight: 700; font-size: 17px; }
+.edu-nav-logo { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, #6366f1, #8b5cf6); display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 16px; }
+.edu-nav-links { display: flex; gap: 6px; }
+.edu-nav-link { padding: 7px 16px; border-radius: 8px; color: rgba(255,255,255,0.65) !important; font-size: 14px; font-weight: 500; text-decoration: none !important; transition: all 0.2s; }
+.edu-nav-link:hover, .edu-nav-link.active { color: #fff !important; background: rgba(255,255,255,0.08); }
+
+.edu-auth-wrapper {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: 100px 20px 60px;
+  background: linear-gradient(150deg, #0f172a 0%, #1e1b4b 35%, #312e81 65%, #4338ca 100%);
+}
+.edu-auth-container { width: 100%; max-width: 480px; }
+.edu-auth-tabs { display: flex; background: rgba(255,255,255,0.1); border-radius: 14px; padding: 4px; margin-bottom: 20px; }
+.edu-auth-tab {
+  flex: 1; padding: 12px; border: none; background: transparent; color: rgba(255,255,255,0.7);
+  font-weight: 600; font-size: 14px; border-radius: 10px; cursor: pointer; transition: all 0.2s;
+  font-family: inherit;
+}
+.edu-auth-tab.active { background: white; color: #1e1b4b; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+.edu-auth-card {
+  background: white; border-radius: 24px; padding: 36px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+}
+.edu-auth-header { text-align: center; margin-bottom: 24px; }
+.edu-auth-header h2 { font-size: 22px; color: #0f172a; margin: 0 0 6px; }
+.edu-auth-header p { font-size: 14px; color: #64748b; margin: 0; }
+.edu-auth-footer { text-align: center; margin-top: 20px; font-size: 13px; color: #64748b; }
+.edu-auth-footer a { color: #6366f1; font-weight: 600; text-decoration: none; }
+
+
+
+.edu-nav-logo-img {
+  width: 46px !important;
+  height: 46px !important;
+  object-fit: contain !important;
+  filter: drop-shadow(0 2px 8px rgba(194, 136, 47, 0.4)) !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  display: block !important;
+}
+
+.edu-nav-brand:hover .edu-nav-logo-img {
+  transform: scale(1.08) !important;
+  filter: drop-shadow(0 4px 14px rgba(194, 136, 47, 0.6)) !important;
+}
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>edusphere-admission-auth</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>EduSphere Admission Auth</name>
+        <option_schema/>
+        <public>false</public>
+        <roles/>
+        <script><![CDATA[
+(function() {
+  data.isLoggedIn = gs.isLoggedIn();
+
+  if (input && input.action === 'register_applicant') {
+    var reg = input.reg || {};
+    var email = reg.email;
+    var name = reg.name;
+    var mobile = reg.mobile;
+    var dob = reg.dob;
+
+    // Check if sys_user exists
+    var userGR = new GlideRecord('sys_user');
+    userGR.addQuery('email', email);
+    userGR.query();
+    var userSysId;
+    if (userGR.next()) {
+      userSysId = userGR.getUniqueValue();
+    } else {
+      userGR.initialize();
+      userGR.setValue('user_name', email);
+      userGR.setValue('first_name', name.split(' ')[0] || name);
+      userGR.setValue('last_name', name.split(' ').slice(1).join(' ') || 'Applicant');
+      userGR.setValue('email', email);
+      userGR.setValue('mobile_phone', mobile);
+      userSysId = userGR.insert();
+
+      // Assign x_erp.applicant role
+      var roleGR = new GlideRecord('sys_user_role');
+      roleGR.addQuery('name', 'x_erp.applicant');
+      roleGR.query();
+      if (roleGR.next()) {
+        var userRoleGR = new GlideRecord('sys_user_has_role');
+        userRoleGR.initialize();
+        userRoleGR.setValue('user', userSysId);
+        userRoleGR.setValue('role', roleGR.getUniqueValue());
+        userRoleGR.insert();
+      }
+    }
+
+    // Check or create Draft Application
+    var appGR = new GlideRecord('x_1790229_edusph_0_admission_application');
+    appGR.addQuery('email', email);
+    appGR.addQuery('status', 'draft');
+    appGR.query();
+    var appSysId;
+    if (appGR.next()) {
+      appSysId = appGR.getUniqueValue();
+    } else {
+      appGR.initialize();
+      appGR.setValue('name', name);
+      appGR.setValue('email', email);
+      appGR.setValue('mobile', mobile);
+      appGR.setValue('date_of_birth', dob);
+      appGR.setValue('status', 'draft');
+      appGR.setValue('category', 'general');
+      appSysId = appGR.insert();
+    }
+
+    data.registered = true;
+    data.appSysId = appSysId;
+  }
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>developer.abhinav</sys_created_by>
+        <sys_created_on>2026-11-16 10:34:36</sys_created_on>
+        <sys_id>4223c19ec3ac5f10d70532f1b401314a</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>EduSphere Admission Auth</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sp_widget_4223c19ec3ac5f10d70532f1b401314a</sys_update_name>
+        <sys_updated_by>developer.abhinav</sys_updated_by>
+        <sys_updated_on>2026-11-16 12:41:35</sys_updated_on>
+        <template><![CDATA[
+<div class="edu-landing-root">
+  <!-- NAVBAR -->
+  <nav class="edu-nav">
+    <div class="edu-nav-inner">
+      <a href="?id=admission_home" class="edu-nav-brand">
+        <img src="x_1790229_edusph_0.Edusphere%20Logo.svg?v=68ce119ac3a09f10d70532f1b40131b4" alt="EduSphere" class="edu-nav-logo-img" />
+        <span>EduSphere</span>
+      </a>
+      <div class="edu-nav-links">
+        <a href="?id=admission_home" class="edu-nav-link">Home</a>
+        <a href="?id=admission_apply" class="edu-nav-link">Apply</a>
+        <a href="?id=admission_dashboard" class="edu-nav-link">Track Status</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="edu-auth-wrapper">
+    <div class="edu-auth-container animate-in">
+      <!-- TABS: Sign In / Register -->
+      <div class="edu-auth-tabs">
+        <button class="edu-auth-tab" ng-class="{'active': c.tab === 'register'}" ng-click="c.tab = 'register'">
+          New Applicant Registration
+        </button>
+        <button class="edu-auth-tab" ng-class="{'active': c.tab === 'login'}" ng-click="c.tab = 'login'">
+          Sign In
+        </button>
+      </div>
+
+      <!-- REGISTRATION FORM -->
+      <div ng-if="c.tab === 'register'" class="edu-auth-card animate-in">
+        <div class="edu-auth-header">
+          <h2>Create Your Applicant Account</h2>
+          <p>Register once to apply and track your admission progress.</p>
+        </div>
+
+        <form ng-submit="c.registerApplicant()">
+          <div class="edu-field edu-field-required">
+            <label class="edu-label">Full Legal Name</label>
+            <input class="edu-input" type="text" ng-model="c.reg.name" placeholder="As on 10th Certificate" required />
+          </div>
+
+          <div class="edu-field edu-field-required">
+            <label class="edu-label">Email Address</label>
+            <input class="edu-input" type="email" ng-model="c.reg.email" placeholder="name@example.com" required />
+          </div>
+
+          <div class="edu-field edu-field-required">
+            <label class="edu-label">Mobile Number</label>
+            <input class="edu-input" type="tel" ng-model="c.reg.mobile" placeholder="10-digit mobile number" maxlength="10" required />
+          </div>
+
+          <div class="edu-field edu-field-required">
+            <label class="edu-label">Date of Birth</label>
+            <input class="edu-input" type="date" ng-model="c.reg.dob" required />
+          </div>
+
+          <button type="submit" class="edu-btn edu-btn-primary edu-btn-lg" style="width:100%" ng-disabled="c.loading">
+            <span ng-if="!c.loading">Register &amp; Start Application</span>
+            <span ng-if="c.loading">Creating Account...</span>
+          </button>
+        </form>
+
+        <div class="edu-auth-footer">
+          Already registered? <a href="#" ng-click="c.tab = 'login'">Sign In here</a>
+        </div>
+      </div>
+
+      <!-- SIGN IN FORM -->
+      <div ng-if="c.tab === 'login'" class="edu-auth-card animate-in">
+        <div class="edu-auth-header">
+          <h2>Sign In to Admissions</h2>
+          <p>Enter your applicant credentials to access your dashboard.</p>
+        </div>
+
+        <form ng-submit="c.loginApplicant()">
+          <div class="edu-field edu-field-required">
+            <label class="edu-label">Email / Username</label>
+            <input class="edu-input" type="text" ng-model="c.login.user" placeholder="Registered Email or Username" required />
+          </div>
+
+          <div class="edu-field edu-field-required">
+            <label class="edu-label">Password</label>
+            <input class="edu-input" type="password" ng-model="c.login.pass" placeholder="Enter password" required />
+          </div>
+
+          <button type="submit" class="edu-btn edu-btn-primary edu-btn-lg" style="width:100%" ng-disabled="c.loading">
+            <span ng-if="!c.loading">Sign In</span>
+            <span ng-if="c.loading">Authenticating...</span>
+          </button>
+        </form>
+
+        <div class="edu-auth-footer">
+          Don't have an account? <a href="#" ng-click="c.tab = 'register'">Register now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>
