@@ -4,7 +4,7 @@
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Type" max_length="32" name="type" reference="x_1790229_edusph_0_leave_type" type="reference"/>
         <element label="Used" max_length="255" name="used" type="string"/>
         <element label="Carried" max_length="255" name="carried" type="string"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Employee" mandatory="true" max_length="32" name="employee" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Employee" mandatory="true" max_length="32" name="employee" reference="x_1790229_edusph_0_employee" reference_qual="javascript: new CollegeReferenceQualifier().getEmployeesForLoggedInUserCollege();" type="reference" use_reference_qualifier="advanced"/>
         <element label="Entitled" max_length="255" name="entitled" type="string"/>
         <index name="index">
             <element name="employee"/>

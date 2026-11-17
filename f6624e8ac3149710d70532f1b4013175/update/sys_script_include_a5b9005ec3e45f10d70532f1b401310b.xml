@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1790229_edusph_0.ExaminationRefQual </api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>ExaminationRefQual </name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var ExaminationRefQual = Class.create();
+ExaminationRefQual.prototype = {
+    initialize: function() {},
+
+  // exam event 
+    getLoggedInCollege: function() {
+		
+        var emp = new GlideRecord('x_1790229_edusph_0_employee');
+        emp.addQuery('user', gs.getUserID());
+        emp.addQuery('active', true);
+        emp.setLimit(1);
+        emp.query();
+
+        if (emp.next()) {
+            var collegeId = emp.getValue('college');
+       
+            var college = new GlideRecord('x_1790229_edusph_0_college');
+            college.addQuery('sys_id', collegeId);
+            college.addQuery('status', 'active');
+            college.setLimit(1);
+            college.query();
+          
+            if (college.next()) {
+                 return 'sys_idIN=' + collegeId;
+            }
+        }
+
+        return "sys_idINempty" ;
+    },
+
+	getSemesterByCollege: function(collegeId) {
+
+    if (!collegeId) {
+        return 'sys_idINempty';
+    }
+
+    return 'college=' + collegeId;
+},
+  
+ 
+ // Exam Schedule 	
+getExamByCollege: function() {
+
+    var collegeQuery = this.getLoggedInCollege();
+
+    if (!collegeQuery || collegeQuery == 'sys_idINempty') {
+        return 'sys_idINempty';
+    }
+
+    return collegeQuery;
+},
+
+getCourseByExam: function(examId) {
+
+    if (!examId) {
+        return 'sys_idINempty';
+    }
+
+    // Get selected Exam Event
+    var exam = new GlideRecord('x_1790229_edusph_0_exam_event');
+
+    if (!exam.get(examId)) {
+        return 'sys_idINempty';
+    }
+
+    // Get College associated with selected Exam
+    var collegeId = exam.getValue('college');
+
+    if (!collegeId) {
+        return 'sys_idINempty';
+    }
+
+    // Get University's College
+    var college = new GlideRecord('x_1790229_edusph_0_college');
+
+    if (!college.get(collegeId)) {
+        return 'sys_idINempty';
+    }
+
+    var universityId = college.getValue('university');
+
+    if (!universityId) {
+        return 'sys_idINempty';
+    }
+
+    // Return courses belonging to that University
+    return 'university=' + universityId;
+},
+
+  // seating Plan
+
+	getRoomByCollege: function() {
+
+    var collegeQuery = this.getLoggedInCollege();
+
+    if (!collegeQuery || collegeQuery == 'sys_idINempty') {
+        return 'sys_idINempty';
+    }
+
+    var collegeId = collegeQuery.replace('sys_idIN=', '');
+
+    return 'college=' + collegeId;
+},
+
+   // seat Assignment 
+
+  getFinalizedPlanByCollege: function() {
+
+    var collegeId = this.getLoggedInCollege();
+
+    gs.info('Seat Plan Qualifier - College ID: ' + collegeId);
+
+    if (!collegeId) {
+        return 'sys_id=-1';
+    }
+
+    var plan = new GlideRecord('x_1790229_edusph_0_seating_plan');
+
+    plan.addQuery('finalized', true);
+    plan.addQuery('exam.college', collegeId);
+    plan.query();
+
+    var planIds = [];
+
+    while (plan.next()) {
+        planIds.push(plan.getUniqueValue());
+    }
+
+    gs.info('Seat Plan Qualifier - Matching Plans: ' + planIds.length);
+
+    if (planIds.length > 0) {
+        return 'sys_idIN' + planIds.join(',');
+    }
+
+    return 'sys_id=-1';
+},
+
+getStudentByCollege: function() {
+
+    var collegeId = this.getLoggedInCollege();
+    if (!collegeId) {
+        return 'sys_idINempty';
+    }
+
+    return 'college=' + collegeId;
+},
+
+
+ // hall ticket 
+
+ getStudentByExam: function(examId) {
+
+    var collegeId = this.getLoggedInCollege();
+    
+    if (!collegeId || !examId) {
+        return 'sys_idINempty';
+    }
+
+    // Get selected Exam Event
+    var exam = new GlideRecord('x_1790229_edusph_0_exam_event');
+
+    if (!exam.get(examId)) {
+        return 'sys_idINempty';
+    }
+
+    // Get College and Semester from Exam
+    var examCollege = exam.getValue('college');
+    var semesterId = exam.getValue('semester');
+
+    // Validate Exam belongs to logged-in user's College
+    if (examCollege != collegeId || !semesterId) {
+        return 'sys_idINempty';
+    }
+
+    // Filter Students by College and Semester
+    return 'college=' + collegeId +
+           '^semester=' + semesterId;
+},
+
+// mark
+
+ getOfferingByStudent: function(studentId) {
+
+    if (!studentId) {
+        return 'sys_idINempty';
+    }
+
+    // Get selected Student
+    var student = new GlideRecord('x_1790229_edusph_0_student');
+
+    if (!student.get(studentId)) {
+        return 'sys_idINempty';
+    }
+
+    var collegeId = student.getValue('college');
+    var semesterId = student.getValue('semester');
+    var sectionId = student.getValue('section');
+
+    if (!collegeId || !semesterId || !sectionId) {
+        return 'sys_idINempty';
+    }
+
+    // Match College, Semester and Section
+    return 'college=' + collegeId +
+           '^semester=' + semesterId +
+           '^section=' + sectionId;
+},
+
+// Result 
+
+ getSemesterForLoggedInCollege: function() {
+
+    var collegeId = this.getLoggedInCollege();
+
+    if (!collegeId) {
+        return 'sys_idINempty';
+    }
+
+    return 'college=' + collegeId;
+},
+
+ getStudentsBySemester: function(semesterId) {
+
+    var collegeId = this.getLoggedInCollege();
+
+    if (!collegeId || !semesterId) {
+        return 'sys_idINempty';
+    }
+
+    return 'college=' + collegeId +
+           '^semester=' + semesterId;
+},
+
+// backlog 
+
+  getEligibleBacklogStudents: function() {
+
+    var collegeId = this.getLoggedInCollege();
+
+    if (!collegeId) {
+        return 'sys_idINempty';
+    }
+
+    var eligibleStudents = {};
+
+    var mark = new GlideRecord('x_1790229_edusph_0_mark');
+    mark.addQuery('obtained', '<', 36);
+    mark.query();
+
+    while (mark.next()) {
+
+        var studentId = mark.getValue('student');
+
+        if (!studentId) {
+            continue;
+        }
+
+        var student = new GlideRecord('x_1790229_edusph_0_student');
+
+        if (student.get(studentId) &&
+            student.getValue('college') == collegeId) {
+
+            eligibleStudents[studentId] = true;
+        }
+    }
+
+    var studentIds = Object.keys(eligibleStudents);
+
+    if (studentIds.length > 0) {
+        return 'sys_idIN' + studentIds.join(',');
+    }
+
+    return 'sys_idINempty';
+},
+
+getEligibleBacklogCourses: function(studentId) {
+
+    if (!studentId) {
+        return 'sys_idINempty';
+    }
+
+    var eligibleCourses = {};
+
+    var mark = new GlideRecord('x_1790229_edusph_0_mark');
+    mark.addQuery('student', studentId);
+    mark.addQuery('obtained', '<', 36);
+    mark.query();
+
+    while (mark.next()) {
+
+        var offeringId = mark.getValue('offering');
+
+        if (!offeringId) {
+            continue;
+        }
+
+        var offering = new GlideRecord(
+            'x_1790229_edusph_0_course_offering'
+        );
+
+        if (offering.get(offeringId)) {
+
+            var courseId = offering.getValue('course');
+
+            if (courseId) {
+                eligibleCourses[courseId] = true;
+            }
+        }
+    }
+
+    var courseIds = Object.keys(eligibleCourses);
+
+    if (courseIds.length > 0) {
+        return 'sys_idIN' + courseIds.join(',');
+    }
+
+    return 'sys_idINempty';
+},
+
+ getPaidFeeByStudent: function(studentId) {
+
+    if (!studentId) {
+        return 'sys_idINempty';
+    }
+
+    return 'student=' + studentId + '^status=paid';
+},
+
+getPaymentByFee: function(feeId) {
+
+    if (!feeId) {
+        return 'sys_idINempty';
+    }
+
+    return 'fee=' + feeId;
+},
+
+getBacklogExamByCollege: function() {
+
+    var collegeId = this.getLoggedInCollege();
+
+    if (!collegeId) {
+        return 'sys_idINempty';
+    }
+
+    return 'college=' + collegeId + '^type=backlog';
+},
+    type: 'ExaminationRefQual'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Developer-Rakshit</sys_created_by>
+        <sys_created_on>2026-11-16 06:25:45</sys_created_on>
+        <sys_id>a5b9005ec3e45f10d70532f1b401310b</sys_id>
+        <sys_mod_count>32</sys_mod_count>
+        <sys_name>ExaminationRefQual </sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_script_include_a5b9005ec3e45f10d70532f1b401310b</sys_update_name>
+        <sys_updated_by>Developer-Rakshit</sys_updated_by>
+        <sys_updated_on>2026-11-16 10:07:54</sys_updated_on>
+    </sys_script_include>
+</record_update>

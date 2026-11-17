@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="7d2aebe2c3589b10d70532f1b4013163" label="Backlog Registration" max_length="40" name="x_1790229_edusph_0_backlog_registration" type="collection">
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Course" mandatory="true" max_length="32" name="course" reference="x_1790229_edusph_0_course" type="reference"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Fee" max_length="32" name="fee" reference="x_1790229_edusph_0_student_fee" type="reference"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Payment" max_length="32" name="payment" reference="x_1790229_edusph_0_payment_transaction" type="reference"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Exam event" mandatory="true" max_length="32" name="exam_event" reference="x_1790229_edusph_0_exam_event" type="reference"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Course" mandatory="true" max_length="32" name="course" reference="x_1790229_edusph_0_course" reference_qual="javascript:new ExaminationRefQual().getEligibleBacklogCourses(current.getValue('student'));" type="reference" use_reference_qualifier="advanced"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Fee" max_length="32" name="fee" reference="x_1790229_edusph_0_student_fee" reference_qual="javascript:new ExaminationRefQual().getPaidFeeByStudent(current.getValue('student'));" type="reference" use_reference_qualifier="advanced"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Payment" max_length="32" name="payment" reference="x_1790229_edusph_0_payment_transaction" reference_qual="javascript:new ExaminationRefQual().getPaymentByFee(current.getValue('fee'));" type="reference" use_reference_qualifier="advanced"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Exam event" mandatory="true" max_length="32" name="exam_event" reference="x_1790229_edusph_0_exam_event" reference_qual="javascript:new ExaminationRefQual().getBacklogExamByCollege();" type="reference" use_reference_qualifier="advanced"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" reference_qual="javascript:new ExaminationRefQual().getEligibleBacklogStudents();" type="reference" use_reference_qualifier="advanced"/>
         <element label="Registered on" max_length="40" name="registered_on" type="glide_date_time"/>
         <element attributes="edge_encryption_enabled=true" choice="1" label="Status" mandatory="true" max_length="40" name="status" type="choice">
             <choice>

@@ -3,7 +3,7 @@
         <element label="Decision notes" max_length="255" name="decision_notes" type="string"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Approver" max_length="32" name="approver" reference="x_1790229_edusph_0_employee" type="reference"/>
         <element label="Reason" max_length="255" name="reason" type="string"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Employee" mandatory="true" max_length="32" name="employee" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Employee" mandatory="true" max_length="32" name="employee" reference="x_1790229_edusph_0_employee" reference_qual="javascript: new CollegeReferenceQualifier().getEmployeesForLoggedInUserCollege();" type="reference" use_reference_qualifier="advanced"/>
         <element label="To Date" max_length="40" name="to_date" type="glide_date"/>
         <element attributes="edge_encryption_enabled=true" label="Attachment" max_length="40" name="attachment" type="file_attachment"/>
         <element label="Days" max_length="255" name="days" type="string"/>

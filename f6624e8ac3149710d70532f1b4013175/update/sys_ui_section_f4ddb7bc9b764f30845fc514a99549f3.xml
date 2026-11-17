@@ -3,70 +3,84 @@
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>name</element>
             <position>0</position>
-            <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-11 06:47:34</sys_created_on>
-            <sys_id>b73f5a28c3209310d70532f1b40131f4</sys_id>
+            <sys_created_by>Developer-Rakshit</sys_created_by>
+            <sys_created_on>2026-11-13 08:58:05</sys_created_on>
+            <sys_id>43401199c3ac9710d70532f1b40131d6</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Program Record Details" display_value="Program Record Details" name="x_1790229_edusph_0_program" sys_domain="global" view="Default view">f4ddb7bc9b764f30845fc514a99549f3</sys_ui_section>
-            <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-11 06:47:34</sys_updated_on>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-13 08:58:05</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>code</element>
             <position>1</position>
-            <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-11 06:47:34</sys_created_on>
-            <sys_id>373f5a28c3209310d70532f1b40131f5</sys_id>
+            <sys_created_by>Developer-Rakshit</sys_created_by>
+            <sys_created_on>2026-11-13 08:58:05</sys_created_on>
+            <sys_id>cf401199c3ac9710d70532f1b40131d6</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Program Record Details" display_value="Program Record Details" name="x_1790229_edusph_0_program" sys_domain="global" view="Default view">f4ddb7bc9b764f30845fc514a99549f3</sys_ui_section>
-            <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-11 06:47:34</sys_updated_on>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-13 08:58:05</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>active</element>
+            <position>2</position>
+            <sys_created_by>Developer-Rakshit</sys_created_by>
+            <sys_created_on>2026-11-13 08:58:05</sys_created_on>
+            <sys_id>4f401199c3ac9710d70532f1b40131d7</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Program Record Details" display_value="Program Record Details" name="x_1790229_edusph_0_program" sys_domain="global" view="Default view">f4ddb7bc9b764f30845fc514a99549f3</sys_ui_section>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-13 08:58:05</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>.split</element>
-            <position>2</position>
-            <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-11 06:47:34</sys_created_on>
-            <sys_id>b33f5a28c3209310d70532f1b40131f6</sys_id>
+            <position>3</position>
+            <sys_created_by>Developer-Rakshit</sys_created_by>
+            <sys_created_on>2026-11-13 08:58:05</sys_created_on>
+            <sys_id>cb401199c3ac9710d70532f1b40131d8</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Program Record Details" display_value="Program Record Details" name="x_1790229_edusph_0_program" sys_domain="global" view="Default view">f4ddb7bc9b764f30845fc514a99549f3</sys_ui_section>
-            <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-11 06:47:34</sys_updated_on>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-13 08:58:05</sys_updated_on>
             <sys_user/>
             <type>.split</type>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>university</element>
-            <position>3</position>
-            <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-11 06:47:34</sys_created_on>
-            <sys_id>333f5a28c3209310d70532f1b40131f7</sys_id>
+            <position>4</position>
+            <sys_created_by>Developer-Rakshit</sys_created_by>
+            <sys_created_on>2026-11-13 08:58:05</sys_created_on>
+            <sys_id>4b401199c3ac9710d70532f1b40131d9</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Program Record Details" display_value="Program Record Details" name="x_1790229_edusph_0_program" sys_domain="global" view="Default view">f4ddb7bc9b764f30845fc514a99549f3</sys_ui_section>
-            <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-11 06:47:34</sys_updated_on>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-13 08:58:05</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>duration_sem</element>
-            <position>4</position>
-            <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-11 06:47:34</sys_created_on>
-            <sys_id>f33f9a28c3209310d70532f1b401311d</sys_id>
+            <position>5</position>
+            <sys_created_by>Developer-Rakshit</sys_created_by>
+            <sys_created_on>2026-11-13 08:58:05</sys_created_on>
+            <sys_id>c7401199c3ac9710d70532f1b40131da</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Program Record Details" display_value="Program Record Details" name="x_1790229_edusph_0_program" sys_domain="global" view="Default view">f4ddb7bc9b764f30845fc514a99549f3</sys_ui_section>
-            <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-11 06:47:34</sys_updated_on>
+            <sys_updated_by>Developer-Rakshit</sys_updated_by>
+            <sys_updated_on>2026-11-13 08:58:05</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>

@@ -23,10 +23,10 @@
             </choice>
         </element>
         <element label="Return notes" max_length="255" name="return_notes" type="string"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Holder" max_length="32" name="holder" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Holder" max_length="32" name="holder" reference="sys_user" reference_qual="javascript:new CampusAssetRefQual().getHolderByCollege();" type="reference" use_reference_qualifier="advanced"/>
         <element label="From Date" max_length="40" name="from_date" type="glide_date"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Asset" max_length="32" name="asset" reference="alm_asset" type="reference"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Allocated by" max_length="32" name="allocated_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Allocated by" max_length="32" name="allocated_by" reference="x_1790229_edusph_0_employee" reference_qual="javascript:new CampusAssetRefQual().getAllocatedByByCollege();" type="reference" use_reference_qualifier="advanced"/>
         <index name="index">
             <element name="allocated_by"/>
         </index>

@@ -2,7 +2,7 @@
     <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="e1a96762c3589b10d70532f1b40131b5" label="Academic Year" max_length="40" name="x_1790229_edusph_0_academic_year" type="collection">
         <element label="Start Date" mandatory="true" max_length="40" name="start_date" type="glide_date"/>
         <element attributes="edge_encryption_enabled=true" default="true" label="Active" mandatory="true" max_length="40" name="active" type="boolean"/>
-        <element label="Label" max_length="100" name="label" type="string"/>
+        <element display="true" label="Label" max_length="100" name="label" type="string"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="University" mandatory="true" max_length="32" name="university" reference="x_1790229_edusph_0_university" reference_qual="active=true^EQ" reference_qual_condition="active=true^EQ" type="reference"/>
         <element label="End Date" max_length="40" name="end_date" type="glide_date"/>
         <index name="index">

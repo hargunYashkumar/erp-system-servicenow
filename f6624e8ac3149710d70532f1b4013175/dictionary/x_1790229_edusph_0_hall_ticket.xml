@@ -3,8 +3,8 @@
         <element attributes="edge_encryption_enabled=true" label="Fee Ok" mandatory="true" max_length="40" name="fee_ok" type="boolean"/>
         <element label="Approval2" max_length="100" name="approval2" type="string"/>
         <element attributes="edge_encryption_enabled=true" label="Attendance Ok" mandatory="true" max_length="40" name="attendance_ok" type="boolean"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" type="reference"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Exam" max_length="32" name="exam" reference="x_1790229_edusph_0_exam_event" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" reference_qual="javascript:new ExaminationRefQual().getStudentByExam(current.getValue('exam'));" type="reference" use_reference_qualifier="advanced"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Exam" max_length="32" name="exam" reference="x_1790229_edusph_0_exam_event" reference_qual="javascript:new ExaminationRefQual().getExamByCollege();" type="reference" use_reference_qualifier="advanced"/>
         <element label="Issued On" max_length="40" name="issued_on" type="glide_date_time"/>
         <element label="Approval1" max_length="100" name="approval1" type="string"/>
         <element label="Rejection Reason" max_length="255" name="rejection_reason" type="string"/>

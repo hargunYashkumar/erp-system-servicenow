@@ -3,9 +3,9 @@
         <element label="Total" max_length="255" name="total" type="string"/>
         <element label="Published on" max_length="40" name="published_on" type="glide_date_time"/>
         <element label="External" max_length="255" name="external" type="string"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Semester" mandatory="true" max_length="32" name="semester" reference="x_1790229_edusph_0_semester" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Semester" mandatory="true" max_length="32" name="semester" reference="x_1790229_edusph_0_semester" reference_qual="javascript:new ExaminationRefQual().getSemesterForLoggedInCollege();" type="reference" use_reference_qualifier="advanced"/>
         <element attributes="edge_encryption_enabled=true" label="Published" mandatory="true" max_length="40" name="published" type="boolean"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" reference_qual="javascript:new ExaminationRefQual().getStudentsBySemester(current.getValue('semester'));" type="reference" use_reference_qualifier="advanced"/>
         <element label="Grade" max_length="255" name="grade" type="string"/>
         <element label="Internal" max_length="255" name="internal" type="string"/>
         <index name="index">

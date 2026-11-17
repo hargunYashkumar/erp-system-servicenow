@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1790229_edusph_0.CollegeReferenceQualifier</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>CollegeReferenceQualifier</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var CollegeReferenceQualifier = Class.create();
+CollegeReferenceQualifier.prototype = {
+    initialiCollegeReferenceQualifiere: function() {},
+
+    getCourseOfferingsForLoggedInEmployee: function() {
+        var userId = gs.getUserID();
+
+        var employee = new GlideRecord('x_1790229_edusph_0_employee');
+
+        employee.addQuery('user', userId);
+        employee.setLimit(1);
+        employee.query();
+
+        if (!employee.next()) {
+            return 'sys_idISEMPTY';
+        }
+
+        if (employee.getValue('college') == '') {
+            return 'sys_idISEMPTY';
+        }
+
+        var collegeId = employee.getValue('college');
+
+        return 'college=' + collegeId;
+    },
+
+
+    getRoomsForCurrentCollege: function() {
+
+        var employee = new GlideRecord(
+            'x_1790229_edusph_0_employee'
+        );
+
+        employee.addQuery('user', gs.getUserID());
+        employee.setLimit(1);
+        employee.query();
+
+        if (!employee.next()) {
+            return 'sys_idISEMPTY';
+        }
+
+        var collegeId = employee.getValue('college');
+
+        if (!collegeId) {
+            return 'sys_idISEMPTY';
+        }
+
+        return 'college=' + collegeId;
+    },
+
+    getEmployeesForLoggedInUserCollege: function() {
+
+        // Get logged-in user
+        var userId = gs.getUserID();
+
+        // Find logged-in user's Employee record
+        var employee = new GlideRecord('x_1790229_edusph_0_employee');
+        employee.addQuery('user', userId);
+        employee.addQuery('active', true);
+        employee.setLimit(1);
+        employee.query();
+
+        // If employee record not found
+        if (!employee.next()) {
+            return 'sys_idISEMPTY';
+        }
+
+        // Get logged-in employee's College
+        var collegeId = employee.getValue('college');
+
+        if (!collegeId) {
+            return 'sys_idISEMPTY';
+        }
+
+        // Return employees from same college
+        return 'college=' + collegeId + '^active=true';
+    },
+
+
+    getStudentsForCurrentCollege: function() {
+
+        var employee = new GlideRecord(
+            'x_1790229_edusph_0_employee'
+        );
+
+        employee.addQuery('user', gs.getUserID());
+        employee.setLimit(1);
+        employee.query();
+
+        if (!employee.next()) {
+            return 'sys_idISEMPTY';
+        }
+
+        var collegeId = employee.getValue('college');
+
+        if (!collegeId) {
+            return 'sys_idISEMPTY';
+        }
+
+        return 'college=' + collegeId;
+    },
+
+    getSemestersForCurrentCollege: function() {
+
+        var employee = new GlideRecord(
+            'x_1790229_edusph_0_employee'
+        );
+
+        employee.addQuery('user', gs.getUserID());
+        employee.setLimit(1);
+        employee.query();
+
+        if (!employee.next()) {
+            return 'sys_idISEMPTY';
+        }
+
+        var collegeId = employee.getValue('college');
+
+        if (!collegeId) {
+            return 'sys_idISEMPTY';
+        }
+
+        return 'college=' + collegeId;
+    },
+
+
+
+
+    getEligibleStudentsForCurrentCollege: function() {
+
+        // Get logged-in Employee
+        var employee = new GlideRecord(
+            'x_1790229_edusph_0_employee'
+        );
+
+        employee.addQuery('user', gs.getUserID());
+        employee.setLimit(1);
+        employee.query();
+
+        if (!employee.next()) {
+            return 'sys_idISEMPTY';
+        }
+
+        var collegeId = employee.getValue('college');
+
+        if (!collegeId) {
+            return 'sys_idISEMPTY';
+        }
+
+        // Get selected Semester from EligibilityApplication
+        var semesterId = current.getValue(
+            'semester'
+        );
+
+        if (!semesterId) {
+            return 'sys_idISEMPTY';
+        }
+
+        // Find AttendanceSummary records below 75%
+        var attendance = new GlideRecord('x_1790229_edusph_0_attendance_summary');
+
+        attendance.addQuery('semester',semesterId);
+
+        attendance.addQuery('weighted_pct', '<', 75);
+        attendance.query();
+
+        var studentIds = [];
+
+        while (attendance.next()) {
+            var studentId = attendance.getValue('student');
+
+            if (studentId && studentIds.indexOf(studentId) === -1) {
+                studentIds.push(studentId);
+            }
+        }
+
+        if (studentIds.length === 0) {
+            return 'sys_idISEMPTY';
+        }
+
+        // Filter students by logged-in Employee's College
+        var students = new GlideRecord('x_1790229_edusph_0_student');
+
+        students.addQuery('college', collegeId);
+        students.addQuery('sys_id', 'IN', studentIds.join(','));
+        students.query();
+
+        var eligibleStudentIds = [];
+
+        while (students.next()) {
+            eligibleStudentIds.push(students.getUniqueValue());
+        }
+
+        return eligibleStudentIds.length > 0 ?
+            'sys_idIN' + eligibleStudentIds.join(',') :
+            'sys_idISEMPTY';
+    },
+	getAvailableDirectors: function() {
+
+    var userIds = [];
+
+    var roleGR = new GlideRecord('sys_user_has_role');
+    roleGR.addQuery('role.name', 'x_erp.director');
+    roleGR.addQuery('user.active', true);
+    roleGR.query();
+
+    while (roleGR.next()) {
+
+        var userId = roleGR.getValue('user');
+
+        if (userIds.indexOf(userId) !== -1) {
+            continue;
+        }
+
+        var collegeGR = new GlideRecord(
+            'x_1790229_edusph_0_college'
+        );
+
+        collegeGR.addQuery('director', userId);
+
+        if (current && !current.isNewRecord()) {
+            collegeGR.addQuery('sys_id', '!=', current.getUniqueValue());
+        }
+
+        collegeGR.setLimit(1);
+        collegeGR.query();
+
+        if (!collegeGR.hasNext()) {
+            userIds.push(userId);
+        }
+    }
+
+    return userIds.length > 0 ?
+        'sys_idIN' + userIds.join(',') :
+        'sys_idINempty';
+},
+
+getDirectorBySelectedCollege: function(current) {
+
+    var collegeId = current.getValue('college');
+
+    if (!collegeId) {
+        return 'sys_idINempty';
+    }
+
+    // Get selected College record
+    var collegeGR = new GlideRecord('x_1790229_edusph_0_college');
+
+    if (!collegeGR.get(collegeId)) {
+        return 'sys_idINempty';
+    }
+
+    // Get Director's sys_user reference
+    var directorId = collegeGR.getValue('director');
+    gs.addInfoMessage(directorId)
+    if (!directorId) {
+        return 'sys_idINempty';
+    }
+
+    // Verify Director through Employee record
+    var empGR = new GlideRecord('x_1790229_edusph_0_employee');
+    // empGR.addQuery('college', collegeId);
+    empGR.addQuery('sys_id', directorId);
+    empGR.addQuery('active', true);
+    empGR.setLimit(1);
+    empGR.query();
+	gs.addInfoMessage(empGR.getRowCount())
+
+    if (empGR.next()) {
+        return 'sys_idIN' + empGR.getValue('user');
+    }
+
+    return 'sys_idINempty';
+},
+
+getHODByCollege: function() {
+
+    var collegeId = current.getValue('college');
+
+    if (!collegeId) {
+        return 'sys_idINempty';
+    }
+
+    // Get users having HOD role
+    var userIds = [];
+
+    var roleGR = new GlideRecord('sys_user_has_role');
+    roleGR.addQuery('role.name', 'x_erp.hod');
+    roleGR.query();
+
+    while (roleGR.next()) {
+        var userId = roleGR.getValue('user');
+
+        if (userIds.indexOf(userId) == -1) {
+            userIds.push(userId);
+        }
+    }
+
+    if (userIds.length == 0) {
+        return 'sys_idINempty';
+    }
+
+    // Find Employees belonging to selected College
+    // and having a User with HOD role
+    var empIds = [];
+
+    var empGR = new GlideRecord('x_1790229_edusph_0_employee');
+    empGR.addQuery('college', collegeId);
+    empGR.addQuery('user', 'IN', userIds.join(','));
+    empGR.query();
+
+    while (empGR.next()) {
+        empIds.push(empGR.getUniqueValue());
+    }
+
+    return empIds.length > 0 ?
+        'sys_idIN' + empIds.join(',') :
+        'sys_idINempty';
+},
+
+    type: 'CollegeReferenceQualifier'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Developer-Vayu</sys_created_by>
+        <sys_created_on>2026-11-13 06:15:43</sys_created_on>
+        <sys_id>f4daac5dc3689710d70532f1b4013131</sys_id>
+        <sys_mod_count>22</sys_mod_count>
+        <sys_name>CollegeReferenceQualifier</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_script_include_f4daac5dc3689710d70532f1b4013131</sys_update_name>
+        <sys_updated_by>Developer-Rakshit</sys_updated_by>
+        <sys_updated_on>2026-11-17 05:14:43</sys_updated_on>
+    </sys_script_include>
+</record_update>

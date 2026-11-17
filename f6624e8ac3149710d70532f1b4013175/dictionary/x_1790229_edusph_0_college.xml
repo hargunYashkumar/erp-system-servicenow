@@ -11,7 +11,7 @@
         </element>
         <element display="true" label="Name" mandatory="true" max_length="121" name="name" type="string"/>
         <element label="Code" mandatory="true" max_length="121" name="code" type="string"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Director" max_length="32" name="director" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Director" max_length="32" name="director" reference="x_1790229_edusph_0_employee" reference_qual="javascript:new CollegeReferenceQualifier().getAvailableDirectors();" type="reference" use_reference_qualifier="advanced"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="University" mandatory="true" max_length="32" name="university" reference="x_1790229_edusph_0_university" reference_qual="active=true^EQ" reference_qual_condition="active=true^EQ" type="reference"/>
         <element label="Affiliation No" mandatory="true" max_length="121" name="affiliation_no" type="string"/>
         <index name="index">

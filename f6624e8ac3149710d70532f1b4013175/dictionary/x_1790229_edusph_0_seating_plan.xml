@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="b31a2be2c3589b10d70532f1b40131b3" label="Seating Plan" max_length="40" name="x_1790229_edusph_0_seating_plan" type="collection">
         <element attributes="edge_encryption_enabled=true" label="Finalized" mandatory="true" max_length="40" name="finalized" type="boolean"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Exam" max_length="32" name="exam" reference="x_1790229_edusph_0_exam_event" type="reference"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Room" mandatory="true" max_length="32" name="room" reference="x_1790229_edusph_0_room" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Exam" max_length="32" name="exam" reference="x_1790229_edusph_0_exam_event" reference_qual="javascript:new ExaminationRefQual().getExamByCollege();" type="reference" use_reference_qualifier="advanced"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Room" mandatory="true" max_length="32" name="room" reference="x_1790229_edusph_0_room" reference_qual="javascript:new ExaminationRefQual().getRoomByCollege();" type="reference" use_reference_qualifier="advanced"/>
         <index name="index">
             <element name="exam"/>
         </index>

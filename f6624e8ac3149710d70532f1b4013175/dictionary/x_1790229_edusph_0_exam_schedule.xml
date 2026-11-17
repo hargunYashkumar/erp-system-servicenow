@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="671a2be2c3589b10d70532f1b401312e" label="Exam Schedule" max_length="40" name="x_1790229_edusph_0_exam_schedule" type="collection">
         <element label="Date" mandatory="true" max_length="40" name="date" type="glide_date"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Exam" max_length="32" name="exam" reference="x_1790229_edusph_0_exam_event" type="reference"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Course" mandatory="true" max_length="32" name="course" reference="x_1790229_edusph_0_course" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Exam" max_length="32" name="exam" reference="x_1790229_edusph_0_exam_event" reference_qual="javascript:new ExaminationRefQual().getExamByCollege();" type="reference" use_reference_qualifier="advanced"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Course" mandatory="true" max_length="32" name="course" reference="x_1790229_edusph_0_course" reference_qual="javascript:new ExaminationRefQual().getCourseByExam(current.getValue('exam'));" type="reference" use_reference_qualifier="advanced"/>
         <element label="Shift" max_length="100" name="shift" type="string"/>
         <index name="index">
             <element name="course"/>
