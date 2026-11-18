@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action">
+    <sys_ui_policy_action action="DELETE">
+        <cleared>false</cleared>
+        <disabled>true</disabled>
+        <field>room</field>
+        <field_message/>
+        <field_message_type>none</field_message_type>
+        <mandatory>ignore</mandatory>
+        <sys_class_name>sys_ui_policy_action</sys_class_name>
+        <sys_created_by>Developer-Rakshit</sys_created_by>
+        <sys_created_on>2026-11-18 05:43:56</sys_created_on>
+        <sys_id>73c39af2c3a09350d70532f1b401312c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>room</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_ui_policy_action_73c39af2c3a09350d70532f1b401312c</sys_update_name>
+        <sys_updated_by>Developer-Rakshit</sys_updated_by>
+        <sys_updated_on>2026-11-18 05:43:56</sys_updated_on>
+        <table>x_1790229_edusph_0_class_session</table>
+        <ui_policy/>
+        <value/>
+        <value_action>ignore</value_action>
+        <visible>ignore</visible>
+    </sys_ui_policy_action>
+    <sys_translated_text action="DELETE" query="documentkey=73c39af2c3a09350d70532f1b401312c"/>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</application>
+        <file_path/>
+        <instance_id>899734a8db923d582f082a5913961960</instance_id>
+        <instance_name>dev199710</instance_name>
+        <name>sys_ui_policy_action_73c39af2c3a09350d70532f1b401312c</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action"><sys_ui_policy_action action="INSERT_OR_UPDATE"><cleared>false</cleared><disabled>true</disabled><field>room</field><field_message/><field_message_type>none</field_message_type><mandatory>ignore</mandatory><sys_class_name>sys_ui_policy_action</sys_class_name><sys_created_by>Developer-Rakshit</sys_created_by><sys_created_on>2026-11-18 05:43:56</sys_created_on><sys_id>73c39af2c3a09350d70532f1b401312c</sys_id><sys_mod_count>0</sys_mod_count><sys_name>room</sys_name><sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package><sys_policy/><sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope><sys_update_name>sys_ui_policy_action_73c39af2c3a09350d70532f1b401312c</sys_update_name><sys_updated_by>Developer-Rakshit</sys_updated_by><sys_updated_on>2026-11-18 05:43:56</sys_updated_on><table>x_1790229_edusph_0_class_session</table><ui_policy/><value/><value_action>ignore</value_action><visible>ignore</visible></sys_ui_policy_action><sys_translated_text action="delete_multiple" query="documentkey=73c39af2c3a09350d70532f1b401312c"/></record_update>]]></payload>
+        <payload_hash>-806382091</payload_hash>
+        <record_name>room</record_name>
+        <reverted_from/>
+        <source>ffa2b334c3e41710d70532f1b4013170</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>Developer-Rakshit</sys_created_by>
+        <sys_created_on>2026-11-18 05:43:56</sys_created_on>
+        <sys_id>7fc39af2c3a09350d70532f1b40131d1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a1ed2ee60f0000001</sys_recorded_at>
+        <sys_updated_by>Developer-Rakshit</sys_updated_by>
+        <sys_updated_on>2026-11-18 05:43:56</sys_updated_on>
+        <type>UI Policy Action</type>
+        <update_guid>fbc39af2e0a093501ec54264cc0a9dd0</update_guid>
+        <update_guid_history>fbc39af2e0a093501ec54264cc0a9dd0:-806382091</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>Developer-Rakshit</sys_created_by>
+        <sys_created_on>2026-11-18 05:46:45</sys_created_on>
+        <sys_db_object display_value="" name="sys_ui_policy_action">sys_ui_policy_action</sys_db_object>
+        <sys_id>32b284ede1804ee0abad382c0a27c400</sys_id>
+        <sys_metadata>73c39af2c3a09350d70532f1b401312c</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>room</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_scope_delete display_value="">496efbe1a9de4fe0a3807b4e0edc8400</sys_scope_delete>
+        <sys_update_name>sys_ui_policy_action_73c39af2c3a09350d70532f1b401312c</sys_update_name>
+        <sys_update_version display_value="sys_ui_policy_action_73c39af2c3a09350d70532f1b401312c">7fc39af2c3a09350d70532f1b40131d1</sys_update_version>
+        <sys_updated_by>Developer-Rakshit</sys_updated_by>
+        <sys_updated_on>2026-11-18 05:46:45</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

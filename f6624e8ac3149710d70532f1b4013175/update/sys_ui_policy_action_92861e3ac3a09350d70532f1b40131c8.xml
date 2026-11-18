@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action">
+    <sys_ui_policy_action action="INSERT_OR_UPDATE">
+        <cleared>false</cleared>
+        <disabled>true</disabled>
+        <field>type</field>
+        <field_message/>
+        <field_message_type>none</field_message_type>
+        <mandatory>ignore</mandatory>
+        <sys_class_name>sys_ui_policy_action</sys_class_name>
+        <sys_created_by>Developer-Rakshit</sys_created_by>
+        <sys_created_on>2026-11-18 05:55:51</sys_created_on>
+        <sys_id>92861e3ac3a09350d70532f1b40131c8</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>type</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_ui_policy_action_92861e3ac3a09350d70532f1b40131c8</sys_update_name>
+        <sys_updated_by>Developer-Rakshit</sys_updated_by>
+        <sys_updated_on>2026-11-18 05:56:24</sys_updated_on>
+        <table>x_1790229_edusph_0_class_session</table>
+        <ui_policy display_value="Make all fields read-only when session status is Completed">f932d2bec3609350d70532f1b4013179</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
+        <visible>ignore</visible>
+    </sys_ui_policy_action>
+    <sys_translated_text action="delete_multiple" query="documentkey=92861e3ac3a09350d70532f1b40131c8"/>
+</record_update>
