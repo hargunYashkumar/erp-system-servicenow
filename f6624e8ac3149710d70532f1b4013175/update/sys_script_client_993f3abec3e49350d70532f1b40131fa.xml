@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description/>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>Validate Event Details on Submit</name>
+        <order>100</order>
+        <script><![CDATA[function onSubmit() {
+    var start = g_form.getValue('start');
+    var end = g_form.getValue('end');
+    var capStr = g_form.getValue('capacity');
+    var entryFeeStr = g_form.getValue('entry_fee');
+    var sponsorAmtStr = g_form.getValue('sponsor_amount');
+
+    g_form.clearMessages();
+
+    if (start && end && start >= end) {
+        g_form.addErrorMessage('Start date must be before End date.');
+        return false;
+    }
+
+    if (capStr !== '') {
+        var capacity = parseInt(capStr, 10);
+        if (isNaN(capacity) || capacity <= 0) {
+            g_form.addErrorMessage('Capacity must be a positive integer.');
+            return false;
+        }
+    }
+
+    if (entryFeeStr !== '') {
+        var entryFee = parseFloat(entryFeeStr.replace(/[^0-9.-]/g, ''));
+        if (!isNaN(entryFee) && entryFee < 0) {
+            g_form.addErrorMessage('Entry Fee cannot be negative.');
+            return false;
+        }
+    }
+
+    if (sponsorAmtStr !== '') {
+        var sponsorAmt = parseFloat(sponsorAmtStr.replace(/[^0-9.-]/g, ''));
+        if (!isNaN(sponsorAmt) && sponsorAmt < 0) {
+            g_form.addErrorMessage('Sponsor Amount cannot be negative.');
+            return false;
+        }
+    }
+    return true;
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>Developer-Hemendra</sys_created_by>
+        <sys_created_on>2026-11-18 08:53:32</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>993f3abec3e49350d70532f1b40131fa</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Validate Event Details on Submit</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_script_client_993f3abec3e49350d70532f1b40131fa</sys_update_name>
+        <sys_updated_by>Developer-Hemendra</sys_updated_by>
+        <sys_updated_on>2026-11-18 08:53:32</sys_updated_on>
+        <table>x_1790229_edusph_0_event</table>
+        <type>onSubmit</type>
+        <ui_type>10</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>

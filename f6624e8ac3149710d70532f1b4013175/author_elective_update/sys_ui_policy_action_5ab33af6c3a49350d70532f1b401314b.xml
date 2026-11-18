@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action">
+    <sys_ui_policy_action action="DELETE">
+        <cleared>false</cleared>
+        <disabled>true</disabled>
+        <field>label</field>
+        <field_message/>
+        <field_message_type>none</field_message_type>
+        <mandatory>ignore</mandatory>
+        <sys_class_name>sys_ui_policy_action</sys_class_name>
+        <sys_created_by>Developer-Hemendra</sys_created_by>
+        <sys_created_on>2026-11-18 08:03:24</sys_created_on>
+        <sys_id>5ab33af6c3a49350d70532f1b401314b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>label</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_ui_policy_action_5ab33af6c3a49350d70532f1b401314b</sys_update_name>
+        <sys_updated_by>Developer-Hemendra</sys_updated_by>
+        <sys_updated_on>2026-11-18 08:03:24</sys_updated_on>
+        <table>x_1790229_edusph_0_academic_year</table>
+        <ui_policy display_value="Make Academic Year fields read-only when inactive">42a6aa7ec3249350d70532f1b40131be</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
+        <visible>ignore</visible>
+    </sys_ui_policy_action>
+    <sys_translated_text action="DELETE" query="documentkey=5ab33af6c3a49350d70532f1b401314b"/>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</application>
+        <file_path/>
+        <instance_id>899734a8db923d582f082a5913961960</instance_id>
+        <instance_name>dev199710</instance_name>
+        <name>sys_ui_policy_action_5ab33af6c3a49350d70532f1b401314b</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action"><sys_ui_policy_action action="INSERT_OR_UPDATE"><cleared>false</cleared><disabled>true</disabled><field>label</field><field_message/><field_message_type>none</field_message_type><mandatory>ignore</mandatory><sys_class_name>sys_ui_policy_action</sys_class_name><sys_created_by>Developer-Hemendra</sys_created_by><sys_created_on>2026-11-18 08:03:24</sys_created_on><sys_id>5ab33af6c3a49350d70532f1b401314b</sys_id><sys_mod_count>0</sys_mod_count><sys_name>label</sys_name><sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package><sys_policy/><sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope><sys_update_name>sys_ui_policy_action_5ab33af6c3a49350d70532f1b401314b</sys_update_name><sys_updated_by>Developer-Hemendra</sys_updated_by><sys_updated_on>2026-11-18 08:03:24</sys_updated_on><table>x_1790229_edusph_0_academic_year</table><ui_policy display_value="Make Academic Year fields read-only when inactive">42a6aa7ec3249350d70532f1b40131be</ui_policy><value/><value_action>ignore</value_action><visible>ignore</visible></sys_ui_policy_action><sys_translated_text action="delete_multiple" query="documentkey=5ab33af6c3a49350d70532f1b401314b"/></record_update>]]></payload>
+        <payload_hash>-2066429062</payload_hash>
+        <record_name>label</record_name>
+        <reverted_from/>
+        <source>ceb27f70c3e41710d70532f1b40131b3</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>Developer-Hemendra</sys_created_by>
+        <sys_created_on>2026-11-18 08:03:24</sys_created_on>
+        <sys_id>7eb3f2f2c3a49350d70532f1b401319a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a1edae96ff0000001</sys_recorded_at>
+        <sys_updated_by>Developer-Hemendra</sys_updated_by>
+        <sys_updated_on>2026-11-18 08:03:24</sys_updated_on>
+        <type>UI Policy Action</type>
+        <update_guid>fab3f2f221a49350d2eacaa690128299</update_guid>
+        <update_guid_history>fab3f2f221a49350d2eacaa690128299:-2066429062</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>Developer-Hemendra</sys_created_by>
+        <sys_created_on>2026-11-18 08:05:27</sys_created_on>
+        <sys_db_object display_value="" name="sys_ui_policy_action">sys_ui_policy_action</sys_db_object>
+        <sys_id>29d55e4cf33b49b09fb19cb2a3450e40</sys_id>
+        <sys_metadata>5ab33af6c3a49350d70532f1b401314b</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>label</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_parent display_value="Make Academic Year fields read-only when inactive">42a6aa7ec3249350d70532f1b40131be</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_scope_delete display_value="">496efbe1a9de4fe0a3807b4e0edc8400</sys_scope_delete>
+        <sys_update_name>sys_ui_policy_action_5ab33af6c3a49350d70532f1b401314b</sys_update_name>
+        <sys_update_version display_value="sys_ui_policy_action_5ab33af6c3a49350d70532f1b401314b">7eb3f2f2c3a49350d70532f1b401319a</sys_update_version>
+        <sys_updated_by>Developer-Hemendra</sys_updated_by>
+        <sys_updated_on>2026-11-18 08:05:27</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

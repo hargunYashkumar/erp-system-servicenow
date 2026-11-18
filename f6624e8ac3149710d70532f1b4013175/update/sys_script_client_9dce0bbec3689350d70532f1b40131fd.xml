@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description>Check ValidTo date is greater than ValidFrom and Renewal Date is between ValidFrom and ValidTo Date</description>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>Validate Affiliation Dates on Submit</name>
+        <order>100</order>
+        <script><![CDATA[function onSubmit() {
+    var validFrom = g_form.getValue('valid_from');
+    var validTo = g_form.getValue('valid_to');
+    var renewalDue = g_form.getValue('renewal_due');
+
+    g_form.clearMessages();
+
+    if (validFrom && validTo && validTo <= validFrom) {
+        g_form.addErrorMessage('Valid To date must be greater than Valid From date.');
+        g_form.showFieldMsg('valid_to', 'Valid To date must be greater than Valid From date.', 'error');
+        return false;
+    }
+
+    if (renewalDue) {
+        if (validFrom && renewalDue < validFrom) {
+            g_form.addErrorMessage('Renewal Due date must be between Valid From and Valid To dates.');
+            g_form.showFieldMsg('renewal_due', 'Renewal Due date cannot be earlier than Valid From date.', 'error');
+            return false;
+        }
+        if (validTo && renewalDue > validTo) {
+            g_form.addErrorMessage('Renewal Due date must be between Valid From and Valid To dates.');
+            g_form.showFieldMsg('renewal_due', 'Renewal Due date cannot be later than Valid To date.', 'error');
+            return false;
+        }
+    }
+
+    return true;
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>Developer-Hemendra</sys_created_by>
+        <sys_created_on>2026-11-18 10:01:31</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>9dce0bbec3689350d70532f1b40131fd</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Validate Affiliation Dates on Submit</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_script_client_9dce0bbec3689350d70532f1b40131fd</sys_update_name>
+        <sys_updated_by>Developer-Hemendra</sys_updated_by>
+        <sys_updated_on>2026-11-18 10:01:31</sys_updated_on>
+        <table>x_1790229_edusph_0_affiliation</table>
+        <type>onSubmit</type>
+        <ui_type>10</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>
