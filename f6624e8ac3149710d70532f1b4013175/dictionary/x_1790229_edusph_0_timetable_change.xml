@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="4d0a27e2c3589b10d70532f1b4013115" label="Timetable Change" max_length="40" name="x_1790229_edusph_0_timetable_change" type="collection">
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="New Faculty" max_length="32" name="new_faculty" reference="x_1790229_edusph_0_employee" reference_qual="roles=x_erp.faculty^EQ" reference_qual_condition="roles=x_erp.faculty^EQ" type="reference"/>
-        <element label="Reason" max_length="255" name="reason" type="string"/>
+        <element label="Reason" mandatory="true" max_length="255" name="reason" type="string"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Requested By" mandatory="true" max_length="32" name="requested_by" reference="x_1790229_edusph_0_employee" reference_qual="roles=x_erp.faculty^EQ" reference_qual_condition="roles=x_erp.faculty^EQ" type="reference"/>
         <element label="Approved On" max_length="40" name="approved_on" type="glide_date_time"/>
         <element attributes="edge_encryption_enabled=true" choice="1" label="Approval Status" mandatory="true" max_length="40" name="approval_status" type="choice">

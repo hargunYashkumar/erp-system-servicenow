@@ -3,154 +3,168 @@
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>asset</element>
             <position>0</position>
-            <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-12 08:30:54</sys_created_on>
-            <sys_id>5b70c041c3681710d70532f1b401316e</sys_id>
+            <sys_created_by>Developer-NikhilN</sys_created_by>
+            <sys_created_on>2026-11-18 05:41:08</sys_created_on>
+            <sys_id>fe2396b2c3a09350d70532f1b40131c4</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_asset_allocation" sys_domain="global" view="Default view">fd340f28c3249310d70532f1b40131ec</sys_ui_section>
-            <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-12 08:30:54</sys_updated_on>
+            <sys_updated_by>Developer-NikhilN</sys_updated_by>
+            <sys_updated_on>2026-11-18 05:41:08</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>asset_request</element>
+            <position>1</position>
+            <sys_created_by>Developer-NikhilN</sys_created_by>
+            <sys_created_on>2026-11-18 05:41:08</sys_created_on>
+            <sys_id>b62396b2c3a09350d70532f1b40131c6</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_asset_allocation" sys_domain="global" view="Default view">fd340f28c3249310d70532f1b40131ec</sys_ui_section>
+            <sys_updated_by>Developer-NikhilN</sys_updated_by>
+            <sys_updated_on>2026-11-18 05:41:08</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>allocated_quantity</element>
-            <position>1</position>
-            <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-12 08:30:54</sys_created_on>
-            <sys_id>d770c041c3681710d70532f1b401316f</sys_id>
+            <position>2</position>
+            <sys_created_by>Developer-NikhilN</sys_created_by>
+            <sys_created_on>2026-11-18 05:41:08</sys_created_on>
+            <sys_id>362396b2c3a09350d70532f1b40131c7</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_asset_allocation" sys_domain="global" view="Default view">fd340f28c3249310d70532f1b40131ec</sys_ui_section>
-            <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-12 08:30:54</sys_updated_on>
+            <sys_updated_by>Developer-NikhilN</sys_updated_by>
+            <sys_updated_on>2026-11-18 05:41:08</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>allocated_by</element>
-            <position>2</position>
-            <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-12 08:30:54</sys_created_on>
-            <sys_id>5770c041c3681710d70532f1b4013170</sys_id>
+            <position>3</position>
+            <sys_created_by>Developer-NikhilN</sys_created_by>
+            <sys_created_on>2026-11-18 05:41:08</sys_created_on>
+            <sys_id>b22396b2c3a09350d70532f1b40131c8</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_asset_allocation" sys_domain="global" view="Default view">fd340f28c3249310d70532f1b40131ec</sys_ui_section>
-            <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-12 08:30:54</sys_updated_on>
+            <sys_updated_by>Developer-NikhilN</sys_updated_by>
+            <sys_updated_on>2026-11-18 05:41:08</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>returned_on</element>
-            <position>3</position>
-            <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-12 08:30:54</sys_created_on>
-            <sys_id>d370c041c3681710d70532f1b4013171</sys_id>
+            <position>4</position>
+            <sys_created_by>Developer-NikhilN</sys_created_by>
+            <sys_created_on>2026-11-18 05:41:08</sys_created_on>
+            <sys_id>322396b2c3a09350d70532f1b40131c9</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_asset_allocation" sys_domain="global" view="Default view">fd340f28c3249310d70532f1b40131ec</sys_ui_section>
-            <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-12 08:30:54</sys_updated_on>
+            <sys_updated_by>Developer-NikhilN</sys_updated_by>
+            <sys_updated_on>2026-11-18 05:41:08</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>return_condition</element>
-            <position>4</position>
-            <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-12 08:30:54</sys_created_on>
-            <sys_id>5370c041c3681710d70532f1b4013172</sys_id>
+            <position>5</position>
+            <sys_created_by>Developer-NikhilN</sys_created_by>
+            <sys_created_on>2026-11-18 05:41:08</sys_created_on>
+            <sys_id>be2396b2c3a09350d70532f1b40131c9</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_asset_allocation" sys_domain="global" view="Default view">fd340f28c3249310d70532f1b40131ec</sys_ui_section>
-            <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-12 08:30:54</sys_updated_on>
+            <sys_updated_by>Developer-NikhilN</sys_updated_by>
+            <sys_updated_on>2026-11-18 05:41:08</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>.split</element>
-            <position>5</position>
-            <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-12 08:30:54</sys_created_on>
-            <sys_id>df70c041c3681710d70532f1b4013172</sys_id>
+            <position>6</position>
+            <sys_created_by>Developer-NikhilN</sys_created_by>
+            <sys_created_on>2026-11-18 05:41:08</sys_created_on>
+            <sys_id>f22396b2c3a09350d70532f1b40131d7</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_asset_allocation" sys_domain="global" view="Default view">fd340f28c3249310d70532f1b40131ec</sys_ui_section>
-            <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-12 08:30:54</sys_updated_on>
+            <sys_updated_by>Developer-NikhilN</sys_updated_by>
+            <sys_updated_on>2026-11-18 05:41:08</sys_updated_on>
             <sys_user/>
             <type>.split</type>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>holder</element>
-            <position>6</position>
-            <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-12 08:30:54</sys_created_on>
-            <sys_id>5f70c041c3681710d70532f1b4013173</sys_id>
+            <position>7</position>
+            <sys_created_by>Developer-NikhilN</sys_created_by>
+            <sys_created_on>2026-11-18 05:41:08</sys_created_on>
+            <sys_id>722396b2c3a09350d70532f1b40131d8</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_asset_allocation" sys_domain="global" view="Default view">fd340f28c3249310d70532f1b40131ec</sys_ui_section>
-            <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-12 08:30:54</sys_updated_on>
+            <sys_updated_by>Developer-NikhilN</sys_updated_by>
+            <sys_updated_on>2026-11-18 05:41:08</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>allocation_status</element>
-            <position>7</position>
-            <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-12 08:30:54</sys_created_on>
-            <sys_id>db70c041c3681710d70532f1b4013174</sys_id>
+            <position>8</position>
+            <sys_created_by>Developer-NikhilN</sys_created_by>
+            <sys_created_on>2026-11-18 05:41:08</sys_created_on>
+            <sys_id>fe2396b2c3a09350d70532f1b40131d8</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_asset_allocation" sys_domain="global" view="Default view">fd340f28c3249310d70532f1b40131ec</sys_ui_section>
-            <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-12 08:30:54</sys_updated_on>
+            <sys_updated_by>Developer-NikhilN</sys_updated_by>
+            <sys_updated_on>2026-11-18 05:41:08</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>from_date</element>
-            <position>8</position>
-            <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-12 08:30:54</sys_created_on>
-            <sys_id>5b70c041c3681710d70532f1b4013175</sys_id>
+            <position>9</position>
+            <sys_created_by>Developer-NikhilN</sys_created_by>
+            <sys_created_on>2026-11-18 05:41:08</sys_created_on>
+            <sys_id>7e2396b2c3a09350d70532f1b40131d9</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_asset_allocation" sys_domain="global" view="Default view">fd340f28c3249310d70532f1b40131ec</sys_ui_section>
-            <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-12 08:30:54</sys_updated_on>
+            <sys_updated_by>Developer-NikhilN</sys_updated_by>
+            <sys_updated_on>2026-11-18 05:41:08</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>to_date</element>
-            <position>9</position>
-            <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-12 08:30:54</sys_created_on>
-            <sys_id>d770c041c3681710d70532f1b4013176</sys_id>
+            <position>10</position>
+            <sys_created_by>Developer-NikhilN</sys_created_by>
+            <sys_created_on>2026-11-18 05:41:08</sys_created_on>
+            <sys_id>fa2396b2c3a09350d70532f1b40131da</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_asset_allocation" sys_domain="global" view="Default view">fd340f28c3249310d70532f1b40131ec</sys_ui_section>
-            <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-12 08:30:54</sys_updated_on>
+            <sys_updated_by>Developer-NikhilN</sys_updated_by>
+            <sys_updated_on>2026-11-18 05:41:08</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>return_notes</element>
-            <position>10</position>
-            <sys_created_by>Developer-Hemendra</sys_created_by>
-            <sys_created_on>2026-11-12 08:30:54</sys_created_on>
-            <sys_id>5770c041c3681710d70532f1b4013177</sys_id>
+            <position>11</position>
+            <sys_created_by>Developer-NikhilN</sys_created_by>
+            <sys_created_on>2026-11-18 05:41:08</sys_created_on>
+            <sys_id>7a2396b2c3a09350d70532f1b40131db</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="NULL" display_value="" name="x_1790229_edusph_0_asset_allocation" sys_domain="global" view="Default view">fd340f28c3249310d70532f1b40131ec</sys_ui_section>
-            <sys_updated_by>Developer-Hemendra</sys_updated_by>
-            <sys_updated_on>2026-11-12 08:30:54</sys_updated_on>
+            <sys_updated_by>Developer-NikhilN</sys_updated_by>
+            <sys_updated_on>2026-11-18 05:41:08</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>

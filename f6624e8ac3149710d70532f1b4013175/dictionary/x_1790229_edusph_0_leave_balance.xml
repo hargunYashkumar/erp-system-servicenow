@@ -2,10 +2,10 @@
     <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="16f9efa2c3589b10d70532f1b401313a" label="Leave Balance" max_length="40" name="x_1790229_edusph_0_leave_balance" type="collection">
         <element attributes="edge_encryption_enabled=true" label="Year" max_length="40" name="year" type="integer"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Type" max_length="32" name="type" reference="x_1790229_edusph_0_leave_type" type="reference"/>
-        <element label="Used" max_length="255" name="used" type="string"/>
-        <element label="Carried" max_length="255" name="carried" type="string"/>
+        <element label="Used" max_length="255" name="used" read_only="true" read_only_option="display_read_only" type="string"/>
+        <element label="Carried" max_length="255" name="carried" read_only="true" read_only_option="display_read_only" type="string"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Employee" mandatory="true" max_length="32" name="employee" reference="x_1790229_edusph_0_employee" reference_qual="javascript: new CollegeReferenceQualifier().getEmployeesForLoggedInUserCollege();" type="reference" use_reference_qualifier="advanced"/>
-        <element label="Entitled" max_length="255" name="entitled" type="string"/>
+        <element label="Entitled" max_length="255" name="entitled" read_only="true" read_only_option="display_read_only" type="string"/>
         <index name="index">
             <element name="employee"/>
         </index>

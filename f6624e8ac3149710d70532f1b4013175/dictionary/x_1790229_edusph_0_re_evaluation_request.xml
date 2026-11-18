@@ -3,7 +3,7 @@
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student fee record" mandatory="true" max_length="32" name="student_fee" reference="x_1790229_edusph_0_student_fee" reference_qual="javascript:new ExaminationRefQual().getPaidFeeByStudent(current.getValue('student'));" type="reference" use_reference_qualifier="advanced"/>
         <element label="Attempt No" mandatory="true" max_length="255" name="attempt_no" type="string"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Fee" max_length="32" name="fee" reference="x_1790229_edusph_0_student_fee" reference_qual="javascript:new ExaminationRefQual().getPaidFeeByStudent(current.getValue('student'));" type="reference" use_reference_qualifier="advanced"/>
-        <element label="Courses" max_length="255" name="courses" reference="x_1790229_edusph_0_course_offering" reference_qual="javascript:new ExaminationRefQual().getEligibleBacklogCourses(current.getValue('student'));" type="reference" use_reference_qualifier="advanced"/>
+        <element label="Courses" mandatory="true" max_length="255" name="courses" reference="x_1790229_edusph_0_course_offering" reference_qual="javascript:new ExaminationRefQual().getEligibleBacklogCourses(current.getValue('student'));" type="reference" use_reference_qualifier="advanced"/>
         <element attributes="edge_encryption_enabled=true" choice="1" label="Status" mandatory="true" max_length="40" name="status" type="choice">
             <choice>
                 <element inactive_on_update="false" label="Submitted" sequence="0" value="submitted"/>

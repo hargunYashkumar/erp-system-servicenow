@@ -12,7 +12,7 @@
             </choice>
         </element>
         <element label="Returned on" max_length="40" name="returned_on" type="glide_date_time"/>
-        <element attributes="edge_encryption_enabled=true" choice="1" label="Return condition" mandatory="true" max_length="40" name="return_condition" type="choice">
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Return condition" max_length="40" name="return_condition" type="choice">
             <choice>
                 <element inactive_on_update="false" label="Good" sequence="1" value="good"/>
                 <element inactive_on_update="false" label="Lost" sequence="5" value="lost"/>
@@ -26,6 +26,7 @@
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Holder" max_length="32" name="holder" reference="sys_user" reference_qual="javascript:new CampusAssetRefQual().getHolderByCollege();" type="reference" use_reference_qualifier="advanced"/>
         <element label="From Date" max_length="40" name="from_date" type="glide_date"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Asset" max_length="32" name="asset" reference="alm_asset" type="reference"/>
+        <element label="Asset Request" max_length="32" name="asset_request" reference="x_1790229_edusph_0_asset_request" type="reference"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Allocated by" max_length="32" name="allocated_by" reference="x_1790229_edusph_0_employee" reference_qual="javascript:new CampusAssetRefQual().getAllocatedByByCollege();" type="reference" use_reference_qualifier="advanced"/>
         <index name="index">
             <element name="allocated_by"/>
@@ -34,6 +35,9 @@
             <element name="asset"/>
         </index>
         <index name="index3">
+            <element name="asset_request"/>
+        </index>
+        <index name="index4">
             <element name="holder"/>
         </index>
     </element>

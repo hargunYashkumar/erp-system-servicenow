@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="df61abba47594daf934bc295bc423dab" label="College Program" name="x_1790229_edusph_0_coll_prog" type="collection">
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Department" mandatory="true" max_length="32" name="department" reference="x_1790229_edusph_0_department" reference_qual="javascript: new x_1790229_edusph_0.AcademicStructureRefQual().getDepartments(current)" type="reference" use_reference_qualifier="advanced"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Department" max_length="32" name="department" reference="x_1790229_edusph_0_department" reference_qual="javascript: new x_1790229_edusph_0.AcademicStructureRefQual().getDepartments(current)" type="reference" use_reference_qualifier="advanced"/>
         <element attributes="edge_encryption_enabled=true" label="Approved" max_length="40" name="approved" type="boolean"/>
-        <element label="Intake Seats" mandatory="true" name="intake_seats" type="integer"/>
+        <element label="Intake Seats" max_length="40" name="intake_seats" type="integer"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="College" mandatory="true" max_length="32" name="college" reference="x_1790229_edusph_0_college" reference_qual="status=active^EQ" reference_qual_condition="status=active^EQ" type="reference"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Program" mandatory="true" max_length="32" name="program" reference="x_1790229_edusph_0_program" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Program" max_length="32" name="program" reference="x_1790229_edusph_0_program" type="reference"/>
         <index name="index">
             <element name="college"/>
         </index>
