@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="caa9a762c3589b10d70532f1b401310b" label="Semester" max_length="40" name="x_1790229_edusph_0_semester" type="collection">
         <element label="Number" mandatory="true" max_length="40" name="number" type="string"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Year" max_length="32" name="year" reference="x_1790229_edusph_0_academic_year" reference_qual="javascript: new x_1790229_edusph_0.AcademicStructureRefQual().getAcademicYears(current)" type="reference" use_reference_qualifier="advanced"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Year" max_length="32" name="year" reference="x_1790229_edusph_0_academic_year" reference_qual="active=true^EQ" reference_qual_condition="active=true^EQ" type="reference"/>
         <element label="End Date" max_length="40" name="end_date" type="glide_date"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Program" mandatory="true" max_length="32" name="program" reference="x_1790229_edusph_0_program" type="reference"/>
         <element label="Start Date" mandatory="true" max_length="40" name="start_date" type="glide_date"/>

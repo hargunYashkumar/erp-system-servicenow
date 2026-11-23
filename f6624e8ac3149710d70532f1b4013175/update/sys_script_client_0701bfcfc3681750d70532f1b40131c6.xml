@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_script_client">
+    <sys_script_client action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <applies_extended>false</applies_extended>
+        <condition/>
+        <description>Validate Package CTC and Max Students are positive AND Date is after Registration Deadline</description>
+        <field/>
+        <global>true</global>
+        <isolate_script>true</isolate_script>
+        <messages/>
+        <name>Validate Placement Drive Details on Subm</name>
+        <order>100</order>
+        <script><![CDATA[function onSubmit() {
+    var packageLpa = g_form.getValue('package_lpa');
+    var maxStudents = g_form.getValue('max_students');
+    var driveDate = g_form.getValue('date');
+    var regDeadline = g_form.getValue('registration_deadline');
+
+    g_form.clearMessages();
+
+    // 1. Validate Package LPA positive
+    if (packageLpa) {
+        var numPackage = parseFloat(packageLpa.replace(/[^0-9.-]+/g, ''));
+        if (isNaN(numPackage) || numPackage <= 0) {
+            g_form.addErrorMessage('Package LPA must be greater than zero.');
+            g_form.showFieldMsg('package_lpa', 'Package LPA must be positive.', 'error');
+            return false;
+        }
+    }
+
+    // 2. Validate Max Students positive
+    if (maxStudents) {
+        var numStudents = parseInt(maxStudents, 10);
+        if (isNaN(numStudents) || numStudents <= 0) {
+            g_form.addErrorMessage('Max Students must be greater than zero.');
+            g_form.showFieldMsg('max_students', 'Max Students must be positive.', 'error');
+            return false;
+        }
+    }
+
+    // 3. Validate Date after Registration Deadline
+    if (driveDate && regDeadline) {
+        var deadlineDate = regDeadline.split(' ')[0];
+        if (driveDate <= deadlineDate) {
+            g_form.addErrorMessage('Placement Drive Date must be after the Registration Deadline.');
+            g_form.showFieldMsg('date', 'Drive Date must be after Registration Deadline (' + deadlineDate + ').', 'error');
+            return false;
+        }
+    }
+
+    return true;
+}]]></script>
+        <sys_class_name>sys_script_client</sys_class_name>
+        <sys_created_by>Developer-Hemendra</sys_created_by>
+        <sys_created_on>2026-11-19 07:09:46</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>0701bfcfc3681750d70532f1b40131c6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Validate Placement Drive Details on Subm</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_script_client_0701bfcfc3681750d70532f1b40131c6</sys_update_name>
+        <sys_updated_by>Developer-Hemendra</sys_updated_by>
+        <sys_updated_on>2026-11-19 07:09:46</sys_updated_on>
+        <table>x_1790229_edusph_0_placement_drive</table>
+        <type>onSubmit</type>
+        <ui_type>10</ui_type>
+        <view/>
+    </sys_script_client>
+</record_update>

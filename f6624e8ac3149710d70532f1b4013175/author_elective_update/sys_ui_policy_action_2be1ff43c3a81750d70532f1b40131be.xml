@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action">
+    <sys_ui_policy_action action="DELETE">
+        <cleared>false</cleared>
+        <disabled>true</disabled>
+        <field>college</field>
+        <field_message/>
+        <field_message_type>none</field_message_type>
+        <mandatory>ignore</mandatory>
+        <sys_class_name>sys_ui_policy_action</sys_class_name>
+        <sys_created_by>Developer-Hemendra</sys_created_by>
+        <sys_created_on>2026-11-19 07:13:39</sys_created_on>
+        <sys_id>2be1ff43c3a81750d70532f1b40131be</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>college</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_ui_policy_action_2be1ff43c3a81750d70532f1b40131be</sys_update_name>
+        <sys_updated_by>Developer-Hemendra</sys_updated_by>
+        <sys_updated_on>2026-11-19 07:13:39</sys_updated_on>
+        <table>x_1790229_edusph_0_placement_drive</table>
+        <ui_policy display_value="Make Placement Drive fields read-only when Closed or Cancelled">67013303c3a81750d70532f1b4013139</ui_policy>
+        <value/>
+        <value_action>ignore</value_action>
+        <visible>ignore</visible>
+    </sys_ui_policy_action>
+    <sys_translated_text action="DELETE" query="documentkey=2be1ff43c3a81750d70532f1b40131be"/>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</application>
+        <file_path/>
+        <instance_id>899734a8db923d582f082a5913961960</instance_id>
+        <instance_name>dev199710</instance_name>
+        <name>sys_ui_policy_action_2be1ff43c3a81750d70532f1b40131be</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_policy_action"><sys_ui_policy_action action="INSERT_OR_UPDATE"><cleared>false</cleared><disabled>true</disabled><field>college</field><field_message/><field_message_type>none</field_message_type><mandatory>ignore</mandatory><sys_class_name>sys_ui_policy_action</sys_class_name><sys_created_by>Developer-Hemendra</sys_created_by><sys_created_on>2026-11-19 07:13:39</sys_created_on><sys_id>2be1ff43c3a81750d70532f1b40131be</sys_id><sys_mod_count>0</sys_mod_count><sys_name>college</sys_name><sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package><sys_policy/><sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope><sys_update_name>sys_ui_policy_action_2be1ff43c3a81750d70532f1b40131be</sys_update_name><sys_updated_by>Developer-Hemendra</sys_updated_by><sys_updated_on>2026-11-19 07:13:39</sys_updated_on><table>x_1790229_edusph_0_placement_drive</table><ui_policy display_value="Make Placement Drive fields read-only when Closed or Cancelled">67013303c3a81750d70532f1b4013139</ui_policy><value/><value_action>ignore</value_action><visible>ignore</visible></sys_ui_policy_action><sys_translated_text action="delete_multiple" query="documentkey=2be1ff43c3a81750d70532f1b40131be"/></record_update>]]></payload>
+        <payload_hash>-418784769</payload_hash>
+        <record_name>college</record_name>
+        <reverted_from/>
+        <source>ceb27f70c3e41710d70532f1b40131b3</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>Developer-Hemendra</sys_created_by>
+        <sys_created_on>2026-11-19 07:13:39</sys_created_on>
+        <sys_id>80f1ff43c3a81750d70532f1b40131c9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>1a1f2a7680c0000001</sys_recorded_at>
+        <sys_updated_by>Developer-Hemendra</sys_updated_by>
+        <sys_updated_on>2026-11-19 07:13:39</sys_updated_on>
+        <type>UI Policy Action</type>
+        <update_guid>00f1ff431fa817507804c67f8c414ec8</update_guid>
+        <update_guid_history>00f1ff431fa817507804c67f8c414ec8:-418784769</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>Developer-Hemendra</sys_created_by>
+        <sys_created_on>2026-11-19 07:19:29</sys_created_on>
+        <sys_db_object display_value="" name="sys_ui_policy_action">sys_ui_policy_action</sys_db_object>
+        <sys_id>1d6cb8a24ec34612b46868868204e1e9</sys_id>
+        <sys_metadata>2be1ff43c3a81750d70532f1b40131be</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>college</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_parent display_value="Make Placement Drive fields read-only when Closed or Cancelled">67013303c3a81750d70532f1b4013139</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_scope_delete display_value="">496efbe1a9de4fe0a3807b4e0edc8400</sys_scope_delete>
+        <sys_update_name>sys_ui_policy_action_2be1ff43c3a81750d70532f1b40131be</sys_update_name>
+        <sys_update_version display_value="sys_ui_policy_action_2be1ff43c3a81750d70532f1b40131be">80f1ff43c3a81750d70532f1b40131c9</sys_update_version>
+        <sys_updated_by>Developer-Hemendra</sys_updated_by>
+        <sys_updated_on>2026-11-19 07:19:29</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>
