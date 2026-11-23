@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="fa1151efc3a0d750d70532f1b4013124" label="Counselling Allotment" max_length="40" name="x_1790229_edusph_0_counselling_allotment" type="collection">
+        <element label="Counselling Round" mandatory="true" max_length="40" name="round" type="integer"/>
+        <element label="Allotted Category" max_length="50" name="allotted_category" type="string"/>
+        <element choice="1" label="Decision" max_length="40" name="decision" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Withdrawn" sequence="40" value="Withdrawn"/>
+                <element inactive_on_update="false" label="Accepted" sequence="20" value="Accepted"/>
+                <element inactive_on_update="false" label="Rejected" sequence="30" value="Rejected"/>
+                <element inactive_on_update="false" label="Pending" sequence="10" value="Pending"/>
+                <element inactive_on_update="false" label="Float / Retain &amp; Upgrade" sequence="25" value="Float"/>
+            </choice>
+        </element>
+        <element label="Decision Date" max_length="40" name="decision_date" type="glide_date_time"/>
+        <element label="Withdrawal Date" max_length="40" name="withdrawal_date" type="glide_date_time"/>
+        <element label="Allotted Program" max_length="32" name="allotted_program" reference="x_1790229_edusph_0_program" type="reference"/>
+        <element label="Acceptance Deadline" max_length="40" name="acceptance_deadline" type="glide_date_time"/>
+        <element label="Withdrawal Reason" max_length="255" name="withdrawal_reason" type="string"/>
+        <element label="Active" max_length="40" name="active" type="boolean"/>
+        <element label="Application" mandatory="true" max_length="32" name="application" reference="x_1790229_edusph_0_admission_application" type="reference"/>
+        <element label="Allotted College" max_length="32" name="allotted_college" reference="x_1790229_edusph_0_college" type="reference"/>
+        <element label="Upgraded From" max_length="32" name="upgraded_from" reference="x_1790229_edusph_0_counselling_allotment" type="reference"/>
+        <element label="Remarks" max_length="255" name="remarks" type="string"/>
+        <element choice="1" label="Status" mandatory="true" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Withdrawn" sequence="80" value="Withdrawn"/>
+                <element inactive_on_update="false" label="Action Required" sequence="50" value="Action Required"/>
+                <element inactive_on_update="false" label="Seat Rejected" sequence="70" value="Seat Rejected"/>
+                <element inactive_on_update="false" label="Upgraded in Round 2" sequence="45" value="Upgraded"/>
+                <element inactive_on_update="false" label="Seat Allotted" sequence="30" value="Seat Allotted"/>
+                <element inactive_on_update="false" label="Not Started" sequence="10" value="Not Started"/>
+                <element inactive_on_update="false" label="Seat Accepted" sequence="60" value="Seat Accepted"/>
+                <element inactive_on_update="false" label="No Seat Allotted" sequence="40" value="No Seat Allotted"/>
+                <element inactive_on_update="false" label="In Progress" sequence="20" value="In Progress"/>
+            </choice>
+        </element>
+        <element label="Allotment Date" max_length="40" name="allotment_date" type="glide_date"/>
+        <element label="Preference Order" max_length="40" name="preference_order" type="integer"/>
+        <element label="Is Eligible" max_length="40" name="is_eligible" type="boolean"/>
+        <index name="index">
+            <element name="allotted_college"/>
+        </index>
+        <index name="index2">
+            <element name="allotted_program"/>
+        </index>
+        <index name="index3">
+            <element name="application"/>
+        </index>
+        <index name="index4">
+            <element name="upgraded_from"/>
+        </index>
+    </element>
+</database>

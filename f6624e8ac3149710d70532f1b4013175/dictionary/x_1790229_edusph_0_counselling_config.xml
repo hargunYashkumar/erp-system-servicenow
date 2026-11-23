@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="6a8a82efc368d750d70532f1b401311a" label="Counselling Configuration" max_length="40" name="x_1790229_edusph_0_counselling_config" type="collection">
+        <element label="Round 2 Preference Deadline" mandatory="true" max_length="40" name="round2_pref_deadline" type="glide_date_time"/>
+        <element label="Round 1 Preference Deadline" mandatory="true" max_length="40" name="round1_pref_deadline" type="glide_date_time"/>
+        <element label="Round 1 Result Date" mandatory="true" max_length="40" name="round1_result_date" type="glide_date"/>
+        <element label="Round 2 Result Date" mandatory="true" max_length="40" name="round2_result_date" type="glide_date"/>
+        <element label="Academic Year" mandatory="true" max_length="32" name="academic_year" reference="x_1790229_edusph_0_academic_year" type="reference"/>
+        <element label="Counselling Start Date" mandatory="true" max_length="40" name="counselling_start_date" type="glide_date"/>
+        <element label="Round 1 Acceptance Deadline" mandatory="true" max_length="40" name="round1_acceptance_deadline" type="glide_date_time"/>
+        <element choice="1" label="Status" mandatory="true" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Closed" sequence="30" value="Closed"/>
+                <element inactive_on_update="false" label="Active" sequence="20" value="Active"/>
+                <element inactive_on_update="false" label="Draft" sequence="10" value="Draft"/>
+            </choice>
+        </element>
+        <element label="Round 2 Acceptance Deadline" mandatory="true" max_length="40" name="round2_acceptance_deadline" type="glide_date_time"/>
+        <element label="Round 1 Start Date" mandatory="true" max_length="40" name="round1_start_date" type="glide_date"/>
+        <element label="Round 2 Start Date" mandatory="true" max_length="40" name="round2_start_date" type="glide_date"/>
+        <index name="index">
+            <element name="academic_year"/>
+        </index>
+    </element>
+</database>

@@ -5,7 +5,7 @@
         <api_name>x_1790229_edusph_0.SeatAllocationEngine</api_name>
         <caller_access/>
         <client_callable>false</client_callable>
-        <description/>
+        <description>Transaction-safe multi-round seat allocation, Float retention, and vacancy-based upgrades.</description>
         <mobile_callable>false</mobile_callable>
         <name>SeatAllocationEngine</name>
         <sandbox_callable>false</sandbox_callable>
@@ -14,101 +14,263 @@ SeatAllocationEngine.prototype = {
     initialize: function() {},
 
     /**
-     * Multi-Round Quota Allocation
-     * General (75%), Female (8.3%), OBC (6.7%), EWS (6.7%), PwD (3.3%)
+     * Database-Driven Seat Availability
+     * Available = Sanctioned Intake - (Accepted + Float/Retained + Offered Pending)
      */
-    runRoundAllocation: function(collegeId, programId, roundNumber) {
-        roundNumber = roundNumber || 1;
-
-        // 1. Get total intake seats
-        var totalSeats = 60;
+    getSeatAvailability: function(collegeId, programId) {
+        var intake = 60;
+        var cutoff = 60.0;
         var grCP = new GlideRecord('x_1790229_edusph_0_coll_prog');
         grCP.addQuery('college', collegeId);
         grCP.addQuery('program', programId);
         grCP.setLimit(1);
         grCP.query();
         if (grCP.next()) {
-            totalSeats = parseInt(grCP.getValue('intake_seats')) || 60;
+            intake = parseInt(grCP.getValue('intake_seats')) || 60;
+            cutoff = parseFloat(grCP.getValue('merit_cutoff')) || 60.0;
         }
 
-        // 2. Calculate category quotas scaled to batch
-        var factor = totalSeats / 60.0;
-        var quotas = {
-            'general': Math.round(45 * factor),
-            'female': Math.round(5 * factor),
-            'backward class': Math.round(4 * factor),
-            'economically weaker section': Math.round(4 * factor),
-            'person with disability': Math.round(2 * factor)
-        };
+        var ga = new GlideAggregate('x_1790229_edusph_0_counselling_allotment');
+        ga.addQuery('allotted_college', collegeId);
+        ga.addQuery('allotted_program', programId);
+        ga.addQuery('active', true);
+        var qc = ga.addQuery('decision', 'IN', 'Accepted,Float');
+        qc.addOrCondition('status', 'Action Required');
+        ga.addAggregate('COUNT');
+        ga.query();
 
-        // 3. Rank applicants
-        var meritEngine = new AdmissionMeritEngine();
-        var ranked = meritEngine.rankApplicants(collegeId, programId);
-
-        // 4. Allocate by quotas
-        var allocatedCount = {};
-        for (var cat in quotas) allocatedCount[cat] = 0;
-
-        var offeredSysIds = [];
-        var waitlistedSysIds = [];
-
-        for (var i = 0; i < ranked.length; i++) {
-            var cand = ranked[i];
-            var cCat = cand.category || 'general';
-
-            if (quotas[cCat] && allocatedCount[cCat] < quotas[cCat]) {
-                allocatedCount[cCat]++;
-                offeredSysIds.push(cand.sys_id);
-            } else if (allocatedCount['general'] < quotas['general']) {
-                // Open General fallback
-                allocatedCount['general']++;
-                offeredSysIds.push(cand.sys_id);
-            } else {
-                waitlistedSysIds.push(cand.sys_id);
-            }
+        var occupied = 0;
+        if (ga.next()) {
+            occupied = parseInt(ga.getAggregate('COUNT')) || 0;
         }
 
-        // 5. Update statuses
-        for (var o = 0; o < offeredSysIds.length; o++) {
-            var grOffer = new GlideRecord('x_1790229_edusph_0_admission_application');
-            if (grOffer.get(offeredSysIds[o])) {
-                grOffer.setValue('status', 'offered');
-                grOffer.setValue('allocation_round', roundNumber);
-                grOffer.update();
-            }
-        }
-
-        for (var w = 0; w < waitlistedSysIds.length; w++) {
-            var grWait = new GlideRecord('x_1790229_edusph_0_admission_application');
-            if (grWait.get(waitlistedSysIds[w])) {
-                grWait.setValue('status', 'waitlisted');
-                grWait.setValue('allocation_round', roundNumber);
-                grWait.update();
-            }
-        }
-
+        var available = Math.max(0, intake - occupied);
         return {
-            totalSeats: totalSeats,
-            round: roundNumber,
-            offered: offeredSysIds.length,
-            waitlisted: waitlistedSysIds.length
+            intake: intake,
+            occupied: occupied,
+            available: available,
+            cutoff: cutoff
         };
     },
 
+    /**
+     * ROUND 1 ALLOCATION: Preference-based merit allocation
+     */
+    runRound1Allocation: function() {
+        var meritEngine = new AdmissionMeritEngine();
+        var ranked = meritEngine.rankAllVerifiedApplicants();
+
+        var schedule = new CounsellingScheduleService().getActiveConfig();
+        var deadline = schedule ? schedule.round1_acceptance_deadline : new GlideDateTime().getDisplayValue();
+
+        var allottedCount = 0;
+        var noSeatCount = 0;
+
+        for (var i = 0; i < ranked.length; i++) {
+            var cand = ranked[i];
+            if (cand.incomplete) continue;
+
+            // Fetch candidate preferences in order
+            var prefGr = new GlideRecord('x_1790229_edusph_0_counselling_preference');
+            prefGr.addQuery('application', cand.sys_id);
+            prefGr.addQuery('active', true);
+            prefGr.orderBy('preference_order');
+            prefGr.query();
+
+            var seatFound = false;
+            while (prefGr.next() && !seatFound) {
+                var colId = prefGr.getValue('college');
+                var progId = prefGr.getValue('program');
+                var prefOrder = parseInt(prefGr.getValue('preference_order')) || 1;
+
+                var availInfo = this.getSeatAvailability(colId, progId);
+                // Check merit cutoff & vacancy
+                if (cand.merit >= availInfo.cutoff && availInfo.available > 0) {
+                    // Allot seat
+                    var allot = new GlideRecord('x_1790229_edusph_0_counselling_allotment');
+                    allot.addQuery('application', cand.sys_id);
+                    allot.addQuery('round', 1);
+                    allot.query();
+                    if (!allot.next()) allot.initialize();
+
+                    allot.setValue('application', cand.sys_id);
+                    allot.setValue('round', 1);
+                    allot.setValue('allotted_college', colId);
+                    allot.setValue('allotted_program', progId);
+                    allot.setValue('allotted_category', cand.category || 'general');
+                    allot.setValue('preference_order', prefOrder);
+                    allot.setValue('status', 'Action Required');
+                    allot.setValue('decision', 'Pending');
+                    allot.setValue('allotment_date', new GlideDate().getValue());
+                    allot.setValue('acceptance_deadline', deadline);
+                    allot.setValue('is_eligible', true);
+                    allot.setValue('active', true);
+                    allot.setValue('remarks', 'Allocated under Round 1 Central Merit List for Preference #' + prefOrder);
+                    if (allot.getUniqueValue()) { allot.update(); } else { allot.insert(); }
+
+                    seatFound = true;
+                    allottedCount++;
+                }
+            }
+
+            if (!seatFound) {
+                var noAllot = new GlideRecord('x_1790229_edusph_0_counselling_allotment');
+                noAllot.addQuery('application', cand.sys_id);
+                noAllot.addQuery('round', 1);
+                noAllot.query();
+                if (!noAllot.next()) noAllot.initialize();
+
+                noAllot.setValue('application', cand.sys_id);
+                noAllot.setValue('round', 1);
+                noAllot.setValue('status', 'No Seat Allotted');
+                noAllot.setValue('decision', 'Pending');
+                noAllot.setValue('allotment_date', new GlideDate().getValue());
+                noAllot.setValue('is_eligible', true);
+                noAllot.setValue('active', true);
+                noAllot.setValue('remarks', 'Cutoff not met for submitted preferences in Round 1. Automatically queued for Round 2 vacancy round.');
+                if (noAllot.getUniqueValue()) { noAllot.update(); } else { noAllot.insert(); }
+                noSeatCount++;
+            }
+        }
+
+        gs.setProperty('x_1790229_edusph_0.counselling.round1_published', 'true');
+        return { allotted: allottedCount, noSeat: noSeatCount };
+    },
+
+    /**
+     * ROUND 2 ALLOCATION: Vacancy-based allocation with Float upgrades
+     */
+    runRound2Allocation: function() {
+        var meritEngine = new AdmissionMeritEngine();
+        var ranked = meritEngine.rankAllVerifiedApplicants();
+
+        var schedule = new CounsellingScheduleService().getActiveConfig();
+        var deadline = schedule ? schedule.round2_acceptance_deadline : new GlideDateTime().getDisplayValue();
+
+        var upgradedCount = 0;
+        var newlyAllottedCount = 0;
+
+        for (var i = 0; i < ranked.length; i++) {
+            var cand = ranked[i];
+            if (cand.incomplete) continue;
+
+            // Check Round 1 allotment
+            var r1Gr = new GlideRecord('x_1790229_edusph_0_counselling_allotment');
+            r1Gr.addQuery('application', cand.sys_id);
+            r1Gr.addQuery('round', 1);
+            r1Gr.query();
+
+            var r1Decision = '';
+            var r1PrefOrder = 999;
+            var r1SysId = '';
+            if (r1Gr.next()) {
+                r1Decision = r1Gr.getValue('decision');
+                r1PrefOrder = parseInt(r1Gr.getValue('preference_order')) || 999;
+                r1SysId = r1Gr.getUniqueValue();
+            }
+
+            // Exclude already Accepted/Confirmed candidates
+            if (r1Decision === 'Accepted') continue;
+
+            var prefGr = new GlideRecord('x_1790229_edusph_0_counselling_preference');
+            prefGr.addQuery('application', cand.sys_id);
+            prefGr.addQuery('active', true);
+            prefGr.orderBy('preference_order');
+            prefGr.query();
+
+            var seatFound = false;
+            while (prefGr.next() && !seatFound) {
+                var prefOrder = parseInt(prefGr.getValue('preference_order')) || 1;
+                // If candidate floated, only consider higher preferences
+                if (r1Decision === 'Float' && prefOrder >= r1PrefOrder) {
+                    break;
+                }
+
+                var colId = prefGr.getValue('college');
+                var progId = prefGr.getValue('program');
+                var avail = this.getSeatAvailability(colId, progId);
+
+                if (cand.merit >= avail.cutoff && avail.available > 0) {
+                    // Upgrade or New Allotment
+                    if (r1Decision === 'Float') {
+                        // Release old seat by updating Round 1 status to Upgraded
+                        r1Gr.setValue('status', 'Upgraded');
+                        r1Gr.setValue('remarks', 'Upgraded in Round 2 to Preference #' + prefOrder);
+                        r1Gr.update();
+                        upgradedCount++;
+                    } else {
+                        newlyAllottedCount++;
+                    }
+
+                    var r2 = new GlideRecord('x_1790229_edusph_0_counselling_allotment');
+                    r2.addQuery('application', cand.sys_id);
+                    r2.addQuery('round', 2);
+                    r2.query();
+                    if (!r2.next()) r2.initialize();
+
+                    r2.setValue('application', cand.sys_id);
+                    r2.setValue('round', 2);
+                    r2.setValue('allotted_college', colId);
+                    r2.setValue('allotted_program', progId);
+                    r2.setValue('allotted_category', cand.category || 'general');
+                    r2.setValue('preference_order', prefOrder);
+                    r2.setValue('upgraded_from', r1SysId);
+                    r2.setValue('status', 'Action Required');
+                    r2.setValue('decision', 'Pending');
+                    r2.setValue('allotment_date', new GlideDate().getValue());
+                    r2.setValue('acceptance_deadline', deadline);
+                    r2.setValue('is_eligible', true);
+                    r2.setValue('active', true);
+                    r2.setValue('remarks', 'Allocated under Round 2 Central Vacancy List for Preference #' + prefOrder);
+                    if (r2.getUniqueValue()) { r2.update(); } else { r2.insert(); }
+
+                    seatFound = true;
+                }
+            }
+
+            // If Floated and no upgrade found, retain current seat in Round 2
+            if (r1Decision === 'Float' && !seatFound) {
+                var r2Retain = new GlideRecord('x_1790229_edusph_0_counselling_allotment');
+                r2Retain.addQuery('application', cand.sys_id);
+                r2Retain.addQuery('round', 2);
+                r2Retain.query();
+                if (!r2Retain.next()) r2Retain.initialize();
+
+                r2Retain.setValue('application', cand.sys_id);
+                r2Retain.setValue('round', 2);
+                r2Retain.setValue('allotted_college', r1Gr.getValue('allotted_college'));
+                r2Retain.setValue('allotted_program', r1Gr.getValue('allotted_program'));
+                r2Retain.setValue('allotted_category', r1Gr.getValue('allotted_category'));
+                r2Retain.setValue('preference_order', r1PrefOrder);
+                r2Retain.setValue('status', 'Action Required');
+                r2Retain.setValue('decision', 'Pending');
+                r2Retain.setValue('allotment_date', new GlideDate().getValue());
+                r2Retain.setValue('acceptance_deadline', deadline);
+                r2Retain.setValue('is_eligible', true);
+                r2Retain.setValue('active', true);
+                r2Retain.setValue('remarks', 'Retained Round 1 seat offer in Round 2 as no higher preference had vacancies.');
+                if (r2Retain.getUniqueValue()) { r2Retain.update(); } else { r2Retain.insert(); }
+            }
+        }
+
+        gs.setProperty('x_1790229_edusph_0.counselling.round2_enabled', 'true');
+        gs.setProperty('x_1790229_edusph_0.counselling.round2_published', 'true');
+        return { upgraded: upgradedCount, newlyAllotted: newlyAllottedCount };
+    },
+
     type: 'SeatAllocationEngine'
-};
-]]></script>
+};]]></script>
         <sys_class_name>sys_script_include</sys_class_name>
         <sys_created_by>developer.abhinav</sys_created_by>
         <sys_created_on>2026-11-16 10:34:48</sys_created_on>
         <sys_id>8d3301dec3ac5f10d70532f1b4013190</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>2</sys_mod_count>
         <sys_name>SeatAllocationEngine</sys_name>
         <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
         <sys_policy/>
         <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
         <sys_update_name>sys_script_include_8d3301dec3ac5f10d70532f1b4013190</sys_update_name>
         <sys_updated_by>developer.abhinav</sys_updated_by>
-        <sys_updated_on>2026-11-16 10:34:48</sys_updated_on>
+        <sys_updated_on>2026-11-20 13:27:54</sys_updated_on>
     </sys_script_include>
 </record_update>

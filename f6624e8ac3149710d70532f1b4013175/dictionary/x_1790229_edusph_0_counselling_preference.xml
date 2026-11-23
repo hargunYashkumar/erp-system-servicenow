@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="a78ac2efc368d750d70532f1b40131fa" label="Counselling Preference" max_length="40" name="x_1790229_edusph_0_counselling_preference" type="collection">
+        <element label="Active" max_length="40" name="active" type="boolean"/>
+        <element label="Application" mandatory="true" max_length="32" name="application" reference="x_1790229_edusph_0_admission_application" type="reference"/>
+        <element label="College" mandatory="true" max_length="32" name="college" reference="x_1790229_edusph_0_college" type="reference"/>
+        <element label="Preference Order" mandatory="true" max_length="40" name="preference_order" type="integer"/>
+        <element label="Round" max_length="40" name="round" type="integer"/>
+        <element label="Academic Year" max_length="32" name="academic_year" reference="x_1790229_edusph_0_academic_year" type="reference"/>
+        <element label="Locked" max_length="40" name="locked" type="boolean"/>
+        <element label="Program" mandatory="true" max_length="32" name="program" reference="x_1790229_edusph_0_program" type="reference"/>
+        <index name="index">
+            <element name="academic_year"/>
+        </index>
+        <index name="index2">
+            <element name="application"/>
+        </index>
+        <index name="index3">
+            <element name="college"/>
+        </index>
+        <index name="index4">
+            <element name="program"/>
+        </index>
+    </element>
+</database>

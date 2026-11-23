@@ -1,0 +1,940 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function($scope, $http, spUtil, $rootScope) {
+  var c = this;
+
+  // Unified Theme System
+  var savedTheme = localStorage.getItem('edusphere_theme') || 'dark';
+  c.currentTheme = savedTheme;
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  document.body.setAttribute('data-theme', savedTheme);
+
+  c.toggleTheme = function() {
+    c.currentTheme = (c.currentTheme == 'dark') ? 'light' : 'dark';
+    localStorage.setItem('edusphere_theme', c.currentTheme);
+    document.documentElement.setAttribute('data-theme', c.currentTheme);
+    document.body.setAttribute('data-theme', c.currentTheme);
+    $rootScope.$broadcast('edusphere:theme_changed', c.currentTheme);
+  };
+
+  $scope.$on('edusphere:theme_changed', function(ev, theme) {
+    c.currentTheme = theme;
+    document.documentElement.setAttribute('data-theme', theme);
+    document.body.setAttribute('data-theme', theme);
+  });
+
+  c.reg = {
+    first_name: '',
+    last_name: '',
+    email: '',
+    mobile: '',
+    terms: false
+  };
+  c.isSubmitting = false;
+  c.submittedSuccess = false;
+  c.errorMessage = '';
+
+  c.submitRegistration = function() {
+    c.errorMessage = '';
+    if (!c.reg.first_name || !c.reg.last_name || !c.reg.email) {
+      c.errorMessage = 'Please complete all required fields.';
+      return;
+    }
+    if (!c.reg.terms) {
+      c.errorMessage = 'Please review and accept the admission regulations and terms.';
+      return;
+    }
+
+    c.isSubmitting = true;
+    c.server.get({
+      action: 'submit_registration',
+      first_name: c.reg.first_name,
+      last_name: c.reg.last_name,
+      email: c.reg.email,
+      mobile: c.reg.mobile
+    }).then(function(response) {
+      c.isSubmitting = false;
+      if (response.data && response.data.success) {
+        c.submittedSuccess = true;
+      } else {
+        c.errorMessage = (response.data && response.data.message) || 'Registration failed. Please try again.';
+      }
+    }, function(err) {
+      c.isSubmitting = false;
+      c.errorMessage = 'Network error during registration. Please verify connection and retry.';
+    });
+  };
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap');
+
+.edu-reg-root {
+  min-height: 100vh;
+  background-color: #070b14;
+  color: #f1f5f9;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  position: relative;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* NAVBAR */
+.edu-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(10, 15, 29, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+}
+.edu-nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.edu-nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: #ffffff;
+}
+.edu-nav-logo-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+.edu-nav-links {
+  display: flex;
+  gap: 1.25rem;
+}
+.edu-nav-link {
+  color: #94a3b8;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+.edu-nav-link:hover {
+  color: #C2882F;
+}
+
+/* BACKGROUND ORBS */
+.edu-reg-body {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+}
+.edu-reg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+}
+.edu-reg-orb-1 {
+  width: 450px;
+  height: 450px;
+  background: rgba(99, 102, 241, 0.12);
+  top: 10%;
+  left: 20%;
+}
+.edu-reg-orb-2 {
+  width: 380px;
+  height: 380px;
+  background: rgba(194, 136, 47, 0.12);
+  bottom: 10%;
+  right: 20%;
+}
+
+/* CARD */
+.edu-reg-card {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 540px;
+  background: rgba(15, 23, 42, 0.88);
+  border: 1px solid rgba(51, 65, 85, 0.6);
+  border-radius: 1.25rem;
+  padding: 2.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+}
+
+.edu-reg-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.edu-reg-logo-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  background: rgba(194, 136, 47, 0.1);
+  border: 1px solid rgba(194, 136, 47, 0.3);
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+}
+.edu-reg-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+.edu-badge-reg {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #34d399;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.85rem;
+}
+.edu-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+}
+.edu-reg-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 0.5rem 0;
+}
+.edu-reg-subtitle {
+  font-size: 0.95rem;
+  color: #94a3b8;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* FORM FIELDS */
+.edu-reg-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.edu-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 500px) {
+  .edu-form-row { grid-template-columns: 1fr; }
+}
+
+.edu-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.edu-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #cbd5e1;
+  margin: 0;
+}
+.edu-label .req {
+  color: #f43f5e;
+}
+.edu-hint {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 0.2rem;
+}
+
+.edu-input-icon-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.edu-field-icon {
+  position: absolute;
+  left: 0.9rem;
+  color: #64748b;
+  pointer-events: none;
+}
+.edu-input {
+  width: 100%;
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid #334155;
+  border-radius: 0.65rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  color: #ffffff;
+  outline: none;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+.edu-input-with-icon {
+  padding-left: 2.6rem;
+}
+.edu-input:focus {
+  border-color: #C2882F;
+  box-shadow: 0 0 0 3px rgba(194, 136, 47, 0.2);
+  background: rgba(30, 41, 59, 0.95);
+}
+
+/* TERMS */
+.edu-terms-wrap {
+  margin-top: 0.25rem;
+}
+.edu-checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.825rem;
+  color: #94a3b8;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.edu-checkbox-label input {
+  margin-top: 0.2rem;
+  accent-color: #C2882F;
+}
+.edu-checkbox-label a {
+  color: #C2882F;
+  text-decoration: underline;
+}
+
+/* BUTTON */
+.edu-btn-reg-submit {
+  width: 100%;
+  padding: 0.9rem 1.5rem;
+  background: linear-gradient(135deg, #C2882F 0%, #a46d1b 100%);
+  border: none;
+  border-radius: 0.65rem;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(194, 136, 47, 0.35);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+.edu-btn-reg-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(194, 136, 47, 0.5);
+  background: linear-gradient(135deg, #d39535 0%, #b87b22 100%);
+}
+.edu-btn-reg-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.edu-spinner {
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.edu-reg-footer-links {
+  text-align: center;
+  margin-top: 1.25rem;
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+.edu-link-gold {
+  color: #C2882F;
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 0.35rem;
+}
+.edu-link-gold:hover {
+  text-decoration: underline;
+}
+
+/* ALERT */
+.edu-reg-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: 0.65rem;
+  color: #fca5a5;
+  font-size: 0.875rem;
+  margin-bottom: 1.25rem;
+}
+
+/* SUCCESS STATE */
+.edu-reg-success {
+  text-align: center;
+  padding: 1rem 0;
+}
+.edu-success-icon-wrap {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 1.25rem;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.edu-success-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.5rem 0;
+}
+.edu-success-desc {
+  font-size: 0.95rem;
+  color: #94a3b8;
+  margin: 0 0 0.75rem 0;
+}
+.edu-email-pill {
+  display: inline-block;
+  padding: 0.4rem 1.2rem;
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid #334155;
+  border-radius: 9999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #38bdf8;
+  margin-bottom: 1.25rem;
+}
+.edu-success-notice {
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 0.65rem;
+  padding: 0.85rem 1rem;
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  text-align: left;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+.edu-success-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.edu-btn-reg-primary {
+  display: block;
+  padding: 0.85rem 1.5rem;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-radius: 0.65rem;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+  transition: all 0.2s;
+}
+.edu-btn-reg-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+}
+.edu-btn-reg-ghost {
+  display: block;
+  padding: 0.75rem 1.5rem;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.edu-btn-reg-ghost:hover {
+  color: #ffffff;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+
+/* Explicit logo sizing constraint */
+.edu-nav-logo-img {
+  width: 44px !important;
+  height: 44px !important;
+  max-width: 44px !important;
+  max-height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  object-fit: contain !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+}
+.edu-footer-brand .edu-nav-logo-img {
+  width: 36px !important;
+  height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
+}
+
+
+/* ==========================================================================
+   SELF-REGISTRATION TYPOGRAPHY, INPUT SIZES &amp; BADGE POSITIONING ENHANCEMENTS
+   ========================================================================== */
+.edu-reg-logo-wrapper {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-bottom: 12px !important;
+  width: 100% !important;
+}
+
+.edu-reg-logo-box {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 76px !important;
+  height: 76px !important;
+  background: rgba(194, 136, 47, 0.12) !important;
+  border: 1px solid rgba(194, 136, 47, 0.35) !important;
+  border-radius: 1.25rem !important;
+  margin: 0 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+}
+
+.edu-reg-logo {
+  width: 48px !important;
+  height: 48px !important;
+  max-width: 48px !important;
+  max-height: 48px !important;
+  object-fit: contain !important;
+}
+
+.edu-badge-reg-wrapper {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-bottom: 16px !important;
+  width: 100% !important;
+}
+
+.edu-badge-reg {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.6rem !important;
+  padding: 0.45rem 1.15rem !important;
+  border-radius: 9999px !important;
+  background: rgba(16, 185, 129, 0.14) !important;
+  border: 1px solid rgba(16, 185, 129, 0.35) !important;
+  color: #34d399 !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  margin: 0 !important;
+}
+
+.edu-reg-title {
+  font-size: 2rem !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  margin: 0 0 0.65rem 0 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.edu-reg-subtitle {
+  font-size: 1.05rem !important;
+  color: #94a3b8 !important;
+  line-height: 1.55 !important;
+  margin: 0 0 1.25rem 0 !important;
+}
+
+.edu-label {
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  color: #e2e8f0 !important;
+  margin: 0 0 0.4rem 0 !important;
+}
+
+.edu-input {
+  height: 52px !important;
+  font-size: 1.05rem !important;
+  padding: 0.85rem 1.15rem !important;
+  border-radius: 0.75rem !important;
+  background: rgba(30, 41, 59, 0.8) !important;
+  color: #ffffff !important;
+}
+
+.edu-input-with-icon {
+  padding-left: 3rem !important;
+}
+
+.edu-field-icon {
+  left: 1.05rem !important;
+  width: 20px !important;
+  height: 20px !important;
+  color: #94a3b8 !important;
+}
+
+.edu-field-group {
+  gap: 0.5rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.edu-helper-text {
+  font-size: 0.9rem !important;
+  color: #94a3b8 !important;
+  margin-top: 0.35rem !important;
+}
+
+.edu-checkbox-label {
+  font-size: 0.95rem !important;
+  line-height: 1.5 !important;
+  color: #cbd5e1 !important;
+}
+
+.edu-btn-reg-submit {
+  height: 52px !important;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  border-radius: 0.75rem !important;
+  margin-top: 0.85rem !important;
+}
+
+.edu-reg-footer-links {
+  font-size: 1rem !important;
+  margin-top: 1.5rem !important;
+}
+
+.edu-link-gold {
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+}
+
+
+/* ========================================================================== */
+/* UNIFIED THEME TOGGLE BUTTON                                                */
+/* ========================================================================== */
+.edu-theme-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  padding: 6px 14px !important;
+  border-radius: 20px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #e2e8f0 !important;
+  backdrop-filter: blur(8px) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+}
+.edu-theme-btn:hover {
+  background: rgba(255, 255, 255, 0.16) !important;
+  border-color: #C2882F !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+}
+.edu-theme-icon {
+  font-size: 14px !important;
+  line-height: 1 !important;
+}
+.edu-theme-label {
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+}
+
+/* ========================================================================== */
+/* LIGHT THEME OVERRIDES FOR AUTH &amp; REGISTRATION                              */
+/* ========================================================================== */
+[data-theme="light"] .edu-reg-root {
+  background: #f8fafc !important;
+  color: #0f172a !important;
+}
+[data-theme="light"] .edu-nav {
+  background: #ffffff !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03) !important;
+}
+[data-theme="light"] .edu-nav-brand span {
+  color: #0f172a !important;
+}
+[data-theme="light"] .edu-nav-link {
+  color: #475569 !important;
+}
+[data-theme="light"] .edu-nav-link:hover,
+[data-theme="light"] .edu-nav-link.active {
+  color: #C2882F !important;
+}
+[data-theme="light"] .edu-theme-btn {
+  background: #f1f5f9 !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #1e293b !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+}
+[data-theme="light"] .edu-theme-btn:hover {
+  background: #e2e8f0 !important;
+  border-color: #C2882F !important;
+  color: #0f172a !important;
+}
+[data-theme="light"] .edu-reg-card {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06) !important;
+  color: #0f172a !important;
+}
+[data-theme="light"] .edu-reg-title {
+  color: #0f172a !important;
+}
+[data-theme="light"] .edu-reg-subtitle {
+  color: #64748b !important;
+}
+[data-theme="light"] .edu-label {
+  color: #334155 !important;
+}
+[data-theme="light"] .edu-input {
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #0f172a !important;
+}
+[data-theme="light"] .edu-input:focus {
+  border-color: #C2882F !important;
+  box-shadow: 0 0 0 3px rgba(194, 136, 47, 0.2) !important;
+}
+[data-theme="light"] .edu-reg-footer {
+  border-top: 1px solid #f1f5f9 !important;
+  color: #64748b !important;
+}
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>edusphere-self-registration</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>EduSphere Self Registration</name>
+        <option_schema/>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function() {
+  data.isLoggedIn = gs.isLoggedIn();
+
+  if (input && input.action === 'submit_registration') {
+    var email = (input.email || '').trim().toLowerCase();
+    var firstName = (input.first_name || '').trim();
+    var lastName = (input.last_name || '').trim();
+    var mobile = (input.mobile || '').trim();
+
+    if (!email || !firstName || !lastName) {
+      data.success = false;
+      data.message = 'Please provide all required fields (First Name, Last Name, and Email).';
+      return;
+    }
+
+    // Basic email format check
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      data.success = false;
+      data.message = 'Please enter a valid email address.';
+      return;
+    }
+
+    // Check if sys_user already exists
+    var usr = new GlideRecord('sys_user');
+    usr.addQuery('email', email).addOrCondition('user_name', email);
+    usr.query();
+    if (usr.next()) {
+      data.success = false;
+      data.message = 'An applicant account with this email address (' + email + ') is already registered. Please proceed to Sign In.';
+      data.alreadyExists = true;
+      return;
+    }
+
+    // Insert into external user registration staging table
+    // x_1790229_edusph_0_user_reg_req_755648
+    var regReq = new GlideRecord('x_1790229_edusph_0_user_reg_req_755648');
+    regReq.initialize();
+    regReq.setValue('email', email);
+    regReq.setValue('first_name', firstName);
+    regReq.setValue('last_name', lastName);
+    regReq.setValue('portal', '78014d9ac3ac5f10d70532f1b40131ad'); // Admission portal
+    
+    var insertedId = regReq.insert();
+    if (insertedId) {
+      data.success = true;
+      data.requestId = insertedId;
+      data.message = 'Registration request processed. Activation link dispatched.';
+    } else {
+      data.success = false;
+      data.message = 'Could not create registration request. Please verify details and try again.';
+    }
+  }
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>developer.abhinav</sys_created_by>
+        <sys_created_on>2026-11-19 07:04:37</sys_created_on>
+        <sys_id>2fdfa30fc3681750d70532f1b40131d8</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>EduSphere Self Registration</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sp_widget_2fdfa30fc3681750d70532f1b40131d8</sys_update_name>
+        <sys_updated_by>developer.abhinav</sys_updated_by>
+        <sys_updated_on>2026-11-19 10:19:54</sys_updated_on>
+        <template><![CDATA[<div class="edu-reg-root" ng-attr-data-theme="{{c.currentTheme}}">
+  <!-- NAVBAR -->
+  <nav class="edu-nav">
+    <div class="edu-nav-inner">
+      <a href="?id=admission_home" class="edu-nav-brand">
+        <img src="x_1790229_edusph_0.Edusphere%20Logo.svg?v=68ce119ac3a09f10d70532f1b40131b4" alt="EduSphere" class="edu-nav-logo-img" width="44" height="44" style="width:44px!important;height:44px!important;max-width:44px!important;max-height:44px!important;min-width:44px!important;min-height:44px!important;object-fit:contain!important;" />
+        <span>EduSphere Admissions</span>
+      </a>
+      <div class="edu-nav-links">
+        <a href="?id=admission_home" class="edu-nav-link">Home</a>
+        <a href="?id=admission_login" class="edu-nav-link">Sign In</a>
+      </div>
+      <div class="edu-nav-actions">
+        <button type="button" class="edu-theme-btn" ng-click="c.toggleTheme()" title="Toggle Light / Dark Theme" aria-label="Toggle Theme">
+          <span class="edu-theme-icon" ng-if="c.currentTheme == 'dark'">&#9728;&#65039;</span>
+          <span class="edu-theme-icon" ng-if="c.currentTheme != 'dark'">&#127769;</span>
+          <span class="edu-theme-label" ng-if="c.currentTheme == 'dark'">Light Mode</span>
+          <span class="edu-theme-label" ng-if="c.currentTheme != 'dark'">Dark Mode</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN REGISTRATION CONTAINER -->
+  <div class="edu-reg-body">
+    <div class="edu-reg-orb edu-reg-orb-1"></div>
+    <div class="edu-reg-orb edu-reg-orb-2"></div>
+
+    <div class="edu-reg-card">
+      <!-- HEADER -->
+      <div class="edu-reg-header">
+        <div class="edu-reg-logo-wrapper">
+          <div class="edu-reg-logo-box">
+            <img src="x_1790229_edusph_0.Edusphere%20Logo.svg?v=68ce119ac3a09f10d70532f1b40131b4" alt="EduSphere" class="edu-reg-logo" width="48" height="48" style="width:48px!important;height:48px!important;object-fit:contain!important;" />
+          </div>
+        </div>
+        <div class="edu-badge-reg-wrapper">
+          <div class="edu-badge-reg">
+            <span class="edu-dot"></span> Admissions 2026-27 Intake
+          </div>
+        </div>
+        <h2 class="edu-reg-title">Create Applicant Account</h2>
+        <p class="edu-reg-subtitle">
+          Register to access the admission application portal, complete your counseling profile, and track seat allocations.
+        </p>
+      </div>
+
+      <!-- SUCCESS CONFIRMATION STATE -->
+      <div ng-if="c.submittedSuccess" class="edu-reg-success animate-in">
+        <div class="edu-success-icon-wrap">
+          <svg width="48" height="48" fill="none" stroke="#10b981" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h3 class="edu-success-title">Verification Link Sent!</h3>
+        <p class="edu-success-desc">
+          We have generated your applicant profile and sent an activation email to:
+        </p>
+        <div class="edu-email-pill">{{c.reg.email}}</div>
+        <div class="edu-success-notice">
+          <strong>Next Step:</strong> Please open your email and click the verification link to set your password and access your candidate dashboard.
+        </div>
+        <div class="edu-success-actions">
+          <a href="?id=admission_login" class="edu-btn-reg-primary">Proceed to Sign In &rarr;</a>
+          <a href="?id=admission_home" class="edu-btn-reg-ghost">&larr; Back to Admissions Home</a>
+        </div>
+      </div>
+
+      <!-- ERROR ALERT -->
+      <div ng-if="c.errorMessage" class="edu-reg-alert animate-in">
+        <svg width="20" height="20" fill="none" stroke="#ef4444" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <span>{{c.errorMessage}}</span>
+      </div>
+
+      <!-- REGISTRATION FORM -->
+      <form ng-if="!c.submittedSuccess" ng-submit="c.submitRegistration()" class="edu-reg-form">
+        <div class="edu-form-row">
+          <div class="edu-field-group">
+            <label class="edu-label">First Name <span class="req">*</span></label>
+            <input type="text" class="edu-input" ng-model="c.reg.first_name" placeholder="e.g. Rahul" required />
+          </div>
+          <div class="edu-field-group">
+            <label class="edu-label">Last Name <span class="req">*</span></label>
+            <input type="text" class="edu-input" ng-model="c.reg.last_name" placeholder="e.g. Sharma" required />
+          </div>
+        </div>
+
+        <div class="edu-field-group">
+          <label class="edu-label">Email Address <span class="req">*</span></label>
+          <div class="edu-input-icon-wrap">
+            <svg class="edu-field-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <input type="email" class="edu-input edu-input-with-icon" ng-model="c.reg.email" placeholder="student@example.com" required />
+          </div>
+          <span class="edu-hint">Activation instructions and credentials will be sent to this email address.</span>
+        </div>
+
+        <div class="edu-field-group">
+          <label class="edu-label">Mobile Number</label>
+          <div class="edu-input-icon-wrap">
+            <svg class="edu-field-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <input type="tel" class="edu-input edu-input-with-icon" ng-model="c.reg.mobile" placeholder="10-digit mobile number" />
+          </div>
+        </div>
+
+        <div class="edu-terms-wrap">
+          <label class="edu-checkbox-label">
+            <input type="checkbox" ng-model="c.reg.terms" required />
+            <span>I agree to the EduSphere University <a href="?id=admission_home#programs" target="_blank">Admissions Regulations &amp; Terms</a> and declare all prospective details are authentic.</span>
+          </label>
+        </div>
+
+        <button type="submit" class="edu-btn-reg-submit" ng-disabled="c.isSubmitting">
+          <span ng-if="!c.isSubmitting">Create Account &amp; Send Activation Link &rarr;</span>
+          <span ng-if="c.isSubmitting" class="edu-btn-loading">
+            <svg class="edu-spinner" viewBox="0 0 24 24" width="18" height="18"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+            Generating Account...
+          </span>
+        </button>
+
+        <div class="edu-reg-footer-links">
+          <span>Already registered?</span>
+          <a href="?id=admission_login" class="edu-link-gold">Sign In to your account &rarr;</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

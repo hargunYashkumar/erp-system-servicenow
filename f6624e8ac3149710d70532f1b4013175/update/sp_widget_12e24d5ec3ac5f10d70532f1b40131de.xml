@@ -1,28 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
     <sp_widget action="INSERT_OR_UPDATE">
         <category>custom</category>
-        <client_script><![CDATA[
-api.controller = function($scope, $http, $window, spUtil) {
+        <client_script><![CDATA[api.controller = function($scope, $http, $window, spUtil, $rootScope) {
   var c = this;
+
+  // Unified Theme System
+  var savedTheme = localStorage.getItem('edusphere_portal_theme') || localStorage.getItem('edusphere_theme') || 'dark';
+  c.currentTheme = savedTheme;
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  document.body.setAttribute('data-theme', savedTheme);
+
+  c.toggleTheme = function() {
+    c.currentTheme = (c.currentTheme == 'dark') ? 'light' : 'dark';
+    localStorage.setItem('edusphere_portal_theme', c.currentTheme);
+    localStorage.setItem('edusphere_theme', c.currentTheme);
+    document.documentElement.setAttribute('data-theme', c.currentTheme);
+    document.body.setAttribute('data-theme', c.currentTheme);
+    $rootScope.$broadcast('edusphere:theme_changed', c.currentTheme);
+  };
+
+  $scope.$on('edusphere:theme_changed', function(ev, theme) {
+    c.currentTheme = theme;
+    document.documentElement.setAttribute('data-theme', theme);
+    document.body.setAttribute('data-theme', theme);
+  });
+
   c.actionLoading = false;
+  c.refreshing = false;
   c.showCorrectionModal = false;
+  c.showAcceptModal = false;
+  c.showRejectModal = false;
+  c.activeModalRound = 1;
   c.correctionReason = '';
   c.activeDoc = null;
 
   c.categories = {
     'general': 'General (Unreserved)',
+    'gen': 'General (Unreserved)',
     'female': 'Female Supernumerary Quota',
     'backward class': 'OBC / Backward Class (Non-Creamy Layer)',
+    'backward_class': 'OBC / Backward Class (Non-Creamy Layer)',
+    'obc': 'OBC / Backward Class (Non-Creamy Layer)',
     'economically weaker section': 'EWS (Economically Weaker Section)',
+    'economically_weaker_section': 'EWS (Economically Weaker Section)',
+    'ews': 'EWS (Economically Weaker Section)',
     'person with disability': 'Person with Disability (PwD)',
-    'defense causality': 'Defence Priority'
+    'person_with_disability': 'Person with Disability (PwD)',
+    'pwd': 'Person with Disability (PwD)',
+    'defense causality': 'Defence Priority',
+    'defense_causality': 'Defence Priority',
+    'sc/st': 'SC/ST Reserved Quota'
   };
 
   c.getCategoryLabel = function(val) {
-    return c.categories[val] || val || 'General';
+    if (!val) return 'General (Unreserved)';
+    var v = val.toString().toLowerCase().trim();
+    return c.categories[v] || val || 'General (Unreserved)';
   };
 
+  c.formatDate = function(dtStr) {
+    if (!dtStr) return '—';
+    try {
+      var d = dtStr.split(' ')[0].split('-');
+      if (d.length === 3) {
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return d[2] + ' ' + (months[parseInt(d[1],10)-1] || d[1]) + ' ' + d[0];
+      }
+    } catch(e) {}
+    return dtStr;
+  };
+
+  // Helper to identify "In Merit" status reliably
+  c.isInMerit = function() {
+    if (!c.data.app || !c.data.app.status) return false;
+    var st = c.data.app.status.toString().toLowerCase().replace(/_/g, ' ').trim();
+    return st === 'in merit';
+  };
+
+  // Helper to identify Enrolled status reliably
+  c.isEnrolled = function() {
+    if (!c.data.app || !c.data.app.status) return false;
+    var st = c.data.app.status.toString().toLowerCase().replace(/_/g, ' ').trim();
+    return st === 'accepted' || st === 'enrolled';
+  };
+
+  // Correct Status Display for all permutations
   c.getStatusDisplay = function(st) {
+    var normSt = (st || '').toString().toLowerCase().replace(/_/g, ' ').trim();
     var map = {
       'draft': 'Draft Application',
       'submitted': 'Under Review',
@@ -31,29 +95,128 @@ api.controller = function($scope, $http, $window, spUtil) {
       'in merit': 'Ranked in Merit List',
       'offered': 'Seat Allocated',
       'accepted': 'Enrolled',
+      'enrolled': 'Enrolled',
       'waitlisted': 'Waitlisted',
       'rejected': 'Not Qualified',
       'withdrawn': 'Withdrawn'
     };
-    return map[st] || st;
+    return map[normSt] || st;
   };
 
+  // Dynamic Pipeline Step Index (1 to 7)
   c.getStepIndex = function() {
-    var st = c.data.app.status;
+    if (!c.data.app || !c.data.app.status) return 1;
+    var st = c.data.app.status.toString().toLowerCase().replace(/_/g, ' ').trim();
     if (st === 'draft') return 1;
     if (st === 'submitted' || st === 'document pending') return 2;
     if (st === 'verified') return 3;
-    if (st === 'in merit') return 4;
+    if (st === 'in merit') {
+      if (c.data.counselling && c.data.counselling.round1 && c.data.counselling.round1.decision === 'Accepted') return 7;
+      if (c.data.counselling && c.data.counselling.round2 && c.data.counselling.round2.decision === 'Accepted') return 7;
+      if (c.data.counselling && c.data.counselling.round2) return 6;
+      if (c.data.counselling && c.data.counselling.round1) return 5;
+      return 4;
+    }
     if (st === 'offered') return 5;
-    if (st === 'accepted') return 6;
+    if (st === 'accepted' || st === 'enrolled') return 7;
     return 1;
   };
 
-  // =========================================================================
-  // BULLETPROOF DOCUMENT UPLOADER VIA SERVICENOW ATTACHMENT REST API
-  // Supports PDF, PNG, JPG, JPEG, Word (.doc, .docx)
-  // =========================================================================
+  // Check if student can act on allotment
+  c.canTakeAction = function(roundObj) {
+    if (!roundObj) return false;
+    if (c.isEnrolled()) return false;
+    var dec = (roundObj.decision || '').toLowerCase().trim();
+    if (dec === 'accepted' || dec === 'rejected') return false;
+    var st = (roundObj.status || '').toLowerCase().trim();
+    return st === 'action required' || st === 'seat allotted';
+  };
+
+  // Refresh handler
+  c.refreshDashboard = function() {
+    c.refreshing = true;
+    c.server.refresh().then(function() {
+      c.refreshing = false;
+      spUtil.addInfoMessage('Application and counselling status updated.');
+    });
+  };
+
+  // Modal Triggers for Accept / Reject
+  c.openAcceptModal = function(roundNum) {
+    c.activeModalRound = roundNum || 1;
+    c.showAcceptModal = true;
+  };
+
+  c.closeAcceptModal = function() {
+    c.showAcceptModal = false;
+  };
+
+  c.confirmAccept = function() {
+    c.actionLoading = true;
+    c.server.get({
+      action: 'accept_counselling_allotment',
+      appSysId: c.data.app.sys_id,
+      round: c.activeModalRound
+    }).then(function(r) {
+      c.actionLoading = false;
+      c.closeAcceptModal();
+      if (r.data.accepted) {
+        c.data.app.status = 'accepted';
+        if (!c.data.student) c.data.student = {};
+        c.data.student.roll_no = r.data.newRollNo;
+        c.data.student.status = 'Active';
+        if (r.data.student && r.data.student.category) {
+          c.data.student.category = r.data.student.category;
+        }
+        if (c.activeModalRound === 1 && c.data.counselling.round1) {
+          c.data.counselling.round1.status = 'Seat Accepted';
+          c.data.counselling.round1.decision = 'Accepted';
+        }
+        if (c.activeModalRound === 2 && c.data.counselling.round2) {
+          c.data.counselling.round2.status = 'Seat Accepted';
+          c.data.counselling.round2.decision = 'Accepted';
+        }
+        spUtil.addInfoMessage("Congratulations! Your seat has been accepted. Roll No: " + r.data.newRollNo);
+      }
+    });
+  };
+
+  c.openRejectModal = function(roundNum) {
+    c.activeModalRound = roundNum || 1;
+    c.showRejectModal = true;
+  };
+
+  c.closeRejectModal = function() {
+    c.showRejectModal = false;
+  };
+
+  c.confirmReject = function() {
+    c.actionLoading = true;
+    c.server.get({
+      action: 'reject_counselling_allotment',
+      appSysId: c.data.app.sys_id,
+      round: c.activeModalRound
+    }).then(function(r) {
+      c.actionLoading = false;
+      c.closeRejectModal();
+      if (c.activeModalRound === 1 && c.data.counselling.round1) {
+        c.data.counselling.round1.status = 'Seat Rejected';
+        c.data.counselling.round1.decision = 'Rejected';
+      }
+      if (c.activeModalRound === 2 && c.data.counselling.round2) {
+        c.data.counselling.round2.status = 'Seat Rejected';
+        c.data.counselling.round2.decision = 'Rejected';
+      }
+      spUtil.addInfoMessage("Allotment declined. You remain eligible for subsequent vacancy rounds.");
+    });
+  };
+
+  // Document Uploader
   c.triggerUpload = function(doc) {
+    if (doc.verify_status === 'Verified') {
+      spUtil.addInfoMessage("Document is already verified and locked.");
+      return;
+    }
     c.activeDoc = doc;
     var fileInput = document.getElementById('portal_file_input');
     if (fileInput) {
@@ -67,7 +230,11 @@ api.controller = function($scope, $http, $window, spUtil) {
     var file = inputElem.files[0];
     var doc = c.activeDoc;
 
-    // File size limit: 10MB
+    if (doc.verify_status === 'Verified') {
+      spUtil.addErrorMessage("Verified documents cannot be re-uploaded or modified.");
+      return;
+    }
+
     if (file.size > 10 * 1024 * 1024) {
       spUtil.addErrorMessage("File exceeds 10MB limit. Please upload a smaller file.");
       return;
@@ -99,7 +266,6 @@ api.controller = function($scope, $http, $window, spUtil) {
       doc.verify_status = 'Pending';
       spUtil.addInfoMessage("Document \"" + file.name + "\" uploaded successfully for " + doc.label + "!");
 
-      // Update backend status to pending verification
       c.server.get({
         action: 'mark_doc_uploaded',
         doc_sys_id: doc.sys_id,
@@ -107,47 +273,151 @@ api.controller = function($scope, $http, $window, spUtil) {
       });
     }, function(error) {
       doc.uploading = false;
-      console.error("Attachment upload error:", error);
       var msg = (error.data && error.data.error) ? error.data.error.message : "Network error or session timeout.";
       spUtil.addErrorMessage("Failed to upload " + file.name + ": " + msg);
     });
   };
 
-  c.acceptSeatOffer = function() {
-    if (!$window.confirm("Confirm acceptance of your allocated seat in " + c.data.app.program_name + "?")) return;
-    c.actionLoading = true;
-    c.server.get({ action: 'accept_seat_offer', appSysId: c.data.app.sys_id }).then(function(r) {
-      c.actionLoading = false;
-      if (r.data.accepted) {
-        c.data.app.status = 'accepted';
-        c.data.student.roll_no = r.data.newRollNo;
-        spUtil.addInfoMessage("Congratulations! Your admission is confirmed. Roll No: " + r.data.newRollNo);
-      }
-    });
+  c.openCorrectionModal = function() {
+    c.showCorrectionModal = true;
+    c.correctionReason = '';
   };
 
-  c.declineSeatOffer = function() {
-    if (!$window.confirm("Are you sure you want to decline this seat offer?")) return;
-    c.actionLoading = true;
-    c.server.get({ action: 'submit_correction', appSysId: c.data.app.sys_id, reason: 'Candidate declined offer' }).then(function() {
-      c.actionLoading = false;
-      c.data.app.status = 'withdrawn';
-    });
+  c.closeCorrectionModal = function() {
+    c.showCorrectionModal = false;
   };
-
-  c.openCorrectionModal = function() { c.showCorrectionModal = true; };
-  c.closeCorrectionModal = function() { c.showCorrectionModal = false; };
 
   c.submitCorrectionRequest = function() {
-    c.actionLoading = true;
-    c.server.get({ action: 'submit_correction', appSysId: c.data.app.sys_id, reason: c.correctionReason }).then(function() {
-      c.actionLoading = false;
-      c.showCorrectionModal = false;
-      spUtil.addInfoMessage("Correction request submitted for administrative review.");
+    if (!c.correctionReason) return;
+    c.server.get({
+      action: 'submit_correction',
+      appSysId: c.data.app.sys_id,
+      reason: c.correctionReason
+    }).then(function() {
+      c.closeCorrectionModal();
+      spUtil.addInfoMessage("Your correction request has been submitted to the admissions office.");
     });
   };
-};
-]]></client_script>
+
+  // Preferences management
+  c.selectedProg = null;
+  c.savingPrefs = false;
+
+  c.addPreference = function() {
+    if (!c.selectedProg) return;
+    var prog = c.selectedProg;
+    if (typeof prog === 'string') {
+      try { prog = JSON.parse(prog); } catch(e) {}
+    }
+    var colId = prog.college_id || prog.college;
+    var progId = prog.program_id || prog.program;
+    var colName = prog.college_name || '';
+    var progName = prog.program_name || '';
+    if (!colId || !progId || colId === 'undefined' || progId === 'undefined') {
+      spUtil.addErrorMessage("Please select a valid college and program.");
+      return;
+    }
+    if (!c.data.preferences) c.data.preferences = [];
+    for (var i = 0; i < c.data.preferences.length; i++) {
+      if (c.data.preferences[i].college_id === colId && c.data.preferences[i].program_id === progId) {
+        spUtil.addErrorMessage("This College & Program combination is already in your preference list.");
+        return;
+      }
+    }
+    c.data.preferences.push({
+      college_id: colId,
+      college_name: colName,
+      program_id: progId,
+      program_name: progName,
+      preference_order: c.data.preferences.length + 1
+    });
+    c.selectedProg = null;
+  };
+
+  c.removePreference = function(idx) {
+    c.data.preferences.splice(idx, 1);
+  };
+
+  c.movePrefUp = function(idx) {
+    if (idx <= 0) return;
+    var temp = c.data.preferences[idx];
+    c.data.preferences[idx] = c.data.preferences[idx - 1];
+    c.data.preferences[idx - 1] = temp;
+  };
+
+  c.movePrefDown = function(idx) {
+    if (idx >= c.data.preferences.length - 1) return;
+    var temp = c.data.preferences[idx];
+    c.data.preferences[idx] = c.data.preferences[idx + 1];
+    c.data.preferences[idx + 1] = temp;
+  };
+
+  c.savePreferences = function() {
+    c.savingPrefs = true;
+    c.server.get({
+      action: 'save_preferences',
+      appSysId: c.data.app.sys_id,
+      preferences: c.data.preferences
+    }).then(function(r) {
+      c.savingPrefs = false;
+      spUtil.addInfoMessage("Counselling preferences saved successfully!");
+      c.data.preferencesLocked = true;
+    });
+  };
+
+  // Float action
+  c.openFloatModal = function(roundNum) {
+    c.activeModalRound = roundNum || 1;
+    c.showFloatModal = true;
+  };
+
+  c.closeFloatModal = function() {
+    c.showFloatModal = false;
+  };
+
+  c.confirmFloat = function() {
+    c.actionLoading = true;
+    c.server.get({
+      action: 'float_counselling_allotment',
+      appSysId: c.data.app.sys_id,
+      round: c.activeModalRound
+    }).then(function(r) {
+      c.actionLoading = false;
+      c.closeFloatModal();
+      if (c.data.counselling.round1) {
+        c.data.counselling.round1.decision = 'Float';
+      }
+      spUtil.addInfoMessage("Seat Floated! Your seat is retained while eligible for Round 2 upgrade.");
+    });
+  };
+
+  // Withdraw action
+  c.openWithdrawModal = function() {
+    c.withdrawalReason = '';
+    c.showWithdrawModal = true;
+  };
+
+  c.closeWithdrawModal = function() {
+    c.showWithdrawModal = false;
+  };
+
+  c.confirmWithdraw = function() {
+    c.actionLoading = true;
+    c.server.get({
+      action: 'withdraw_admission',
+      appSysId: c.data.app.sys_id,
+      reason: c.withdrawalReason
+    }).then(function(r) {
+      c.actionLoading = false;
+      c.closeWithdrawModal();
+      c.data.app.status = 'withdrawn';
+      if (c.data.counselling.round1) c.data.counselling.round1.decision = 'Withdrawn';
+      if (c.data.counselling.round2) c.data.counselling.round2.decision = 'Withdrawn';
+      spUtil.addInfoMessage("Admission withdrawn successfully. Seat released.");
+    });
+  };
+
+};]]></client_script>
         <controller_as>c</controller_as>
         <css>
 .edu-dash-root {
@@ -157,7 +427,7 @@ api.controller = function($scope, $http, $window, spUtil) {
   right: 50% !important;
   margin-left: -50vw !important;
   margin-right: -50vw !important;
-  background: #f8fafc;
+  background: #0b1120 !important; color: #f8fafc !important;
   min-height: 100vh;
   font-family: 'Plus Jakarta Sans', sans-serif !important;
   padding-bottom: 80px;
@@ -509,7 +779,7 @@ api.controller = function($scope, $http, $window, spUtil) {
 .edu-modal-head h3 { margin: 0; font-size: 18px; font-weight: 800; }
 .edu-close { background: none; border: none; font-size: 24px; cursor: pointer; color: #94a3b8; }
 .edu-modal-body { padding: 24px; }
-.edu-modal-foot { display: flex; justify-content: flex-end; gap: 10px; padding: 16px 24px; background: #f8fafc; border-top: 1px solid #f1f5f9; }
+.edu-modal-foot { display: flex; justify-content: flex-end; gap: 10px; padding: 16px 24px; background: #0b1120 !important; color: #f8fafc !important; border-top: 1px solid #f1f5f9; }
 
 @media (max-width: 768px) {
   .edu-dash-cols { grid-template-columns: 1fr; }
@@ -532,6 +802,1033 @@ api.controller = function($scope, $http, $window, spUtil) {
   transform: scale(1.08) !important;
   filter: drop-shadow(0 4px 14px rgba(194, 136, 47, 0.6)) !important;
 }
+
+
+/* Explicit logo sizing constraint */
+.edu-nav-logo-img {
+  width: 44px !important;
+  height: 44px !important;
+  max-width: 44px !important;
+  max-height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  object-fit: contain !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+}
+.edu-footer-brand .edu-nav-logo-img {
+  width: 36px !important;
+  height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
+}
+
+
+/* ========================================================================== */
+/* UNIFIED THEME TOGGLE BUTTON                                                */
+/* ========================================================================== */
+.edu-theme-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  padding: 6px 14px !important;
+  border-radius: 20px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #e2e8f0 !important;
+  backdrop-filter: blur(8px) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+}
+.edu-theme-btn:hover {
+  background: rgba(255, 255, 255, 0.16) !important;
+  border-color: #C2882F !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+}
+.edu-theme-icon {
+  font-size: 14px !important;
+  line-height: 1 !important;
+}
+.edu-theme-label {
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+}
+.edu-logout-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 8px !important;
+  background: rgba(255,255,255,0.06) !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  color: #cbd5e1 !important;
+  transition: all 0.2s !important;
+  text-decoration: none !important;
+}
+.edu-logout-btn:hover {
+  background: rgba(239, 68, 68, 0.2) !important;
+  border-color: #ef4444 !important;
+  color: #ef4444 !important;
+}
+.edu-btn-ghost {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #e2e8f0 !important;
+  padding: 6px 14px !important;
+  border-radius: 8px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  transition: all 0.2s !important;
+}
+.edu-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  color: #ffffff !important;
+}
+
+/* ========================================================================== */
+/* DARK THEME STYLES FOR CANDIDATE DASHBOARD (DEFAULT / DARK MODE)           */
+/* ========================================================================== */
+[data-theme="dark"] .edu-dash-root,
+:root:not([data-theme="light"]) .edu-dash-root {
+  background: #0b1120 !important;
+  color: #f8fafc !important;
+  min-height: 100vh !important;
+}
+
+[data-theme="dark"] .edu-nav,
+:root:not([data-theme="light"]) .edu-nav {
+  background: rgba(15, 23, 42, 0.96) !important;
+  border-bottom: 1px solid rgba(51, 65, 85, 0.7) !important;
+}
+[data-theme="dark"] .edu-nav-brand span,
+:root:not([data-theme="light"]) .edu-nav-brand span {
+  color: #ffffff !important;
+}
+[data-theme="dark"] .edu-nav-link,
+:root:not([data-theme="light"]) .edu-nav-link {
+  color: #94a3b8 !important;
+}
+[data-theme="dark"] .edu-nav-link:hover,
+[data-theme="dark"] .edu-nav-link.active,
+:root:not([data-theme="light"]) .edu-nav-link:hover,
+:root:not([data-theme="light"]) .edu-nav-link.active {
+  color: #C2882F !important;
+}
+[data-theme="dark"] .edu-nav-user,
+:root:not([data-theme="light"]) .edu-nav-user {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border: 1px solid rgba(71, 85, 105, 0.6) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .edu-dash-banner,
+:root:not([data-theme="light"]) .edu-dash-banner {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98)) !important;
+  border: 1px solid rgba(51, 65, 85, 0.8) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+}
+[data-theme="dark"] .edu-dash-banner h1,
+:root:not([data-theme="light"]) .edu-dash-banner h1 {
+  color: #ffffff !important;
+}
+[data-theme="dark"] .edu-meta-line,
+:root:not([data-theme="light"]) .edu-meta-line {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .edu-card,
+[data-theme="dark"] .edu-metric-card,
+[data-theme="dark"] .edu-step-card,
+[data-theme="dark"] .edu-doc-card,
+[data-theme="dark"] .edu-empty-card,
+:root:not([data-theme="light"]) .edu-card,
+:root:not([data-theme="light"]) .edu-metric-card,
+:root:not([data-theme="light"]) .edu-step-card,
+:root:not([data-theme="light"]) .edu-doc-card,
+:root:not([data-theme="light"]) .edu-empty-card {
+  background: rgba(15, 23, 42, 0.85) !important;
+  border: 1px solid rgba(51, 65, 85, 0.7) !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="dark"] .edu-card-title,
+[data-theme="dark"] .edu-metric-label,
+[data-theme="dark"] .edu-metric-val,
+:root:not([data-theme="light"]) .edu-card-title,
+:root:not([data-theme="light"]) .edu-metric-label,
+:root:not([data-theme="light"]) .edu-metric-val {
+  color: #ffffff !important;
+}
+[data-theme="dark"] .edu-metric-sub,
+:root:not([data-theme="light"]) .edu-metric-sub {
+  color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .edu-step-circle.inactive,
+:root:not([data-theme="light"]) .edu-step-circle.inactive {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border-color: rgba(71, 85, 105, 0.6) !important;
+  color: #94a3b8 !important;
+}
+[data-theme="dark"] .edu-step-name,
+:root:not([data-theme="light"]) .edu-step-name {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .edu-table th,
+:root:not([data-theme="light"]) .edu-table th {
+  background: rgba(30, 41, 59, 0.7) !important;
+  color: #cbd5e1 !important;
+  border-bottom: 1px solid rgba(51, 65, 85, 0.7) !important;
+}
+[data-theme="dark"] .edu-table td,
+:root:not([data-theme="light"]) .edu-table td {
+  color: #f1f5f9 !important;
+  border-bottom: 1px solid rgba(51, 65, 85, 0.5) !important;
+}
+
+[data-theme="dark"] .edu-doc-item,
+:root:not([data-theme="light"]) .edu-doc-item {
+  background: rgba(30, 41, 59, 0.6) !important;
+  border: 1px solid rgba(71, 85, 105, 0.6) !important;
+  color: #ffffff !important;
+}
+[data-theme="dark"] .edu-doc-name,
+:root:not([data-theme="light"]) .edu-doc-name {
+  color: #ffffff !important;
+}
+[data-theme="dark"] .edu-doc-desc,
+:root:not([data-theme="light"]) .edu-doc-desc {
+  color: #94a3b8 !important;
+}
+
+/* ========================================================================== */
+/* LIGHT THEME STYLES FOR CANDIDATE DASHBOARD                                 */
+/* ========================================================================== */
+[data-theme="light"] .edu-dash-root {
+  background: #f8fafc !important;
+  color: #0f172a !important;
+}
+[data-theme="light"] .edu-nav {
+  background: #ffffff !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03) !important;
+}
+[data-theme="light"] .edu-nav-brand span {
+  color: #0f172a !important;
+}
+[data-theme="light"] .edu-nav-link {
+  color: #475569 !important;
+}
+[data-theme="light"] .edu-nav-link:hover,
+[data-theme="light"] .edu-nav-link.active {
+  color: #C2882F !important;
+}
+[data-theme="light"] .edu-theme-btn {
+  background: #f1f5f9 !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #1e293b !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+}
+[data-theme="light"] .edu-theme-btn:hover {
+  background: #e2e8f0 !important;
+  border-color: #C2882F !important;
+  color: #0f172a !important;
+}
+[data-theme="light"] .edu-nav-user {
+  background: #f1f5f9 !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #1e293b !important;
+}
+[data-theme="light"] .edu-logout-btn {
+  background: #f1f5f9 !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #64748b !important;
+}
+[data-theme="light"] .edu-btn-ghost {
+  border-color: #cbd5e1 !important;
+  color: #334155 !important;
+}
+[data-theme="light"] .edu-card,
+[data-theme="light"] .edu-metric-card,
+[data-theme="light"] .edu-step-card,
+[data-theme="light"] .edu-doc-card,
+[data-theme="light"] .edu-empty-card {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04) !important;
+  color: #0f172a !important;
+}
+[data-theme="light"] .edu-dash-banner {
+  background: linear-gradient(135deg, #1e293b, #0f172a) !important;
+  color: #ffffff !important;
+}
+[data-theme="light"] .edu-card-title,
+[data-theme="light"] .edu-metric-label,
+[data-theme="light"] .edu-metric-val {
+  color: #0f172a !important;
+}
+[data-theme="light"] .edu-doc-item {
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+}
+[data-theme="light"] .edu-doc-name {
+  color: #0f172a !important;
+}
+
+
+/* Theme Root Overrides */
+.edu-dash-root {
+  background: #0b1120 !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="light"] .edu-dash-root,
+.edu-dash-root[data-theme="light"],
+body[data-theme="light"] .edu-dash-root {
+  background: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+[data-theme="dark"] .edu-dash-root,
+.edu-dash-root[data-theme="dark"],
+body[data-theme="dark"] .edu-dash-root {
+  background: #0b1120 !important;
+  color: #f8fafc !important;
+}
+
+
+/* =========================================================================
+   ADMISSION FIXES: IN MERIT &amp; ENROLLED DASHBOARD STYLES
+   ========================================================================= */
+
+.status-in-merit, .status-in_merit { background: rgba(59, 130, 246, 0.25); color: #60a5fa; box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
+[data-theme='light'] .status-in-merit, [data-theme='light'] .status-in_merit { background: #dbeafe; color: #1d4ed8; }
+
+/* IN MERIT BANNER */
+.edu-merit-banner {
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.5), rgba(59, 130, 246, 0.25));
+  border: 2px solid #3b82f6; border-radius: 20px; padding: 26px 32px;
+  margin-bottom: 24px; display: flex; align-items: center; gap: 24px;
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
+}
+.edu-merit-icon { font-size: 44px; flex-shrink: 0; line-height: 1; }
+.edu-merit-info { flex: 1; }
+.edu-merit-tag { font-size: 12px; font-weight: 800; color: #93c5fd; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 4px; }
+.edu-merit-banner h2 { font-size: 22px; font-weight: 800; color: #ffffff; margin: 0 0 6px; }
+.edu-merit-banner p { font-size: 15px; color: #bfdbfe; margin: 0; line-height: 1.5; }
+
+[data-theme='light'] .edu-merit-banner {
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  border-color: #3b82f6; box-shadow: 0 8px 20px rgba(59, 130, 246, 0.12);
+}
+[data-theme='light'] .edu-merit-tag { color: #1d4ed8; }
+[data-theme='light'] .edu-merit-banner h2 { color: #1e3a8a; }
+[data-theme='light'] .edu-merit-banner p { color: #1e40af; }
+
+/* ENROLLED HERO CARD */
+.edu-enrolled-hero-card {
+  background: linear-gradient(135deg, rgba(6, 78, 59, 0.4), rgba(16, 185, 129, 0.2));
+  border: 2px solid #10b981; border-radius: 24px; padding: 32px 36px;
+  margin-bottom: 24px; box-shadow: 0 8px 28px rgba(16, 185, 129, 0.15);
+}
+.edu-enrolled-header { display: flex; align-items: center; gap: 20px; margin-bottom: 24px; }
+.edu-enrolled-icon-circle {
+  width: 58px; height: 58px; border-radius: 50%; background: #10b981;
+  display: flex; align-items: center; justify-content: center; font-size: 30px; flex-shrink: 0;
+}
+.edu-enrolled-titles { flex: 1; }
+.edu-enrolled-badge {
+  font-size: 12px; font-weight: 800; color: #6ee7b7; letter-spacing: 0.06em;
+  text-transform: uppercase; display: inline-block; margin-bottom: 4px;
+}
+.edu-enrolled-titles h2 { font-size: 24px; font-weight: 800; color: #ffffff; margin: 0 0 6px; }
+.edu-enrolled-titles p { font-size: 15px; color: #a7f3d0; margin: 0; }
+
+.edu-enrolled-meta-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px; background: rgba(0, 0, 0, 0.25); border-radius: 16px; padding: 20px;
+  border: 1px solid rgba(16, 185, 129, 0.3); margin-bottom: 20px;
+}
+.edu-enrolled-meta-item { display: flex; flex-direction: column; gap: 4px; }
+.edu-meta-label { font-size: 12px; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+.edu-meta-value { font-size: 16px; color: #f8fafc; font-weight: 700; }
+.edu-status-active-pill {
+  display: inline-block; background: #10b981; color: #ffffff; font-size: 13px;
+  font-weight: 800; padding: 2px 10px; border-radius: 12px; align-self: flex-start;
+}
+.edu-enrolled-footer-note { font-size: 14px; color: #a7f3d0; line-height: 1.6; }
+
+[data-theme='light'] .edu-enrolled-hero-card {
+  background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+  border-color: #10b981; box-shadow: 0 8px 24px rgba(16, 185, 129, 0.12);
+}
+[data-theme='light'] .edu-enrolled-badge { color: #047857; }
+[data-theme='light'] .edu-enrolled-titles h2 { color: #064e3b; }
+[data-theme='light'] .edu-enrolled-titles p { color: #065f46; }
+[data-theme='light'] .edu-enrolled-meta-grid {
+  background: #ffffff; border-color: #bbf7d0; box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+[data-theme='light'] .edu-meta-label { color: #64748b; }
+[data-theme='light'] .edu-meta-value { color: #0f172a; }
+[data-theme='light'] .edu-enrolled-footer-note { color: #166534; }
+
+
+/* ========================================================================== */
+/* REFRESH BUTTON STYLING                                                      */
+/* ========================================================================== */
+.edu-refresh-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 8px 14px !important;
+  border-radius: 9999px !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #f8fafc !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  line-height: 1 !important;
+  outline: none !important;
+}
+.edu-refresh-btn:hover {
+  background: rgba(255, 255, 255, 0.16) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  transform: translateY(-1px) !important;
+}
+[data-theme="light"] .edu-refresh-btn {
+  background: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+[data-theme="light"] .edu-refresh-btn:hover {
+  background: #e2e8f0 !important;
+  border-color: #94a3b8 !important;
+}
+
+/* ========================================================================== */
+/* COUNSELLING SECTION &amp; CARDS                                                 */
+/* ========================================================================== */
+.edu-counselling-section {
+  margin: 36px 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 24px !important;
+}
+.edu-counselling-header {
+  margin-bottom: 8px !important;
+}
+.edu-counselling-header h2 {
+  font-size: 26px !important;
+  font-weight: 800 !important;
+  margin: 10px 0 6px 0 !important;
+  letter-spacing: -0.01em !important;
+}
+.edu-counselling-header p {
+  font-size: 15px !important;
+  margin: 0 !important;
+  opacity: 0.85 !important;
+}
+
+/* Summary Card Grid */
+.edu-data-grid-3 {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 20px !important;
+  padding: 16px 0 8px 0 !important;
+}
+@media (max-width: 768px) {
+  .edu-data-grid-3 {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+}
+.edu-summary-item {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+}
+.edu-label-dim {
+  font-size: 12px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  font-weight: 700 !important;
+  opacity: 0.7 !important;
+}
+.edu-summary-item strong {
+  font-size: 15px !important;
+  font-weight: 600 !important;
+}
+.edu-text-gold {
+  color: #c2882f !important;
+}
+[data-theme="dark"] .edu-text-gold {
+  color: #fbbf24 !important;
+}
+
+/* Counselling Card */
+.edu-counsel-card {
+  position: relative !important;
+  border-radius: 20px !important;
+  padding: 28px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+}
+.edu-counsel-card-head {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  padding-bottom: 16px !important;
+}
+[data-theme="light"] .edu-counsel-card-head {
+  border-bottom-color: #f1f5f9 !important;
+}
+.edu-counsel-title-group {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+.edu-counsel-title-group h3 {
+  font-size: 19px !important;
+  font-weight: 800 !important;
+  margin: 0 !important;
+}
+.edu-round-tag {
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  padding: 4px 10px !important;
+  border-radius: 8px !important;
+  background: rgba(194, 136, 47, 0.2) !important;
+  color: #fbbf24 !important;
+  border: 1px solid rgba(194, 136, 47, 0.4) !important;
+}
+.edu-round2-tag {
+  background: rgba(99, 102, 241, 0.2) !important;
+  color: #a5b4fc !important;
+  border-color: rgba(99, 102, 241, 0.4) !important;
+}
+
+/* Status Pills */
+.edu-status-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  padding: 5px 12px !important;
+  border-radius: 9999px !important;
+}
+.pill-green {
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #10b981 !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}
+.pill-amber {
+  background: rgba(245, 158, 11, 0.15) !important;
+  color: #f59e0b !important;
+  border: 1px solid rgba(245, 158, 11, 0.3) !important;
+}
+.pill-rose {
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: #ef4444 !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+}
+.pill-slate {
+  background: rgba(100, 116, 139, 0.15) !important;
+  color: #94a3b8 !important;
+  border: 1px solid rgba(100, 116, 139, 0.3) !important;
+}
+
+/* Details Grid */
+.edu-counsel-details-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 18px !important;
+}
+@media (max-width: 768px) {
+  .edu-counsel-details-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+}
+.edu-counsel-item {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+}
+.edu-highlight-val {
+  font-size: 16px !important;
+  color: #38bdf8 !important;
+}
+[data-theme="light"] .edu-highlight-val {
+  color: #0284c7 !important;
+}
+
+/* Decision Badges */
+.edu-dec-badge {
+  display: inline-block !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  padding: 3px 10px !important;
+  border-radius: 6px !important;
+  width: fit-content !important;
+}
+.dec-accepted {
+  background: rgba(16, 185, 129, 0.2) !important;
+  color: #10b981 !important;
+}
+.dec-rejected {
+  background: rgba(239, 68, 68, 0.2) !important;
+  color: #ef4444 !important;
+}
+.dec-pending {
+  background: rgba(245, 158, 11, 0.2) !important;
+  color: #f59e0b !important;
+}
+
+/* Action Required Bar */
+.edu-counsel-action-bar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: 16px !important;
+  padding: 20px 24px !important;
+  border-radius: 14px !important;
+  background: rgba(245, 158, 11, 0.1) !important;
+  border: 1.5px solid rgba(245, 158, 11, 0.35) !important;
+}
+.edu-counsel-action-text {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  flex: 1 !important;
+  min-width: 260px !important;
+}
+.edu-action-icon {
+  font-size: 28px !important;
+  line-height: 1 !important;
+}
+.edu-counsel-action-text strong {
+  display: block !important;
+  font-size: 15px !important;
+  color: #fbbf24 !important;
+  margin-bottom: 2px !important;
+}
+.edu-counsel-action-text p {
+  margin: 0 !important;
+  font-size: 13.5px !important;
+  line-height: 1.4 !important;
+  opacity: 0.9 !important;
+}
+.edu-counsel-btns {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
+}
+.edu-btn-accept {
+  background: #10b981 !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 10px 20px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3) !important;
+}
+.edu-btn-accept:hover {
+  background: #059669 !important;
+  transform: translateY(-1px) !important;
+}
+.edu-btn-decline {
+  background: transparent !important;
+  color: #ef4444 !important;
+  border: 1.5px solid rgba(239, 68, 68, 0.4) !important;
+  padding: 9px 18px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+.edu-btn-decline:hover {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border-color: #ef4444 !important;
+}
+
+/* Alert Boxes */
+.edu-alert-box {
+  padding: 16px 20px !important;
+  border-radius: 12px !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+.edu-alert-success {
+  background: rgba(16, 185, 129, 0.12) !important;
+  border: 1px solid rgba(16, 185, 129, 0.3) !important;
+  color: #10b981 !important;
+}
+.edu-alert-warn {
+  background: rgba(245, 158, 11, 0.12) !important;
+  border: 1px solid rgba(245, 158, 11, 0.3) !important;
+  color: #fbbf24 !important;
+}
+.edu-alert-info {
+  background: rgba(14, 165, 233, 0.12) !important;
+  border: 1px solid rgba(14, 165, 233, 0.3) !important;
+  color: #38bdf8 !important;
+}
+.edu-r2-pending-note {
+  font-size: 13.5px !important;
+  opacity: 0.75 !important;
+  padding: 8px 12px !important;
+  border-radius: 8px !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+/* Modals */
+.edu-modal-summary-box {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-radius: 10px !important;
+  padding: 14px 18px !important;
+  margin: 14px 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
+[data-theme="light"] .edu-modal-summary-box {
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+}
+.edu-modal-summary-box div {
+  display: flex !important;
+  justify-content: space-between !important;
+  font-size: 14px !important;
+}
+
+/* ========================================================================== */
+/* DARK THEME HIGH-CONTRAST OVERHAUL                                           */
+/* ========================================================================== */
+[data-theme="dark"] .edu-dash-root {
+  background: #0b1120 !important;
+  color: #f8fafc !important;
+}
+[data-theme="dark"] .edu-card {
+  background: rgba(30, 41, 59, 0.7) !important;
+  border: 1px solid rgba(51, 65, 85, 0.8) !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35) !important;
+  color: #f8fafc !important;
+}
+[data-theme="dark"] .edu-card-heading {
+  color: #ffffff !important;
+}
+[data-theme="dark"] .edu-card-sub {
+  color: #94a3b8 !important;
+}
+[data-theme="dark"] .edu-data-row span {
+  color: #94a3b8 !important;
+}
+[data-theme="dark"] .edu-data-row strong {
+  color: #ffffff !important;
+}
+[data-theme="dark"] .edu-data-row {
+  border-bottom: 1px solid rgba(51, 65, 85, 0.6) !important;
+}
+[data-theme="dark"] .edu-doc-item,
+[data-theme="dark"] .edu-doc-row {
+  background: rgba(15, 23, 42, 0.6) !important;
+  border: 1px solid rgba(51, 65, 85, 0.6) !important;
+}
+[data-theme="dark"] .edu-doc-title {
+  color: #ffffff !important;
+}
+[data-theme="dark"] .edu-modal-box {
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+  color: #f8fafc !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6) !important;
+}
+[data-theme="dark"] .edu-modal-head h3 {
+  color: #ffffff !important;
+}
+[data-theme="dark"] .edu-modal-body p {
+  color: #cbd5e1 !important;
+}
+
+/* ========================================================================== */
+/* LIGHT THEME EXPLICIT REFINEMENT                                             */
+/* ========================================================================== */
+[data-theme="light"] .edu-dash-root {
+  background: #f8fafc !important;
+  color: #0f172a !important;
+}
+[data-theme="light"] .edu-card {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
+  color: #0f172a !important;
+}
+[data-theme="light"] .edu-card-heading {
+  color: #0f172a !important;
+}
+[data-theme="light"] .edu-card-sub {
+  color: #64748b !important;
+}
+[data-theme="light"] .edu-data-row span {
+  color: #64748b !important;
+}
+[data-theme="light"] .edu-data-row strong {
+  color: #0f172a !important;
+}
+[data-theme="light"] .edu-data-row {
+  border-bottom: 1px solid #f1f5f9 !important;
+}
+[data-theme="light"] .edu-doc-item,
+[data-theme="light"] .edu-doc-row {
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+}
+[data-theme="light"] .edu-doc-title {
+  color: #0f172a !important;
+}
+[data-theme="light"] .edu-modal-box {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #0f172a !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12) !important;
+}
+[data-theme="light"] .edu-modal-head h3 {
+  color: #0f172a !important;
+}
+[data-theme="light"] .edu-modal-body p {
+  color: #475569 !important;
+}
+
+
+/* ENHANCED COUNSELLING &amp; PREFERENCES STYLING */
+.edu-pref-builder { margin-top: 16px; display: flex; flex-direction: column; gap: 12px; }
+.edu-pref-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; transition: 0.2s; }
+.edu-pref-item:hover { border-color: rgba(255,255,255,0.18); background: rgba(255,255,255,0.05); }
+.edu-pref-order-badge { font-size: 1.1rem; font-weight: 700; color: #c2882f; min-width: 44px; display: flex; align-items: center; gap: 4px; }
+.edu-pref-info { flex: 1; padding: 0 16px; }
+.edu-pref-college { font-weight: 600; color: #f8fafc; font-size: 0.98rem; }
+.edu-pref-program { font-size: 0.88rem; color: #94a3b8; margin-top: 2px; }
+.edu-pref-controls { display: flex; gap: 8px; align-items: center; }
+.edu-btn-order { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #cbd5e1; border-radius: 8px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; font-size: 14px; }
+.edu-btn-order:hover { background: rgba(255,255,255,0.18); color: #fff; }
+.edu-btn-order:disabled { opacity: 0.3; cursor: not-allowed; }
+.edu-btn-remove { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: #ef4444; border-radius: 8px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
+.edu-btn-remove:hover { background: #ef4444; color: #fff; }
+.edu-pref-add-row { display: flex; gap: 12px; margin-top: 10px; align-items: center; }
+.edu-pref-select { flex: 1; }
+.edu-btn-float { background: #6366f1; color: #fff; border: none; padding: 10px 18px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+.edu-btn-float:hover { background: #4f46e5; }
+.edu-btn-withdraw-link { background: transparent; border: 1px solid rgba(239,68,68,0.4); color: #ef4444; padding: 8px 14px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; font-size: 0.85rem; }
+.edu-btn-withdraw-link:hover { background: #ef4444; color: #fff; }
+.edu-locked-tag { font-size: 0.8rem; background: rgba(100,116,139,0.25); border: 1px solid rgba(100,116,139,0.35); color: #94a3b8; padding: 4px 10px; border-radius: 8px; display: inline-flex; align-items: center; gap: 4px; }
+.edu-lock-banner { padding: 14px 18px; border-radius: 12px; margin-bottom: 18px; display: flex; align-items: center; gap: 12px; font-size: 0.95rem; }
+.edu-lock-banner-info { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25); color: #60a5fa; }
+.edu-lock-banner-warn { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25); color: #fbbf24; }
+.edu-lock-banner-success { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.25); color: #34d399; }
+
+
+/* ENHANCED PREFERENCE BUILDER - LIGHT &amp; DARK THEMES */
+.edu-pref-builder { margin-top: 16px; display: flex; flex-direction: column; gap: 12px; }
+.edu-pref-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 14px 18px !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
+  transition: all 0.2s ease !important;
+}
+.edu-pref-item:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+[data-theme="light"] .edu-pref-item {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+[data-theme="light"] .edu-pref-item:hover {
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+}
+.edu-pref-order-badge {
+  font-size: 1.15rem !important;
+  font-weight: 800 !important;
+  color: #c2882f !important;
+  min-width: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+.edu-pref-info { flex: 1 !important; padding: 0 16px !important; }
+.edu-pref-college {
+  font-weight: 700 !important;
+  color: #f8fafc !important;
+  font-size: 1.02rem !important;
+  line-height: 1.3 !important;
+}
+[data-theme="light"] .edu-pref-college {
+  color: #0f172a !important;
+}
+.edu-pref-program {
+  font-size: 0.9rem !important;
+  color: #94a3b8 !important;
+  margin-top: 3px !important;
+}
+[data-theme="light"] .edu-pref-program {
+  color: #64748b !important;
+}
+.edu-pref-controls { display: flex !important; gap: 8px !important; align-items: center !important; }
+.edu-btn-order {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #cbd5e1 !important;
+  border-radius: 8px !important;
+  width: 34px !important;
+  height: 34px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: 0.2s !important;
+  font-size: 14px !important;
+}
+.edu-btn-order:hover:not(:disabled) {
+  background: #6366f1 !important;
+  color: #ffffff !important;
+  border-color: #6366f1 !important;
+}
+.edu-btn-order:disabled {
+  opacity: 0.25 !important;
+  cursor: not-allowed !important;
+}
+[data-theme="light"] .edu-btn-order {
+  background: #f1f5f9 !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #334155 !important;
+}
+[data-theme="light"] .edu-btn-order:hover:not(:disabled) {
+  background: #6366f1 !important;
+  color: #ffffff !important;
+  border-color: #6366f1 !important;
+}
+.edu-btn-remove {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border: 1px solid rgba(239, 68, 68, 0.3) !important;
+  color: #ef4444 !important;
+  border-radius: 8px !important;
+  width: 34px !important;
+  height: 34px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: 0.2s !important;
+}
+.edu-btn-remove:hover {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+}
+[data-theme="light"] .edu-btn-remove {
+  background: #fee2e2 !important;
+  border: 1px solid #fca5a5 !important;
+  color: #dc2626 !important;
+}
+[data-theme="light"] .edu-btn-remove:hover {
+  background: #dc2626 !important;
+  color: #ffffff !important;
+}
+.edu-pref-add-row {
+  display: flex !important;
+  gap: 12px !important;
+  margin-top: 14px !important;
+  align-items: center !important;
+}
+.edu-pref-select {
+  flex: 1 !important;
+  height: 44px !important;
+  padding: 8px 14px !important;
+  border-radius: 10px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  outline: none !important;
+  background: #0f172a !important;
+  color: #ffffff !important;
+  border: 1.5px solid #334155 !important;
+  transition: all 0.2s !important;
+}
+.edu-pref-select:focus {
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25) !important;
+}
+.edu-pref-select option {
+  background: #0f172a !important;
+  color: #ffffff !important;
+  padding: 8px !important;
+}
+[data-theme="light"] .edu-pref-select {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border: 1.5px solid #cbd5e1 !important;
+}
+[data-theme="light"] .edu-pref-select:focus {
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
+}
+[data-theme="light"] .edu-pref-select option {
+  background: #ffffff !important;
+  color: #0f172a !important;
+}
+.edu-btn-add-choice {
+  background: linear-gradient(135deg, #6366f1, #4f46e5) !important;
+  color: #ffffff !important;
+  border: none !important;
+  height: 44px !important;
+  padding: 0 20px !important;
+  border-radius: 10px !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  transition: all 0.2s !important;
+  white-space: nowrap !important;
+}
+.edu-btn-add-choice:hover:not(:disabled) {
+  background: linear-gradient(135deg, #4f46e5, #4338ca) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35) !important;
+}
+.edu-btn-add-choice:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+}
 </css>
         <data_table>sp_instance</data_table>
         <demo_data/>
@@ -544,10 +1841,9 @@ api.controller = function($scope, $http, $window, spUtil) {
         <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
         <name>EduSphere Applicant Dashboard</name>
         <option_schema/>
-        <public>false</public>
+        <public>true</public>
         <roles/>
-        <script><![CDATA[
-(function() {
+        <script><![CDATA[(function() {
   data.isLoggedIn = gs.isLoggedIn();
   data.userName = gs.getUserDisplayName() || gs.getUserName();
   data.userInitial = data.userName ? data.userName.charAt(0).toUpperCase() : 'U';
@@ -555,13 +1851,33 @@ api.controller = function($scope, $http, $window, spUtil) {
   data.app = {};
   data.student = {};
   data.requiredDocs = [];
+  data.counselling = {
+    hasCounselling: false,
+    round1: null,
+    round2: null,
+    round1_published: true,
+    round2_enabled: false,
+    round2_published: false
+  };
 
   if (!data.isLoggedIn) return;
 
   var userEmail = gs.getUser().getEmail();
   var userName = gs.getUserName();
 
-  // Find active application by email OR sys_created_by
+  // Helper to map category
+  function mapCategoryToStudentChoice(admCat) {
+    if (!admCat) return 'GEN';
+    var c = admCat.toString().toLowerCase().trim();
+    if (c === 'gen' || c === 'general') return 'GEN';
+    if (c.indexOf('backward') > -1 || c.indexOf('obc') > -1) return 'OBC';
+    if (c.indexOf('economically') > -1 || c.indexOf('ews') > -1) return 'EWS';
+    if (c.indexOf('disability') > -1 || c.indexOf('pwd') > -1) return 'PwD';
+    if (c.indexOf('sc') > -1 || c.indexOf('st') > -1) return 'SC/ST';
+    return 'GEN';
+  }
+
+  // 1. Find active application by email OR sys_created_by
   var grApp = new GlideRecord('x_1790229_edusph_0_admission_application');
   var qc = grApp.addQuery('sys_created_by', userName);
   if (userEmail) {
@@ -596,9 +1912,10 @@ api.controller = function($scope, $http, $window, spUtil) {
       name: grApp.getValue('name') || '',
       category: grApp.getValue('category') || 'general',
       college_name: colName || 'Netaji Subhas Institute of Technology',
-      program_name: progName || 'B.Tech Engineering',
+      program_name: progName || 'B.Tech Computer Science & Eng.',
       status: grApp.getValue('status') || 'draft',
-      applied_on: grApp.getValue('applied_on') || '',
+      applied_on: grApp.getValue('applied_on') || grApp.getValue('sys_created_on') || '',
+      created_on: grApp.getValue('sys_created_on') || '',
       class_10_percentage: grApp.getValue('class_10_percentage') || '0',
       class_12_percentage: grApp.getValue('class_12_percentage') || '0',
       jee_score: grApp.getValue('jee_score') || '0',
@@ -606,8 +1923,183 @@ api.controller = function($scope, $http, $window, spUtil) {
       allocation_round: grApp.getValue('allocation_round') || '1'
     };
 
-    // If accepted, check for student record
-    if (data.app.status === 'accepted') {
+    // Read system properties for counselling rounds
+    var r1Active = gs.getProperty('x_1790229_edusph_0.counselling.round1_active', 'true') === 'true';
+    var r1Pub = gs.getProperty('x_1790229_edusph_0.counselling.round1_published', 'true') === 'true';
+    var r2Enabled = gs.getProperty('x_1790229_edusph_0.counselling.round2_enabled', 'false') === 'true';
+    var r2Pub = gs.getProperty('x_1790229_edusph_0.counselling.round2_published', 'false') === 'true';
+
+    data.counselling.round1_published = r1Pub;
+    data.counselling.round2_enabled = r2Enabled;
+    data.counselling.round2_published = r2Pub;
+
+    // Check if in merit or offered or accepted
+    var st = (data.app.status || '').toLowerCase().trim();
+    var isMeritOrAbove = (st === 'in_merit' || st === 'offered' || st === 'accepted');
+
+    
+    // Schedule and phase integration
+    var schedSvc = new x_1790229_edusph_0.CounsellingScheduleService();
+    data.schedule = schedSvc.getActiveConfig();
+    data.phase = schedSvc.getCurrentPhase();
+
+    // Dynamic document locking logic
+    data.docsLocked = true;
+    data.docStatusMessage = "";
+    data.docMessageType = "info";
+
+    var curSt = (data.app.status || '').toLowerCase().trim();
+    if (curSt === 'submitted') {
+      data.docsLocked = true;
+      data.docMessageType = "info";
+      data.docStatusMessage = "Your application has been submitted successfully. Please wait while the administration reviews your application.";
+    } else if (curSt === 'document_pending') {
+      data.docsLocked = false;
+      data.docMessageType = "warn";
+      data.docStatusMessage = "Your application has been reviewed. Please upload the required documents.";
+      if (grApp.getValue('correction_reason')) {
+        data.docStatusMessage += " Remarks: " + grApp.getValue('correction_reason');
+      }
+    } else if (curSt === 'verified' || curSt === 'in_merit') {
+      data.docsLocked = true;
+      data.docMessageType = "success";
+      data.docStatusMessage = "Your application has been verified successfully. Please wait for the counselling process to begin.";
+    }
+
+    // Load Student Preferences
+    data.preferences = [];
+    var pGr = new GlideRecord('x_1790229_edusph_0_counselling_preference');
+    pGr.addQuery('application', appSysId);
+    pGr.addQuery('active', true);
+    pGr.orderBy('preference_order');
+    pGr.query();
+    while (pGr.next()) {
+      var prefCol = pGr.college.name ? pGr.college.name.toString() : pGr.college.getDisplayValue();
+      var prefProg = pGr.program.name ? pGr.program.name.toString() : pGr.program.getDisplayValue();
+      data.preferences.push({
+        sys_id: pGr.getUniqueValue(),
+        preference_order: parseInt(pGr.getValue('preference_order')) || 1,
+        college_id: pGr.getValue('college'),
+        college_name: prefCol,
+        program_id: pGr.getValue('program'),
+        program_name: prefProg,
+        locked: pGr.getValue('locked') === '1' || pGr.getValue('locked') === true
+      });
+    }
+
+    // Load Eligible Programs for Preference Selection
+    data.eligiblePrograms = [];
+    var cpGr = new GlideRecord('x_1790229_edusph_0_coll_prog');
+    cpGr.addQuery('approved', true);
+    cpGr.query();
+    var sMerit = parseFloat(data.app.merit_score) || 0;
+    while (cpGr.next()) {
+      var pCut = parseFloat(cpGr.getValue('merit_cutoff')) || 50.0;
+      var cId = cpGr.getValue('college');
+      var prId = cpGr.getValue('program');
+      var cName = cpGr.college.name ? cpGr.college.name.toString() : cpGr.college.getDisplayValue();
+      var prName = cpGr.program.name ? cpGr.program.name.toString() : cpGr.program.getDisplayValue();
+      data.eligiblePrograms.push({
+        college_id: cId,
+        college_name: cName,
+        program_id: prId,
+        program_name: prName,
+        cutoff: pCut,
+        intake: parseInt(cpGr.getValue('intake_seats')) || 60,
+        eligible: (sMerit >= pCut || curSt === 'in_merit')
+      });
+    }
+
+    // 2. Fetch / Ensure Round 1 Allotment Record
+    var r1Gr = new GlideRecord('x_1790229_edusph_0_counselling_allotment');
+    r1Gr.addQuery('application', appSysId);
+    r1Gr.addQuery('round', 1);
+    r1Gr.setLimit(1);
+    r1Gr.query();
+
+    if (r1Gr.next()) {
+      var r1Col = r1Gr.allotted_college.name ? r1Gr.allotted_college.name.toString() : r1Gr.allotted_college.getDisplayValue();
+      var r1Prog = r1Gr.allotted_program.name ? r1Gr.allotted_program.name.toString() : r1Gr.allotted_program.getDisplayValue();
+      data.counselling.round1 = {
+        sys_id: r1Gr.getUniqueValue(),
+        round: 1,
+        college_name: r1Col || data.app.college_name,
+        program_name: r1Prog || data.app.program_name,
+        category: r1Gr.getValue('allotted_category') || data.app.category,
+        status: r1Gr.getValue('status') || 'Action Required',
+        allotment_date: r1Gr.getValue('allotment_date') || data.app.applied_on,
+        acceptance_deadline: r1Gr.getValue('acceptance_deadline') || '',
+        decision: r1Gr.getValue('decision') || 'Pending',
+        decision_date: r1Gr.getValue('decision_date') || '',
+        is_eligible: r1Gr.getValue('is_eligible') == '1' || r1Gr.getValue('is_eligible') === true
+      };
+      data.counselling.hasCounselling = true;
+    } else if (isMeritOrAbove) {
+      // Create initial Round 1 record for backward compatibility
+      r1Gr.initialize();
+      r1Gr.setValue('application', appSysId);
+      r1Gr.setValue('round', 1);
+      r1Gr.setValue('allotted_college', grApp.getValue('college'));
+      r1Gr.setValue('allotted_program', grApp.getValue('program'));
+      r1Gr.setValue('allotted_category', data.app.category || 'general');
+      r1Gr.setValue('allotment_date', new GlideDateTime().getDate().getByFormat('yyyy-MM-dd'));
+      r1Gr.setValue('is_eligible', true);
+      r1Gr.setValue('active', true);
+      
+      var initStatus = 'Action Required';
+      var initDecision = 'Pending';
+      if (st === 'accepted') {
+        initStatus = 'Seat Accepted';
+        initDecision = 'Accepted';
+      }
+      r1Gr.setValue('status', initStatus);
+      r1Gr.setValue('decision', initDecision);
+      var r1Id = r1Gr.insert();
+
+      data.counselling.round1 = {
+        sys_id: r1Id,
+        round: 1,
+        college_name: data.app.college_name,
+        program_name: data.app.program_name,
+        category: data.app.category,
+        status: initStatus,
+        allotment_date: new GlideDateTime().getDate().getByFormat('yyyy-MM-dd'),
+        acceptance_deadline: '',
+        decision: initDecision,
+        decision_date: '',
+        is_eligible: true
+      };
+      data.counselling.hasCounselling = true;
+    }
+
+    // 3. Fetch Round 2 Allotment Record if exists
+    var r2Gr = new GlideRecord('x_1790229_edusph_0_counselling_allotment');
+    r2Gr.addQuery('application', appSysId);
+    r2Gr.addQuery('round', 2);
+    r2Gr.setLimit(1);
+    r2Gr.query();
+
+    if (r2Gr.next()) {
+      var r2Col = r2Gr.allotted_college.name ? r2Gr.allotted_college.name.toString() : r2Gr.allotted_college.getDisplayValue();
+      var r2Prog = r2Gr.allotted_program.name ? r2Gr.allotted_program.name.toString() : r2Gr.allotted_program.getDisplayValue();
+      data.counselling.round2 = {
+        sys_id: r2Gr.getUniqueValue(),
+        round: 2,
+        college_name: r2Col || data.app.college_name,
+        program_name: r2Prog || data.app.program_name,
+        category: r2Gr.getValue('allotted_category') || data.app.category,
+        status: r2Gr.getValue('status') || 'Action Required',
+        allotment_date: r2Gr.getValue('allotment_date') || '',
+        acceptance_deadline: r2Gr.getValue('acceptance_deadline') || '',
+        decision: r2Gr.getValue('decision') || 'Pending',
+        decision_date: r2Gr.getValue('decision_date') || '',
+        is_eligible: r2Gr.getValue('is_eligible') == '1' || r2Gr.getValue('is_eligible') === true
+      };
+      data.counselling.hasCounselling = true;
+    }
+
+    // 4. If accepted / enrolled, fetch student record
+    if (st === 'accepted' || st === 'enrolled') {
       var grStu = new GlideRecord('x_1790229_edusph_0_student');
       grStu.addQuery('admission_application', appSysId);
       grStu.setLimit(1);
@@ -615,12 +2107,15 @@ api.controller = function($scope, $http, $window, spUtil) {
       if (grStu.next()) {
         data.student = {
           sys_id: grStu.getUniqueValue(),
-          roll_no: grStu.getValue('roll_no') || ''
+          roll_no: grStu.getValue('roll_no') || '',
+          category: grStu.getValue('category') || '',
+          status: grStu.getValue('status') || 'Active',
+          admitted_on: grStu.getValue('admitted_on') || ''
         };
       }
     }
 
-    // Dynamic category document definitions
+    // 5. Dynamic category document definitions
     var baseDocs = [
       { type: 'Class 10 Marksheet', label: '10th Marksheet / DOB Proof', isCategory: false },
       { type: 'Class 12 Marksheet', label: '12th Marksheet', isCategory: false },
@@ -640,7 +2135,7 @@ api.controller = function($scope, $http, $window, spUtil) {
       baseDocs.push({ type: 'Defence Certificate', label: 'Defence Priority Certificate', isCategory: true });
     }
 
-    // Pre-create or fetch student_document records for all required docs
+    // Documents status check
     for (var k = 0; k < baseDocs.length; k++) {
       var d = baseDocs[k];
       var grDoc = new GlideRecord('x_1790229_edusph_0_student_document');
@@ -665,7 +2160,6 @@ api.controller = function($scope, $http, $window, spUtil) {
       }
       d.sys_id = docSysId;
 
-      // Check sys_attachment for any uploaded file for this doc
       var grAtt = new GlideRecord('sys_attachment');
       grAtt.addQuery('table_name', 'x_1790229_edusph_0_student_document');
       grAtt.addQuery('table_sys_id', docSysId);
@@ -681,58 +2175,208 @@ api.controller = function($scope, $http, $window, spUtil) {
         d.fileName = '';
         d.attSysId = '';
       }
-
       data.requiredDocs.push(d);
     }
+  }
+
+  // ACTION: Accept Counselling Allotment (Round 1 or Round 2)
+  if (input && input.action === 'accept_counselling_allotment') {
+    var roundNum = input.round || 1;
+    var aId = input.appSysId;
+    
+    // 1. Update counselling_allotment
+    var allGr = new GlideRecord('x_1790229_edusph_0_counselling_allotment');
+    allGr.addQuery('application', aId);
+    allGr.addQuery('round', roundNum);
+    allGr.query();
+    if (allGr.next()) {
+      allGr.setValue('status', 'Seat Accepted');
+      allGr.setValue('decision', 'Accepted');
+      allGr.setValue('decision_date', new GlideDateTime().getDisplayValue());
+      allGr.update();
+    }
+
+    // 2. Update admission_application
+    var appUp = new GlideRecord('x_1790229_edusph_0_admission_application');
+    if (appUp.get(aId)) {
+      var finalColId = (allGr.isValidRecord() && allGr.getValue('allotted_college')) ? allGr.getValue('allotted_college') : appUp.getValue('college');
+      var finalProgId = (allGr.isValidRecord() && allGr.getValue('allotted_program')) ? allGr.getValue('allotted_program') : appUp.getValue('program');
+
+      appUp.setValue('status', 'accepted');
+      appUp.setValue('counselling_state', 'Seat Accepted');
+      if (finalColId) appUp.setValue('college', finalColId);
+      if (finalProgId) appUp.setValue('program', finalProgId);
+      appUp.update();
+
+      // 3. Create / Update Student Record
+      var grNewStudent = new GlideRecord('x_1790229_edusph_0_student');
+      grNewStudent.addQuery('admission_application', aId);
+      grNewStudent.query();
+      var studentId = '';
+      var rollNo = '';
+      var studentCategory = mapCategoryToStudentChoice(appUp.getValue('category'));
+
+      if (grNewStudent.next()) {
+        studentId = grNewStudent.getUniqueValue();
+        rollNo = grNewStudent.getValue('roll_no');
+      } else {
+        grNewStudent.initialize();
+        grNewStudent.setValue('user', gs.getUserID());
+        grNewStudent.setValue('college', finalColId);
+        grNewStudent.setValue('program', finalProgId);
+        grNewStudent.setValue('category', studentCategory);
+        grNewStudent.setValue('admission_application', aId);
+        grNewStudent.setValue('admitted_on', new GlideDateTime().getDate().getByFormat('yyyy-MM-dd'));
+        grNewStudent.setValue('status', 'Active');
+
+        var colCode = 'NSIT';
+        var finalColGr = new GlideRecord('x_1790229_edusph_0_college');
+        if (finalColGr.get(finalColId) && finalColGr.getValue('code')) {
+          colCode = finalColGr.getValue('code').split('-')[0];
+        }
+
+        var progCode = 'CSE';
+        var finalProgGr = new GlideRecord('x_1790229_edusph_0_program');
+        if (finalProgGr.get(finalProgId) && finalProgGr.getValue('code')) {
+          progCode = finalProgGr.getValue('code').replace('BTECH-', '').replace('MTECH-', '');
+        }
+
+        var randNum = Math.floor(100 + Math.random() * 900);
+        rollNo = colCode + '-2026-' + progCode + '-' + randNum;
+        grNewStudent.setValue('roll_no', rollNo);
+
+        var grSec = new GlideRecord('x_1790229_edusph_0_section');
+        grSec.addQuery('college', finalColId);
+        grSec.setLimit(1);
+        grSec.query();
+        if (grSec.next()) {
+          grNewStudent.setValue('section', grSec.getUniqueValue());
+        }
+        studentId = grNewStudent.insert();
+      }
+
+      // Link all student documents
+      if (studentId) {
+        var grLinkDocs = new GlideRecord('x_1790229_edusph_0_student_document');
+        grLinkDocs.addQuery('application', aId);
+        grLinkDocs.query();
+        while (grLinkDocs.next()) {
+          grLinkDocs.setValue('student', studentId);
+          grLinkDocs.update();
+        }
+      }
+
+      data.accepted = true;
+      data.newRollNo = rollNo;
+      data.student = {
+        sys_id: studentId,
+        roll_no: rollNo,
+        category: studentCategory,
+        status: 'Active'
+      };
+    }
+  }
+
+  // ACTION: Reject Counselling Allotment
+  if (input && input.action === 'reject_counselling_allotment') {
+    var rejRound = input.round || 1;
+    var rejAppId = input.appSysId;
+
+    var rejAll = new GlideRecord('x_1790229_edusph_0_counselling_allotment');
+    rejAll.addQuery('application', rejAppId);
+    rejAll.addQuery('round', rejRound);
+    rejAll.query();
+    if (rejAll.next()) {
+      rejAll.setValue('status', 'Seat Rejected');
+      rejAll.setValue('decision', 'Rejected');
+      rejAll.setValue('decision_date', new GlideDateTime().getDisplayValue());
+      rejAll.update();
+    }
+
+    var appRej = new GlideRecord('x_1790229_edusph_0_admission_application');
+    if (appRej.get(rejAppId)) {
+      appRej.setValue('counselling_state', 'Seat Rejected');
+      appRej.update();
+    }
+    data.rejected = true;
+  }
+
+  
+  // ACTION: Save Preferences
+  if (input && input.action === 'save_preferences') {
+    var prefs = input.preferences || [];
+    var delP = new GlideRecord('x_1790229_edusph_0_counselling_preference');
+    delP.addQuery('application', input.appSysId);
+    delP.query();
+    while (delP.next()) {
+      delP.deleteRecord();
+    }
+    for (var pi = 0; pi < prefs.length; pi++) {
+      var np = new GlideRecord('x_1790229_edusph_0_counselling_preference');
+      np.initialize();
+      np.setValue('application', input.appSysId);
+      np.setValue('college', prefs[pi].college_id);
+      np.setValue('program', prefs[pi].program_id);
+      np.setValue('preference_order', pi + 1);
+      np.setValue('locked', true);
+      np.setValue('active', true);
+      np.insert();
+    }
+    data.preferencesSaved = true;
+  }
+
+  // ACTION: Float Allotment
+  if (input && input.action === 'float_counselling_allotment') {
+    var fltAll = new GlideRecord('x_1790229_edusph_0_counselling_allotment');
+    fltAll.addQuery('application', input.appSysId);
+    fltAll.addQuery('round', input.round || 1);
+    fltAll.query();
+    if (fltAll.next()) {
+      fltAll.setValue('decision', 'Float');
+      fltAll.setValue('decision_date', new GlideDateTime().getDisplayValue());
+      fltAll.setValue('remarks', 'Seat Retained. Participating in Round 2 for higher preference upgrade.');
+      fltAll.update();
+    }
+    data.floated = true;
+  }
+
+  // ACTION: Withdraw Admission
+  if (input && input.action === 'withdraw_admission') {
+    var wAll = new GlideRecord('x_1790229_edusph_0_counselling_allotment');
+    wAll.addQuery('application', input.appSysId);
+    wAll.query();
+    while (wAll.next()) {
+      wAll.setValue('status', 'Withdrawn');
+      wAll.setValue('decision', 'Withdrawn');
+      wAll.setValue('withdrawal_date', new GlideDateTime().getDisplayValue());
+      wAll.setValue('withdrawal_reason', input.reason || 'Student requested withdrawal');
+      wAll.update();
+    }
+    var wApp = new GlideRecord('x_1790229_edusph_0_admission_application');
+    if (wApp.get(input.appSysId)) {
+      wApp.setValue('status', 'withdrawn');
+      wApp.setValue('withdrawal_on', new GlideDate().getValue());
+      wApp.update();
+    }
+    var wStu = new GlideRecord('x_1790229_edusph_0_student');
+    wStu.addQuery('admission_application', input.appSysId);
+    wStu.query();
+    if (wStu.next()) {
+      wStu.setValue('status', 'Withdrawn');
+      wStu.update();
+    }
+    data.withdrawn = true;
   }
 
   // Handle Mark Doc Uploaded Notification from Client
   if (input && input.action === 'mark_doc_uploaded') {
     var upDocGR = new GlideRecord('x_1790229_edusph_0_student_document');
     if (upDocGR.get(input.doc_sys_id)) {
-      upDocGR.setValue('verify_status', 'Pending');
-      upDocGR.update();
-      data.updated = true;
-    }
-  }
-
-  // Accept Seat Offer Action
-  if (input && input.action === 'accept_seat_offer') {
-    var offerAppId = input.appSysId;
-    var appToAccept = new GlideRecord('x_1790229_edusph_0_admission_application');
-    if (appToAccept.get(offerAppId)) {
-      appToAccept.setValue('status', 'accepted');
-      appToAccept.update();
-
-      // Create Student Record
-      var grNewStudent = new GlideRecord('x_1790229_edusph_0_student');
-      grNewStudent.initialize();
-      grNewStudent.setValue('user', gs.getUserID());
-      grNewStudent.setValue('college', appToAccept.getValue('college'));
-      grNewStudent.setValue('program', appToAccept.getValue('program'));
-      grNewStudent.setValue('category', appToAccept.getValue('category'));
-      grNewStudent.setValue('admission_application', offerAppId);
-      grNewStudent.setValue('admitted_on', new GlideDateTime().getDate().getByFormat('yyyy-MM-dd'));
-      grNewStudent.setValue('status', 'active');
-
-      var colCode = appToAccept.college.code ? appToAccept.college.code.toString() : 'NSIT';
-      var progCode = appToAccept.program.code ? appToAccept.program.code.toString() : 'CSE';
-      var randNum = Math.floor(100 + Math.random() * 900);
-      var rollNo = colCode + '-2026-' + progCode + '-' + randNum;
-      grNewStudent.setValue('roll_no', rollNo);
-
-      // Section fallback
-      var grSec = new GlideRecord('x_1790229_edusph_0_section');
-      grSec.addQuery('college', appToAccept.getValue('college'));
-      grSec.setLimit(1);
-      grSec.query();
-      if (grSec.next()) {
-        grNewStudent.setValue('section', grSec.getUniqueValue());
+      if (upDocGR.getValue('verify_status') !== 'Verified') {
+        upDocGR.setValue('verify_status', 'Pending');
+        upDocGR.update();
+        data.updated = true;
       }
-      var newStuId = grNewStudent.insert();
-
-      data.accepted = true;
-      data.newRollNo = rollNo;
     }
   }
 
@@ -745,24 +2389,22 @@ api.controller = function($scope, $http, $window, spUtil) {
       data.correctionSubmitted = true;
     }
   }
-})();
-]]></script>
+})();]]></script>
         <servicenow>false</servicenow>
         <sys_class_name>sp_widget</sys_class_name>
         <sys_created_by>developer.abhinav</sys_created_by>
         <sys_created_on>2026-11-16 10:33:31</sys_created_on>
         <sys_id>12e24d5ec3ac5f10d70532f1b40131de</sys_id>
-        <sys_mod_count>4</sys_mod_count>
+        <sys_mod_count>16</sys_mod_count>
         <sys_name>EduSphere Applicant Dashboard</sys_name>
         <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
         <sys_policy/>
         <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
         <sys_update_name>sp_widget_12e24d5ec3ac5f10d70532f1b40131de</sys_update_name>
         <sys_updated_by>developer.abhinav</sys_updated_by>
-        <sys_updated_on>2026-11-16 12:41:28</sys_updated_on>
-        <template><![CDATA[
-<div class="edu-dash-root">
-  <!-- HIDDEN SINGLE FILE INPUT: ZERO $INDEX, SUPPORTS PDF, PNG, JPG, DOC, DOCX -->
+        <sys_updated_on>2026-11-20 13:49:06</sys_updated_on>
+        <template><![CDATA[<div class="edu-dash-root" ng-attr-data-theme="{{c.currentTheme}}">
+  <!-- HIDDEN SINGLE FILE INPUT -->
   <input type="file" id="portal_file_input" style="display:none;" 
          accept=".pdf,.png,.jpg,.jpeg,.doc,.docx,application/pdf,image/png,image/jpeg,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" 
          onchange="angular.element(this).scope().c.onFilePicked(this)" />
@@ -771,7 +2413,7 @@ api.controller = function($scope, $http, $window, spUtil) {
   <nav class="edu-nav">
     <div class="edu-nav-inner">
       <a href="?id=admission_home" class="edu-nav-brand">
-        <img src="x_1790229_edusph_0.Edusphere%20Logo.svg?v=68ce119ac3a09f10d70532f1b40131b4" alt="EduSphere" class="edu-nav-logo-img" />
+        <img src="x_1790229_edusph_0.Edusphere%20Logo.svg?v=68ce119ac3a09f10d70532f1b40131b4" alt="EduSphere" class="edu-nav-logo-img" width="44" height="44" style="width:44px!important;height:44px!important;max-width:44px!important;max-height:44px!important;min-width:44px!important;min-height:44px!important;object-fit:contain!important;" />
         <span>EduSphere Admissions</span>
       </a>
       <div class="edu-nav-links">
@@ -780,17 +2422,52 @@ api.controller = function($scope, $http, $window, spUtil) {
         <a href="?id=admission_dashboard" class="edu-nav-link active">Track Status</a>
       </div>
       <div class="edu-nav-actions">
-        <div class="edu-nav-user">
-          <div class="edu-nav-avatar">{{c.data.userInitial}}</div>
-          <span>{{c.data.userName}}</span>
+        <!-- Refresh Button -->
+        <button type="button" class="edu-refresh-btn" ng-click="c.refreshDashboard()" title="Refresh Application Status" aria-label="Refresh Status">
+          <svg class="edu-refresh-svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          <span class="edu-refresh-label">Refresh</span>
+        </button>
+
+        <!-- Theme Toggle Button -->
+        <button type="button" class="edu-theme-btn" ng-click="c.toggleTheme()" title="Toggle Light / Dark Theme" aria-label="Toggle Theme">
+          <span class="edu-theme-icon" ng-if="c.currentTheme == 'dark'">&#9728;&#65039;</span>
+          <span class="edu-theme-icon" ng-if="c.currentTheme != 'dark'">&#127769;</span>
+          <span class="edu-theme-label" ng-if="c.currentTheme == 'dark'">Light Mode</span>
+          <span class="edu-theme-label" ng-if="c.currentTheme != 'dark'">Dark Mode</span>
+        </button>
+
+        <div ng-if="!c.data.isLoggedIn" class="edu-nav-guest-btns">
+          <a href="?id=admission_login" class="edu-btn edu-btn-sm edu-btn-ghost">Sign In</a>
+          <a href="?id=admission_register" class="edu-btn edu-btn-sm edu-btn-primary">Register</a>
+        </div>
+
+        <div ng-if="c.data.isLoggedIn" class="edu-nav-user-wrap" style="display:flex;align-items:center;gap:12px;">
+          <div class="edu-nav-user">
+            <div class="edu-nav-avatar">{{c.data.userInitial}}</div>
+            <span>{{c.data.userName}}</span>
+          </div>
+          <a href="/logout.do?sysparm_goto_url=/admission" class="edu-logout-btn" title="Sign Out">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          </a>
         </div>
       </div>
     </div>
   </nav>
 
   <div class="edu-dash-wrap">
-    <!-- EMPTY STATE -->
-    <div ng-if="!c.data.hasApplication" class="edu-empty-card">
+    <!-- UNAUTHENTICATED STATE -->
+    <div ng-if="!c.data.isLoggedIn" class="edu-empty-card">
+      <div class="edu-empty-icon">&#128274;</div>
+      <h2>Applicant Sign In Required</h2>
+      <p>Please sign in with your candidate account to view and track your admission application.</p>
+      <div style="display:flex; gap:12px; justify-content:center; margin-top:20px; flex-wrap:wrap;">
+        <a href="?id=admission_login" class="edu-btn edu-btn-primary" style="display:inline-flex;">Sign In to Continue &rarr;</a>
+        <a href="?id=admission_register" class="edu-btn edu-btn-ghost" style="display:inline-flex;">Register New Account</a>
+      </div>
+    </div>
+
+    <!-- EMPTY STATE FOR AUTHENTICATED USER -->
+    <div ng-if="c.data.isLoggedIn && !c.data.hasApplication" class="edu-empty-card">
       <div class="edu-empty-icon">&#128221;</div>
       <h2>No Active Application Found</h2>
       <p>You haven't submitted an application for the 2026-27 intake cycle.</p>
@@ -798,103 +2475,426 @@ api.controller = function($scope, $http, $window, spUtil) {
     </div>
 
     <!-- ACTIVE APPLICATION -->
-    <div ng-if="c.data.hasApplication">
-      <!-- DASHBOARD HERO -->
+    <div ng-if="c.data.isLoggedIn && c.data.hasApplication">
+      <!-- DASHBOARD HERO BANNER -->
       <div class="edu-dash-banner">
         <div>
           <span class="edu-badge edu-badge-primary">Session 2026-27 Intake</span>
           <h1>Welcome, {{c.data.app.name || c.data.userName}}</h1>
           <p class="edu-meta-line">
-            <span>App No: <strong>{{c.data.app.app_no || 'DRAFT-IN-PROGRESS'}}</strong></span> &bull;
+            <span>App No: <strong>{{c.data.app.app_no || 'APP0001001'}}</strong></span> &bull;
             <span>Category: <strong>{{c.getCategoryLabel(c.data.app.category)}}</strong></span> &bull;
             <span>Target: <strong>{{c.data.app.college_name}}</strong></span>
           </p>
         </div>
         <div>
-          <span class="edu-pill status-{{c.data.app.status}}">
+          <span class="edu-pill" ng-class="{'status-in-merit': c.isInMerit(), 'status-accepted': c.isEnrolled(), 'status-offered': c.data.app.status == 'offered', 'status-verified': c.data.app.status == 'verified', 'status-submitted': c.data.app.status == 'submitted', 'status-draft': c.data.app.status == 'draft'}">
             <span class="edu-pill-dot"></span>
             {{c.getStatusDisplay(c.data.app.status)}}
           </span>
         </div>
       </div>
 
-      <!-- SEAT OFFER CARD -->
-      <div ng-if="c.data.app.status === 'offered'" class="edu-seat-offer-banner">
-        <div class="edu-offer-left">
-          <div class="edu-offer-tag">&#127881; SEAT ALLOCATED &bull; ROUND {{c.data.app.allocation_round || 1}}</div>
-          <h2>Congratulations! Seat Offered in {{c.data.app.program_name}}</h2>
-          <p>Allocated under <strong>{{c.getCategoryLabel(c.data.app.category)}}</strong> quota. Please confirm acceptance to claim your seat.</p>
-        </div>
-        <div class="edu-offer-actions">
-          <button class="edu-btn edu-btn-accept" ng-click="c.acceptSeatOffer()" ng-disabled="c.actionLoading">
-            &#10003; Accept Seat &amp; Enroll
-          </button>
-          <button class="edu-btn edu-btn-decline" ng-click="c.declineSeatOffer()" ng-disabled="c.actionLoading">
-            Decline
-          </button>
+      <!-- IN MERIT BANNER -->
+      <div ng-if="c.isInMerit() && !c.isEnrolled()" class="edu-merit-banner">
+        <div class="edu-merit-icon">&#11088;</div>
+        <div class="edu-merit-info">
+          <div class="edu-merit-tag">&#10024; MERIT LIST POSITION SECURED</div>
+          <h2>You are In Merit!</h2>
+          <p>Congratulations, your application is ranked in the central merit list with a Composite Score of <strong>{{c.data.app.merit_score}}</strong>. Your application has been moved into the Counselling &amp; Seat Allotment phase below.</p>
         </div>
       </div>
 
-      <!-- ENROLLED CONFIRMATION -->
-      <div ng-if="c.data.app.status === 'accepted'" class="edu-enrolled-card">
-        <div class="edu-enrolled-icon">&#127891;</div>
-        <div>
-          <h2>Admission Confirmed &amp; Enrolled!</h2>
-          <p>Official Institutional Roll Number: <strong class="edu-roll-badge">{{c.data.student.roll_no || 'Pending Generation'}}</strong></p>
+      <!-- ENROLLED CONFIRMATION HERO CARD -->
+      <div ng-if="c.isEnrolled()" class="edu-enrolled-hero-card">
+        <div class="edu-enrolled-header">
+          <div class="edu-enrolled-icon-circle">&#127891;</div>
+          <div class="edu-enrolled-titles">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+              <span class="edu-enrolled-badge">&#10003; ADMISSION CONFIRMED</span>
+              <button type="button" class="edu-btn-withdraw-link" ng-click="c.openWithdrawModal()" ng-if="c.data.app.status !== 'withdrawn'">
+                &#9888; Withdraw Admission
+              </button>
+            </div>
+            <h2>Welcome to {{c.data.app.college_name}}!</h2>
+            <p>You are officially enrolled in the <strong>{{c.data.app.program_name}}</strong> program for the 2026-27 Academic Session.</p>
+          </div>
+        </div>
+
+        <div class="edu-enrolled-meta-grid">
+          <div class="edu-enrolled-meta-item">
+            <span class="edu-meta-label">Institutional Roll Number</span>
+            <strong class="edu-roll-badge">{{c.data.student.roll_no || 'Assigned'}}</strong>
+          </div>
+          <div class="edu-enrolled-meta-item">
+            <span class="edu-meta-label">Enrolled Category</span>
+            <strong class="edu-meta-value">{{c.data.student.category || c.getCategoryLabel(c.data.app.category)}}</strong>
+          </div>
+          <div class="edu-enrolled-meta-item">
+            <span class="edu-meta-label">Student Status</span>
+            <span class="edu-status-active-pill">{{c.data.student.status || 'Active'}}</span>
+          </div>
+          <div class="edu-enrolled-meta-item">
+            <span class="edu-meta-label">Application Number</span>
+            <strong class="edu-meta-value">{{c.data.app.app_no}}</strong>
+          </div>
+        </div>
+
+        <div class="edu-enrolled-footer-note">
+          <p>&#128274; <em>Your admission documents have been verified, approved, and securely archived into your permanent student record.</em></p>
+          <div style="margin-top:20px; display:flex; gap:12px; flex-wrap:wrap;">
+            <a href="?id=admission_home" class="edu-btn edu-btn-primary">Return to Admissions Home &rarr;</a>
+          </div>
         </div>
       </div>
 
-      <!-- ADMISSION PIPELINE -->
+      <!-- COUNSELLING PROGRESS TIMELINE (7-STEP DYNAMIC TRACKER) -->
       <div class="edu-card edu-pipeline-box">
-        <h3 class="edu-card-heading">Admission Progress Tracker</h3>
+        <div class="edu-pipeline-head">
+          <h3 class="edu-card-heading">Admission &amp; Counselling Progress Tracker</h3>
+          <span class="edu-badge edu-badge-primary">Session 2026-27</span>
+        </div>
         <div class="edu-pipeline">
-          <div class="edu-pipe-node" ng-class="{'completed': c.getStepIndex() >= 1, 'active': c.getStepIndex() === 1}">
+          <div class="edu-pipe-node" ng-class="{'completed': c.getStepIndex() >= 1, 'active': c.getStepIndex() == 1}">
             <div class="edu-pipe-circ">1</div>
             <span>Draft</span>
           </div>
           <div class="edu-pipe-bar" ng-class="{'completed': c.getStepIndex() >= 2}"></div>
 
-          <div class="edu-pipe-node" ng-class="{'completed': c.getStepIndex() >= 2, 'active': c.getStepIndex() === 2}">
+          <div class="edu-pipe-node" ng-class="{'completed': c.getStepIndex() >= 2, 'active': c.getStepIndex() == 2}">
             <div class="edu-pipe-circ">2</div>
             <span>Submitted</span>
           </div>
           <div class="edu-pipe-bar" ng-class="{'completed': c.getStepIndex() >= 3}"></div>
 
-          <div class="edu-pipe-node" ng-class="{'completed': c.getStepIndex() >= 3, 'active': c.getStepIndex() === 3}">
+          <div class="edu-pipe-node" ng-class="{'completed': c.getStepIndex() >= 3, 'active': c.getStepIndex() == 3}">
             <div class="edu-pipe-circ">3</div>
             <span>Verified</span>
           </div>
           <div class="edu-pipe-bar" ng-class="{'completed': c.getStepIndex() >= 4}"></div>
 
-          <div class="edu-pipe-node" ng-class="{'completed': c.getStepIndex() >= 4, 'active': c.getStepIndex() === 4}">
+          <div class="edu-pipe-node" ng-class="{'completed': c.getStepIndex() >= 4, 'active': c.getStepIndex() == 4}">
             <div class="edu-pipe-circ">4</div>
             <span>In Merit</span>
           </div>
           <div class="edu-pipe-bar" ng-class="{'completed': c.getStepIndex() >= 5}"></div>
 
-          <div class="edu-pipe-node" ng-class="{'completed': c.getStepIndex() >= 5, 'active': c.getStepIndex() === 5}">
+          <div class="edu-pipe-node" ng-class="{'completed': c.getStepIndex() >= 5, 'active': c.getStepIndex() == 5}">
             <div class="edu-pipe-circ">5</div>
-            <span>Offered</span>
+            <span>Round 1</span>
           </div>
           <div class="edu-pipe-bar" ng-class="{'completed': c.getStepIndex() >= 6}"></div>
 
-          <div class="edu-pipe-node" ng-class="{'completed': c.getStepIndex() >= 6, 'active': c.getStepIndex() === 6}">
+          <div class="edu-pipe-node" ng-class="{'completed': c.getStepIndex() >= 6, 'active': c.getStepIndex() == 6}">
             <div class="edu-pipe-circ">6</div>
+            <span>Round 2</span>
+          </div>
+          <div class="edu-pipe-bar" ng-class="{'completed': c.getStepIndex() >= 7}"></div>
+
+          <div class="edu-pipe-node" ng-class="{'completed': c.getStepIndex() >= 7, 'active': c.getStepIndex() == 7}">
+            <div class="edu-pipe-circ">7</div>
             <span>Enrolled</span>
           </div>
         </div>
       </div>
 
-      <!-- 2-COL DETAILS & DYNAMIC DOCUMENTS -->
-      <div class="edu-dash-cols">
-        <!-- APPLICATION SUMMARY -->
+      <!-- COUNSELLING & SEAT ALLOTMENT SECTION -->
+      <div class="edu-counselling-section" ng-if="c.isInMerit() || c.isEnrolled() || c.data.counselling.hasCounselling || c.data.app.status == 'offered' || c.data.app.status == 'verified'">
+        <div class="edu-counselling-header">
+          <div class="edu-badge edu-badge-gold">&#9878;&#65039; Centralized Counselling System</div>
+          <h2>Counselling &amp; Seat Allotment</h2>
+          <p>Merit-based seat allocation across university colleges (Max 2 Rounds).</p>
+        </div>
+
+        <!-- 1. APPLICATION COORDINATES / SUMMARY CARD -->
+        <div class="edu-card edu-summary-card">
+          <div class="edu-card-top">
+            <h3 class="edu-card-heading">&#128203; Application Coordinates</h3>
+            <span class="edu-badge edu-badge-primary">Session 2026-27</span>
+          </div>
+          <div class="edu-data-grid-3">
+            <div class="edu-summary-item">
+              <span class="edu-label-dim">Application Number</span>
+              <strong>{{c.data.app.app_no}}</strong>
+            </div>
+            <div class="edu-summary-item">
+              <span class="edu-label-dim">Candidate Name</span>
+              <strong>{{c.data.app.name}}</strong>
+            </div>
+            <div class="edu-summary-item">
+              <span class="edu-label-dim">Submission Date</span>
+              <strong>{{c.formatDate(c.data.app.applied_on)}}</strong>
+            </div>
+            <div class="edu-summary-item">
+              <span class="edu-label-dim">Applied College (Preference)</span>
+              <strong>{{c.data.app.college_name}}</strong>
+            </div>
+            <div class="edu-summary-item">
+              <span class="edu-label-dim">Applied Program (Preference)</span>
+              <strong>{{c.data.app.program_name}}</strong>
+            </div>
+            <div class="edu-summary-item">
+              <span class="edu-label-dim">Composite Merit Score</span>
+              <strong class="edu-text-gold">{{c.data.app.merit_score}}</strong>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- 1.5 COUNSELLING PREFERENCES MANAGER -->
+        <div class="edu-card edu-counsel-card" ng-if="c.data.hasApplication && c.data.app.status !== 'draft' && c.data.app.status !== 'submitted' && c.data.app.status !== 'document_pending'">
+          <div class="edu-card-top" style="margin-bottom: 12px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span class="edu-round-tag" style="background:#6366f1;">Counselling</span>
+              <h3 class="edu-card-heading" style="margin:0;">College &amp; Program Preferences</h3>
+            </div>
+            <div>
+              <span class="edu-badge edu-badge-success" ng-if="c.data.preferences && c.data.preferences.length > 0">
+                &#10003; {{c.data.preferences.length}} Choices Submitted
+              </span>
+              <span class="edu-badge edu-badge-warn" ng-if="!c.data.preferences || c.data.preferences.length === 0">
+                &#9888; No Preferences Yet
+              </span>
+            </div>
+          </div>
+
+          <!-- Schedule Notice -->
+          <div class="edu-alert-box edu-alert-info" ng-if="c.data.phase && c.data.phase.message" style="margin-bottom:14px;">
+            &#8505;&#65039; <strong>Schedule Update:</strong> {{c.data.phase.message}}
+          </div>
+
+          <!-- Preferences List -->
+          <div class="edu-pref-builder" ng-if="c.data.preferences && c.data.preferences.length > 0">
+            <div class="edu-pref-item" ng-repeat="pref in c.data.preferences track by $index">
+              <div class="edu-pref-order-badge">#{{$index + 1}}</div>
+              <div class="edu-pref-info">
+                <div class="edu-pref-college">{{pref.college_name}}</div>
+                <div class="edu-pref-program">{{pref.program_name}}</div>
+              </div>
+              <div class="edu-pref-controls" ng-if="!c.data.preferencesLocked && !pref.locked">
+                <button type="button" class="edu-btn-order" ng-click="c.movePrefUp($index)" ng-disabled="$first" title="Move Up">&#9650;</button>
+                <button type="button" class="edu-btn-order" ng-click="c.movePrefDown($index)" ng-disabled="$last" title="Move Down">&#9660;</button>
+                <button type="button" class="edu-btn-remove" ng-click="c.removePreference($index)" title="Remove">&#10005;</button>
+              </div>
+              <div ng-if="c.data.preferencesLocked || pref.locked">
+                <span class="edu-locked-tag">&#128274; Preference Locked</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Add Preference Controls (When Not Locked) -->
+          <div ng-if="!c.data.preferencesLocked" style="margin-top: 14px;">
+            <div class="edu-pref-add-row">
+              <select class="edu-select edu-pref-select" 
+                      ng-model="c.selectedProg" 
+                      ng-options="prog as (prog.college_name + ' - ' + prog.program_name + ' (Cutoff: ' + prog.cutoff + '%)' + (!prog.eligible ? ' [Cutoff Not Met]' : '')) disable when !prog.eligible for prog in c.data.eligiblePrograms">
+                <option value="">-- Select Affiliated College &amp; Program --</option>
+              </select>
+              <button type="button" class="edu-btn-add-choice" ng-click="c.addPreference()" ng-disabled="!c.selectedProg">
+                + Add Choice
+              </button>
+            </div>
+            <div style="margin-top: 14px; display: flex; justify-content: flex-end;">
+              <button type="button" class="edu-btn edu-btn-accept" ng-click="c.savePreferences()" ng-disabled="!c.data.preferences || c.data.preferences.length === 0 || c.savingPrefs">
+                &#10003; Save &amp; Lock Preferences
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. ROUND 1 ALLOTMENT CARD -->
+        <div class="edu-card edu-counsel-card" ng-if="c.data.counselling.round1">
+          <div class="edu-counsel-card-head">
+            <div class="edu-counsel-title-group">
+              <span class="edu-round-tag">Round 1</span>
+              <h3>First Counselling / Seat Allotment</h3>
+            </div>
+            <div>
+              <span class="edu-status-pill" ng-class="{
+                'pill-green': c.data.counselling.round1.decision == 'Accepted',
+                'pill-amber': c.canTakeAction(c.data.counselling.round1),
+                'pill-rose': c.data.counselling.round1.decision == 'Rejected',
+                'pill-slate': c.data.counselling.round1.status == 'No Seat Allotted'
+              }">
+                <span class="edu-pill-dot"></span>
+                {{c.data.counselling.round1.status}}
+              </span>
+            </div>
+          </div>
+
+          <div class="edu-counsel-details-grid">
+            <div class="edu-counsel-item">
+              <span class="edu-label-dim">Allotted College</span>
+              <strong class="edu-highlight-val">{{c.data.counselling.round1.college_name}}</strong>
+            </div>
+            <div class="edu-counsel-item">
+              <span class="edu-label-dim">Allotted Course / Program</span>
+              <strong class="edu-highlight-val">{{c.data.counselling.round1.program_name}}</strong>
+            </div>
+            <div class="edu-counsel-item">
+              <span class="edu-label-dim">Allotted Quota / Category</span>
+              <strong>{{c.getCategoryLabel(c.data.counselling.round1.category)}}</strong>
+            </div>
+            <div class="edu-counsel-item">
+              <span class="edu-label-dim">Allotment Date</span>
+              <strong>{{c.formatDate(c.data.counselling.round1.allotment_date)}}</strong>
+            </div>
+            <div class="edu-counsel-item">
+              <span class="edu-label-dim">Acceptance Status</span>
+              <span class="edu-dec-badge dec-{{c.data.counselling.round1.decision.toLowerCase()}}">
+                {{c.data.counselling.round1.decision}}
+              </span>
+            </div>
+            <div class="edu-counsel-item">
+              <span class="edu-label-dim">Counselling Round</span>
+              <strong>Round 1 of 2</strong>
+            </div>
+          </div>
+
+          <!-- ACTION REQUIRED BANNER & BUTTONS -->
+          <div ng-if="c.canTakeAction(c.data.counselling.round1)" class="edu-counsel-action-bar">
+            <div class="edu-counsel-action-text">
+              <span class="edu-action-icon">&#9889;</span>
+              <div>
+                <strong>Student Action Required</strong>
+                <p>A seat has been allotted to you in Round 1. Please accept to confirm your enrollment or decline to participate in subsequent vacancy rounds.</p>
+              </div>
+            </div>
+            <div class="edu-counsel-btns">
+              <button type="button" class="edu-btn edu-btn-accept" ng-click="c.openAcceptModal(1)" ng-disabled="c.actionLoading">
+                &#10003; Accept Seat &amp; Confirm
+              </button>
+              <button type="button" class="edu-btn edu-btn-float" ng-click="c.openFloatModal(1)" ng-disabled="c.actionLoading">
+                &#8635; Float / Retain &amp; Upgrade
+              </button>
+              <button type="button" class="edu-btn edu-btn-decline" ng-click="c.openRejectModal(1)" ng-disabled="c.actionLoading">
+                Decline Allotment
+              </button>
+            </div>
+          </div>
+
+          <!-- DECISION INFO BANNERS -->
+          <div ng-if="c.data.counselling.round1.decision == 'Accepted'" class="edu-alert-box edu-alert-success">
+            &#10003; <strong>Seat Accepted:</strong> You have accepted your Round 1 allotment. Your admission is confirmed and your permanent Roll Number is generated above.
+          </div>
+          <div ng-if="c.data.counselling.round1.decision == 'Float'" class="edu-alert-box edu-alert-info">
+            &#8635; <strong>Seat Floated:</strong> You have retained your Round 1 seat offer at {{c.data.counselling.round1.college_name}}. You will be automatically considered for higher preferences in Round 2 without forfeiting this seat.
+          </div>
+          <div ng-if="c.data.counselling.round1.decision == 'Rejected'" class="edu-alert-box edu-alert-warn">
+            &#9888; <strong>Allotment Declined:</strong> You declined your Round 1 seat offer. You remain eligible to participate in Round 2 counselling if enabled.
+          </div>
+          <div ng-if="c.data.counselling.round1.status == 'No Seat Allotted'" class="edu-alert-box edu-alert-info">
+            &#8505;&#65039; <strong>No Seat Allotted in Round 1:</strong> Based on merit cutoffs and category quotas, no seat was allocated in Round 1. You are queued for Round 2.
+          </div>
+        </div>
+
+        <!-- 3. ROUND 2 ALLOTMENT CARD -->
+        <div class="edu-card edu-counsel-card" ng-if="c.data.counselling.round2_enabled || c.data.counselling.round2">
+          <div class="edu-counsel-card-head">
+            <div class="edu-counsel-title-group">
+              <span class="edu-round-tag edu-round2-tag">Round 2</span>
+              <h3>Second Counselling / Final Seat Allotment</h3>
+            </div>
+            <div>
+              <span ng-if="c.data.counselling.round1.decision == 'Accepted'" class="edu-status-pill pill-slate">
+                Not Applicable
+              </span>
+              <span ng-if="c.data.counselling.round1.decision != 'Accepted' && c.data.counselling.round2" class="edu-status-pill" ng-class="{
+                'pill-green': c.data.counselling.round2.decision == 'Accepted',
+                'pill-amber': c.canTakeAction(c.data.counselling.round2),
+                'pill-rose': c.data.counselling.round2.decision == 'Rejected'
+              }">
+                <span class="edu-pill-dot"></span>
+                {{c.data.counselling.round2.status}}
+              </span>
+            </div>
+          </div>
+
+          <!-- If R1 Accepted: Round 2 is Not Applicable -->
+          <div ng-if="c.data.counselling.round1.decision == 'Accepted'" class="edu-alert-box edu-alert-info">
+            &#8505;&#65039; <strong>Round 2 Not Applicable:</strong> You have already accepted and confirmed your seat allotment in Round 1.
+          </div>
+
+          <!-- If R1 Not Accepted and R2 Record Exists -->
+          <div ng-if="c.data.counselling.round1.decision != 'Accepted' && c.data.counselling.round2">
+            <div class="edu-counsel-details-grid">
+              <div class="edu-counsel-item">
+                <span class="edu-label-dim">Allotted College</span>
+                <strong class="edu-highlight-val">{{c.data.counselling.round2.college_name}}</strong>
+              </div>
+              <div class="edu-counsel-item">
+                <span class="edu-label-dim">Allotted Course / Program</span>
+                <strong class="edu-highlight-val">{{c.data.counselling.round2.program_name}}</strong>
+              </div>
+              <div class="edu-counsel-item">
+                <span class="edu-label-dim">Allotted Quota / Category</span>
+                <strong>{{c.getCategoryLabel(c.data.counselling.round2.category)}}</strong>
+              </div>
+              <div class="edu-counsel-item">
+                <span class="edu-label-dim">Allotment Date</span>
+                <strong>{{c.formatDate(c.data.counselling.round2.allotment_date)}}</strong>
+              </div>
+              <div class="edu-counsel-item">
+                <span class="edu-label-dim">Acceptance Status</span>
+                <span class="edu-dec-badge dec-{{c.data.counselling.round2.decision.toLowerCase()}}">
+                  {{c.data.counselling.round2.decision}}
+                </span>
+              </div>
+              <div class="edu-counsel-item">
+                <span class="edu-label-dim">Counselling Round</span>
+                <strong>Round 2 (Final)</strong>
+              </div>
+            </div>
+
+            <!-- Action Required for Round 2 -->
+            <div ng-if="c.canTakeAction(c.data.counselling.round2)" class="edu-counsel-action-bar">
+              <div class="edu-counsel-action-text">
+                <span class="edu-action-icon">&#9889;</span>
+                <div>
+                  <strong>Student Action Required (Round 2)</strong>
+                  <p>Final seat offer in Round 2. Please accept to confirm your admission.</p>
+                </div>
+              </div>
+              <div class="edu-counsel-btns">
+                <button type="button" class="edu-btn edu-btn-accept" ng-click="c.openAcceptModal(2)" ng-disabled="c.actionLoading">
+                  &#10003; Accept Seat &amp; Confirm
+                </button>
+                <button type="button" class="edu-btn edu-btn-decline" ng-click="c.openRejectModal(2)" ng-disabled="c.actionLoading">
+                  Decline Allotment
+                </button>
+              </div>
+            </div>
+
+            <div ng-if="c.data.counselling.round2.decision == 'Accepted'" class="edu-alert-box edu-alert-success">
+              &#10003; <strong>Round 2 Seat Accepted:</strong> Your final admission is confirmed!
+            </div>
+            <div ng-if="c.data.counselling.round2.decision == 'Rejected'" class="edu-alert-box edu-alert-warn">
+              &#9888; <strong>Round 2 Allotment Declined:</strong> You have declined the Round 2 seat offer. The admission cycle has concluded.
+            </div>
+          </div>
+
+          <!-- If R2 enabled but no record yet -->
+          <div ng-if="c.data.counselling.round1.decision != 'Accepted' && !c.data.counselling.round2 && c.data.counselling.round2_enabled" class="edu-alert-box edu-alert-info">
+            &#9889; <strong>Round 2 in Progress:</strong> Round 2 seat allotment is currently underway by the admissions office. Results will be published soon.
+          </div>
+        </div>
+
+        <!-- Note if Round 2 is not enabled yet -->
+        <div ng-if="!c.data.counselling.round2_enabled && !c.data.counselling.round2 && c.data.counselling.round1.decision != 'Accepted'" class="edu-r2-pending-note">
+          &#8505;&#65039; <em>Note: Round 2 (Second Counselling) will be officially activated by the Admissions Committee if vacancies remain after Round 1 confirmations.</em>
+        </div>
+      </div>
+
+      <!-- 2-COL DETAILS & DYNAMIC DOCUMENTS (SHOWN ONLY WHEN NOT ENROLLED) -->
+      <div class="edu-dash-cols" ng-if="!c.isEnrolled()">
+        <!-- SCORES & APPLICATION SUMMARY -->
         <div class="edu-card">
           <div class="edu-card-top">
-            <h3 class="edu-card-heading">Application Coordinates</h3>
-            <button ng-if="c.data.app.status === 'submitted'" class="edu-link-btn" ng-click="c.openCorrectionModal()">
+            <h3 class="edu-card-heading">Academic Scores Breakdown</h3>
+            <button ng-if="c.data.app.status == 'submitted'" class="edu-link-btn" ng-click="c.openCorrectionModal()">
               Request Correction
             </button>
-            <a ng-if="c.data.app.status === 'draft'" href="?id=admission_apply" class="edu-link-btn">
+            <a ng-if="c.data.app.status == 'draft'" href="?id=admission_apply" class="edu-link-btn">
               Resume Form &rarr;
             </a>
           </div>
@@ -912,7 +2912,7 @@ api.controller = function($scope, $http, $window, spUtil) {
           </div>
         </div>
 
-        <!-- DYNAMIC DOCUMENTS CHECKLIST WITH ROCK-SOLID UPLOADER -->
+        <!-- DYNAMIC DOCUMENTS CHECKLIST -->
         <div class="edu-card">
           <div class="edu-card-top">
             <h3 class="edu-card-heading">Category Document Checklist</h3>
@@ -920,9 +2920,14 @@ api.controller = function($scope, $http, $window, spUtil) {
           </div>
           <p class="edu-card-sub">Upload PDF, PNG, JPG, or Word documents. Verified by College Admissions Office.</p>
 
+          <!-- DYNAMIC VERIFICATION LOCK BANNER -->
+          <div class="edu-lock-banner" ng-class="'edu-lock-banner-' + c.data.docMessageType" ng-if="c.data.docStatusMessage">
+            <span>{{c.data.docMessageType === 'warn' ? '&#9888;&#65039;' : (c.data.docMessageType === 'success' ? '&#10003;' : '&#8505;&#65039;')}}</span>
+            <span>{{c.data.docStatusMessage}}</span>
+          </div>
+
           <div class="edu-doc-stack">
             <div ng-repeat="doc in c.data.requiredDocs" class="edu-doc-row">
-              <!-- LEFT: ICON & DETAILS -->
               <div class="edu-doc-info-col">
                 <div class="edu-doc-icon-wrap">&#128196;</div>
                 <div class="edu-doc-details">
@@ -937,13 +2942,11 @@ api.controller = function($scope, $http, $window, spUtil) {
                 </div>
               </div>
 
-              <!-- RIGHT: STATUS & UPLOAD BUTTON (FLEX-SHRINK:0, NEVER WRAPS) -->
               <div class="edu-doc-action-col">
                 <span class="edu-verify-tag tag-{{doc.verify_status}}">
                   {{doc.verify_status}}
                 </span>
 
-                <!-- PREVIEW / DOWNLOAD LINK IF UPLOADED -->
                 <a ng-if="doc.uploaded && doc.attSysId" 
                    ng-href="/sys_attachment.do?sys_id={{doc.attSysId}}" 
                    target="_blank" 
@@ -952,12 +2955,12 @@ api.controller = function($scope, $http, $window, spUtil) {
                   &#128065; View
                 </a>
 
-                <!-- UPLOAD / RE-UPLOAD BUTTON -->
                 <button type="button" 
                         class="edu-btn-upload" 
                         ng-class="{'uploaded': doc.uploaded}" 
                         ng-click="c.triggerUpload(doc)" 
-                        ng-disabled="doc.uploading">
+                        ng-disabled="doc.uploading || c.data.docsLocked"
+                        ng-if="doc.verify_status !== 'Verified' && !c.data.docsLocked">
                   <span ng-if="!doc.uploading && !doc.uploaded" class="edu-btn-upload-inner">
                     <span class="edu-clip-icon">&#128206;</span>
                     <span>Upload</span>
@@ -971,10 +2974,142 @@ api.controller = function($scope, $http, $window, spUtil) {
                     <span>Saving...</span>
                   </span>
                 </button>
+                <span class="edu-locked-tag" ng-if="c.data.docsLocked && doc.verify_status !== 'Verified'">
+                  <span>&#128274;</span> Locked
+                </span>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACCEPT CONFIRMATION MODAL -->
+  <div ng-if="c.showAcceptModal" class="edu-modal-backdrop">
+    <div class="edu-modal-box">
+      <div class="edu-modal-head">
+        <h3>&#10003; Confirm Seat Acceptance</h3>
+        <button class="edu-close" ng-click="c.closeAcceptModal()">&times;</button>
+      </div>
+      <div class="edu-modal-body">
+        <p>You are about to accept your allocated seat in <strong>Round {{c.activeModalRound}}</strong>:</p>
+        <div class="edu-modal-summary-box">
+          <div><span>Allotted College:</span> <strong>{{c.activeModalRound == 1 ? c.data.counselling.round1.college_name : c.data.counselling.round2.college_name}}</strong></div>
+          <div><span>Allotted Program:</span> <strong>{{c.activeModalRound == 1 ? c.data.counselling.round1.program_name : c.data.counselling.round2.program_name}}</strong></div>
+          <div><span>Category Quota:</span> <strong>{{c.getCategoryLabel(c.data.app.category)}}</strong></div>
+        </div>
+        <p style="margin-top:14px; font-size:13.5px; color:#64748b;">
+          <strong>Important:</strong> Accepting this seat offer will confirm your admission, generate your permanent Institutional Roll Number, and lock your enrollment.
+        </p>
+      </div>
+      <div class="edu-modal-foot">
+        <button class="edu-btn edu-btn-ghost" ng-click="c.closeAcceptModal()">Cancel</button>
+        <button class="edu-btn edu-btn-accept" ng-click="c.confirmAccept()" ng-disabled="c.actionLoading">
+          Yes, Accept &amp; Enroll
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DECLINE CONFIRMATION MODAL -->
+  <div ng-if="c.showRejectModal" class="edu-modal-backdrop">
+    <div class="edu-modal-box">
+      <div class="edu-modal-head">
+        <h3>&#9888; Confirm Seat Decline</h3>
+        <button class="edu-close" ng-click="c.closeRejectModal()">&times;</button>
+      </div>
+      <div class="edu-modal-body">
+        <p>Are you sure you want to decline your <strong>Round {{c.activeModalRound}}</strong> seat offer?</p>
+        <p style="margin-top:10px; font-size:13.5px; color:#ef4444;">
+          <strong>Consequence:</strong> You will forfeit this specific seat allotment. If Round 2 counselling is enabled, your application will be re-considered for any vacant seats.
+        </p>
+      </div>
+      <div class="edu-modal-foot">
+        <button class="edu-btn edu-btn-ghost" ng-click="c.closeRejectModal()">Keep Allotment</button>
+        <button class="edu-btn edu-btn-decline" ng-click="c.confirmReject()" ng-disabled="c.actionLoading">
+          Yes, Decline Seat
+        </button>
+      </div>
+    </div>
+  </div>
+
+  
+  <!-- FLOAT CONFIRMATION MODAL -->
+  <div ng-if="c.showFloatModal" class="edu-modal-backdrop">
+    <div class="edu-modal-box">
+      <div class="edu-modal-head">
+        <h3>&#8635; Confirm Float / Retain &amp; Upgrade</h3>
+        <button class="edu-close" ng-click="c.closeFloatModal()">&times;</button>
+      </div>
+      <div class="edu-modal-body">
+        <p>You are selecting <strong>Float</strong> for your Round 1 allotment at <strong>{{c.data.counselling.round1.college_name}} - {{c.data.counselling.round1.program_name}}</strong>.</p>
+        <div class="edu-modal-summary-box">
+          <div><span>Current Reserved Seat:</span> <strong>{{c.data.counselling.round1.college_name}}</strong></div>
+          <div><span>Round 2 Status:</span> <strong>Eligible for Higher Preferences</strong></div>
+        </div>
+        <p style="margin-top:14px; font-size:13.5px; color:#60a5fa;">
+          <strong>How Float Works:</strong> Your current seat is 100% reserved and will not be given to anyone else. In Round 2, you will be considered only for preferences you ranked higher. If an upgrade occurs, your old seat is released and you receive the upgraded seat; if not, your existing seat is preserved!
+        </p>
+      </div>
+      <div class="edu-modal-foot">
+        <button class="edu-btn edu-btn-ghost" ng-click="c.closeFloatModal()">Cancel</button>
+        <button class="edu-btn edu-btn-float" ng-click="c.confirmFloat()" ng-disabled="c.actionLoading">
+          Yes, Confirm Float
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- WITHDRAWAL MODAL -->
+  <div ng-if="c.showWithdrawModal" class="edu-modal-backdrop">
+    <div class="edu-modal-box">
+      <div class="edu-modal-head">
+        <h3>&#9888; Confirm Admission Withdrawal</h3>
+        <button class="edu-close" ng-click="c.closeWithdrawModal()">&times;</button>
+      </div>
+      <div class="edu-modal-body">
+        <p>You are requesting to withdraw your confirmed admission and surrender your institutional seat.</p>
+        <p style="margin-top:10px; font-size:13.5px; color:#ef4444;">
+          <strong>Warning:</strong> Withdrawing will permanently cancel your enrollment, release your seat back to the university vacancy pool, and exit you from the admission cycle.
+        </p>
+        <div style="margin-top:14px;">
+          <label class="edu-label">Reason for Withdrawal *</label>
+          <textarea class="edu-input" rows="3" ng-model="c.withdrawalReason" placeholder="Please provide withdrawal reason (e.g. Admitted to another institution)..."></textarea>
+        </div>
+      </div>
+      <div class="edu-modal-foot">
+        <button class="edu-btn edu-btn-ghost" ng-click="c.closeWithdrawModal()">Cancel</button>
+        <button class="edu-btn edu-btn-decline" ng-click="c.confirmWithdraw()" ng-disabled="!c.withdrawalReason || c.actionLoading">
+          Yes, Withdraw Admission
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- WITHDRAWAL CONFIRMATION MODAL -->
+  <div ng-if="c.showWithdrawModal" class="edu-modal-backdrop">
+    <div class="edu-modal-box">
+      <div class="edu-modal-head">
+        <h3>&#9888; Confirm Admission Withdrawal</h3>
+        <button class="edu-close" ng-click="c.closeWithdrawModal()">&times;</button>
+      </div>
+      <div class="edu-modal-body">
+        <p>You are requesting to withdraw your confirmed admission and surrender your institutional seat.</p>
+        <div class="edu-alert-box edu-alert-warn" style="margin-top:12px;">
+          <strong>Warning:</strong> Withdrawing will permanently cancel your enrollment, release your seat back to the university vacancy pool, and exit you from the admission cycle.
+        </div>
+        <div style="margin-top:14px;">
+          <label class="edu-label">Reason for Withdrawal *</label>
+          <textarea class="edu-input" rows="3" ng-model="c.withdrawalReason" placeholder="Please provide withdrawal reason (e.g. Admitted to another institution)..."></textarea>
+        </div>
+      </div>
+      <div class="edu-modal-foot">
+        <button class="edu-btn edu-btn-ghost" ng-click="c.closeWithdrawModal()">Cancel</button>
+        <button class="edu-btn edu-btn-decline" ng-click="c.confirmWithdraw()" ng-disabled="!c.withdrawalReason || c.actionLoading">
+          Yes, Withdraw Admission
+        </button>
       </div>
     </div>
   </div>
@@ -991,14 +3126,13 @@ api.controller = function($scope, $http, $window, spUtil) {
         <textarea class="edu-input" rows="4" ng-model="c.correctionReason" placeholder="Describe correction needed..."></textarea>
       </div>
       <div class="edu-modal-foot">
-        <button class="edu-btn edu-btn-back" ng-click="c.closeCorrectionModal()">Cancel</button>
+        <button class="edu-btn edu-btn-ghost" ng-click="c.closeCorrectionModal()">Cancel</button>
         <button class="edu-btn edu-btn-primary" ng-click="c.submitCorrectionRequest()" ng-disabled="!c.correctionReason">
           Submit Correction Request
         </button>
       </div>
     </div>
   </div>
-</div>
-]]></template>
+</div>]]></template>
     </sp_widget>
 </record_update>

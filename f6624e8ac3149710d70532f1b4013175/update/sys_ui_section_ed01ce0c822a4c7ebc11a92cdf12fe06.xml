@@ -84,6 +84,34 @@
             <sys_user/>
             <type/>
         </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>merit_cutoff</element>
+            <position>6</position>
+            <sys_created_by>developer.abhinav</sys_created_by>
+            <sys_created_on>2026-11-20 12:58:59</sys_created_on>
+            <sys_id>509a46efc368d750d70532f1b4013140</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="College Program Details" display_value="College Program Details" name="x_1790229_edusph_0_coll_prog" sys_domain="global" view="Default view">ed01ce0c822a4c7ebc11a92cdf12fe06</sys_ui_section>
+            <sys_updated_by>developer.abhinav</sys_updated_by>
+            <sys_updated_on>2026-11-20 12:58:59</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>academic_year</element>
+            <position>7</position>
+            <sys_created_by>developer.abhinav</sys_created_by>
+            <sys_created_on>2026-11-20 12:58:59</sys_created_on>
+            <sys_id>d09a46efc368d750d70532f1b401315a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="College Program Details" display_value="College Program Details" name="x_1790229_edusph_0_coll_prog" sys_domain="global" view="Default view">ed01ce0c822a4c7ebc11a92cdf12fe06</sys_ui_section>
+            <sys_updated_by>developer.abhinav</sys_updated_by>
+            <sys_updated_on>2026-11-20 12:58:59</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
         <sys_ui_section action="INSERT_OR_UPDATE">
             <caption>College Program Details</caption>
             <header>false</header>

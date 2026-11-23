@@ -6,7 +6,7 @@
         <element label="Eligible" max_length="40" name="eligible" type="boolean"/>
         <element label="Calculated On" max_length="40" name="calculated_on" type="glide_date_time"/>
         <element attributes="edge_encryption_enabled=true" label="Points Possible" max_length="15" name="points_possible" type="decimal"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" reference_qual="javascript:new x_1790229_edusph_0.CollegeReferenceQualifier().getStudentsForCurrentCollege()" type="reference" use_reference_qualifier="advanced"/>
         <index name="index">
             <element name="semester"/>
         </index>

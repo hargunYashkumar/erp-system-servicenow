@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="status" table="x_1790229_edusph_0_counselling_allotment" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>status</element>
+            <name>x_1790229_edusph_0_counselling_allotment</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>developer.abhinav</sys_created_by>
+            <sys_created_on>2026-11-20 08:48:01</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>status</sys_name>
+            <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+            <sys_update_name>sys_choice_x_1790229_edusph_0_counselling_allotment_status</sys_update_name>
+            <sys_updated_by>developer.abhinav</sys_updated_by>
+            <sys_updated_on>2026-11-20 08:48:01</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Not Started</label>
+            <language>en</language>
+            <name>x_1790229_edusph_0_counselling_allotment</name>
+            <sequence>10</sequence>
+            <synonyms/>
+            <sys_created_by>developer.abhinav</sys_created_by>
+            <sys_created_on>2026-11-20 08:48:01</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>developer.abhinav</sys_updated_by>
+            <sys_updated_on>2026-11-20 08:48:01</sys_updated_on>
+            <value>Not Started</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>In Progress</label>
+            <language>en</language>
+            <name>x_1790229_edusph_0_counselling_allotment</name>
+            <sequence>20</sequence>
+            <synonyms/>
+            <sys_created_by>developer.abhinav</sys_created_by>
+            <sys_created_on>2026-11-20 08:48:01</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>developer.abhinav</sys_updated_by>
+            <sys_updated_on>2026-11-20 08:48:01</sys_updated_on>
+            <value>In Progress</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Seat Allotted</label>
+            <language>en</language>
+            <name>x_1790229_edusph_0_counselling_allotment</name>
+            <sequence>30</sequence>
+            <synonyms/>
+            <sys_created_by>developer.abhinav</sys_created_by>
+            <sys_created_on>2026-11-20 08:48:01</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>developer.abhinav</sys_updated_by>
+            <sys_updated_on>2026-11-20 08:48:01</sys_updated_on>
+            <value>Seat Allotted</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>No Seat Allotted</label>
+            <language>en</language>
+            <name>x_1790229_edusph_0_counselling_allotment</name>
+            <sequence>40</sequence>
+            <synonyms/>
+            <sys_created_by>developer.abhinav</sys_created_by>
+            <sys_created_on>2026-11-20 08:48:01</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>developer.abhinav</sys_updated_by>
+            <sys_updated_on>2026-11-20 08:48:01</sys_updated_on>
+            <value>No Seat Allotted</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Upgraded in Round 2</label>
+            <language>en</language>
+            <name>x_1790229_edusph_0_counselling_allotment</name>
+            <sequence>45</sequence>
+            <synonyms/>
+            <sys_created_by>developer.abhinav</sys_created_by>
+            <sys_created_on>2026-11-20 12:59:00</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>developer.abhinav</sys_updated_by>
+            <sys_updated_on>2026-11-20 12:59:00</sys_updated_on>
+            <value>Upgraded</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Action Required</label>
+            <language>en</language>
+            <name>x_1790229_edusph_0_counselling_allotment</name>
+            <sequence>50</sequence>
+            <synonyms/>
+            <sys_created_by>developer.abhinav</sys_created_by>
+            <sys_created_on>2026-11-20 08:48:01</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>developer.abhinav</sys_updated_by>
+            <sys_updated_on>2026-11-20 08:48:01</sys_updated_on>
+            <value>Action Required</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Seat Accepted</label>
+            <language>en</language>
+            <name>x_1790229_edusph_0_counselling_allotment</name>
+            <sequence>60</sequence>
+            <synonyms/>
+            <sys_created_by>developer.abhinav</sys_created_by>
+            <sys_created_on>2026-11-20 08:48:01</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>developer.abhinav</sys_updated_by>
+            <sys_updated_on>2026-11-20 08:48:01</sys_updated_on>
+            <value>Seat Accepted</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Seat Rejected</label>
+            <language>en</language>
+            <name>x_1790229_edusph_0_counselling_allotment</name>
+            <sequence>70</sequence>
+            <synonyms/>
+            <sys_created_by>developer.abhinav</sys_created_by>
+            <sys_created_on>2026-11-20 08:48:01</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>developer.abhinav</sys_updated_by>
+            <sys_updated_on>2026-11-20 08:48:01</sys_updated_on>
+            <value>Seat Rejected</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>status</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Withdrawn</label>
+            <language>en</language>
+            <name>x_1790229_edusph_0_counselling_allotment</name>
+            <sequence>80</sequence>
+            <synonyms/>
+            <sys_created_by>developer.abhinav</sys_created_by>
+            <sys_created_on>2026-11-20 08:48:01</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>developer.abhinav</sys_updated_by>
+            <sys_updated_on>2026-11-20 08:48:01</sys_updated_on>
+            <value>Withdrawn</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

@@ -7,7 +7,7 @@
         <element label="Correction Reason" max_length="255" name="correction_reason" type="string"/>
         <element label="Applied On" max_length="40" name="applied_on" type="glide_date"/>
         <element attributes="edge_encryption_enabled=true" label="Email" mandatory="true" max_length="100" name="email" type="email"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Program" mandatory="true" max_length="32" name="program" reference="x_1790229_edusph_0_program" type="reference"/>
+        <element active="false" attributes="edge_encryption_enabled=true,encode_utf8=false" label="Program" max_length="32" name="program" reference="x_1790229_edusph_0_program" type="reference"/>
         <element attributes="edge_encryption_enabled=true" label="Merit Score" max_length="15" name="merit_score" type="decimal"/>
         <element attributes="edge_encryption_enabled=true" choice="1" label="Category" mandatory="true" max_length="40" name="category" type="choice">
             <choice>
@@ -45,7 +45,7 @@
         </element>
         <element label="Withdrawal On" max_length="40" name="withdrawal_on" type="glide_date"/>
         <element attributes="edge_encryption_enabled=true" label="Class 12 Percentage" max_length="15" name="class_12_percentage" type="decimal"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="College" mandatory="true" max_length="32" name="college" reference="x_1790229_edusph_0_college" reference_qual="status=active^EQ" reference_qual_condition="status=active^EQ" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="College" max_length="32" name="college" reference="x_1790229_edusph_0_college" reference_qual="status=active^EQ" reference_qual_condition="status=active^EQ" type="reference"/>
         <element attributes="edge_encryption_enabled=true" label="Jee Score" max_length="15" name="jee_score" type="decimal"/>
         <element attributes="edge_encryption_enabled=true" label="Allocation Round" max_length="40" name="allocation_round" type="integer"/>
         <element label="Mobile" max_length="40" name="mobile" type="string"/>

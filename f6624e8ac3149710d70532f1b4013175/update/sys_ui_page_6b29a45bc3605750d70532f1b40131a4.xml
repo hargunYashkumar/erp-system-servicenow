@@ -1,0 +1,685 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script/>
+        <description>EduSphere University ERP Data Model and Architecture Visualizer</description>
+        <direct>false</direct>
+        <endpoint>x_1790229_edusph_0_data_model.do</endpoint>
+        <html>&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+&lt;j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null"&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;EduSphere University ERP - Data Model &amp;amp; Architecture&lt;/title&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+  &lt;style&gt;
+    :root {
+      --bg-base: #0b1120;
+      --bg-card: #111827;
+      --bg-card-hover: #1e293b;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --gold-primary: #c2882f;
+      --gold-light: #fbbf24;
+      --gold-bg: rgba(194, 136, 47, 0.12);
+      --emerald: #10b981;
+      --blue: #3b82f6;
+    }
+
+    [data-theme="light"] {
+      --bg-base: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f1f5f9;
+      --border-color: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --gold-primary: #92400e;
+      --gold-light: #b45309;
+      --gold-bg: rgba(194, 136, 47, 0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg-base);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding: 24px;
+      transition: background 0.25s, color 0.25s;
+    }
+
+    .edu-container { max-width: 1400px; margin: 0 auto; }
+
+    /* Header */
+    .edu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .edu-brand { display: flex; align-items: center; gap: 14px; }
+    .edu-brand-logo {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, #1e3a8a, #0b1120);
+      border: 2px solid var(--gold-primary);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+    .edu-brand h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+    .edu-brand p { font-size: 13px; color: var(--text-muted); }
+
+    .edu-header-actions { display: flex; align-items: center; gap: 10px; }
+    .edu-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 600;
+      text-decoration: none; cursor: pointer; border: none; transition: all 0.2s;
+    }
+    .edu-btn-gold {
+      background: var(--gold-primary); color: #ffffff !important;
+    }
+    .edu-btn-gold:hover { opacity: 0.9; }
+    .edu-btn-ghost {
+      background: transparent; color: var(--text-main) !important;
+      border: 1px solid var(--border-color);
+    }
+    .edu-btn-ghost:hover { background: var(--bg-card-hover); }
+
+    /* Stats Bar */
+    .edu-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .edu-stat-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .edu-stat-icon {
+      width: 42px; height: 42px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+    .edu-stat-num { font-size: 22px; font-weight: 800; color: var(--text-main); }
+    .edu-stat-label { font-size: 12px; color: var(--text-muted); }
+
+    /* Controls Bar */
+    .edu-controls {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .edu-search-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .edu-search-wrap {
+      flex: 1; min-width: 280px; position: relative;
+    }
+    .edu-search-input {
+      width: 100%;
+      padding: 10px 14px 10px 38px;
+      background: var(--bg-base);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-size: 14px;
+    }
+    .edu-search-input:focus { outline: none; border-color: var(--gold-primary); }
+    .edu-search-icon {
+      position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+      font-size: 15px; color: var(--text-muted);
+    }
+
+    .edu-view-tabs { display: flex; gap: 6px; }
+    .edu-tab-btn {
+      padding: 8px 14px; border-radius: 6px; font-size: 13px; font-weight: 600;
+      cursor: pointer; background: transparent; border: 1px solid transparent;
+      color: var(--text-muted); transition: all 0.2s;
+    }
+    .edu-tab-btn.active {
+      background: var(--gold-bg); color: var(--gold-light);
+      border-color: rgba(194, 136, 47, 0.4);
+    }
+
+    /* Filter Pills */
+    .edu-filter-pills {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      padding-top: 10px; border-top: 1px solid var(--border-color);
+    }
+    .edu-pill {
+      padding: 5px 12px; border-radius: 9999px; font-size: 12px; font-weight: 500;
+      background: var(--bg-base); border: 1px solid var(--border-color);
+      color: var(--text-muted); cursor: pointer; transition: all 0.2s;
+    }
+    .edu-pill:hover, .edu-pill.active {
+      background: var(--gold-bg); border-color: rgba(194, 136, 47, 0.4);
+      color: var(--gold-light);
+    }
+
+    /* Module Section */
+    .edu-module-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 24px;
+      transition: all 0.2s;
+    }
+    .edu-module-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 16px; padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+      flex-wrap: wrap; gap: 8px;
+    }
+    .edu-module-title { display: flex; align-items: center; gap: 10px; }
+    .edu-module-title h2 { font-size: 18px; font-weight: 700; }
+    .edu-module-tag {
+      font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 9999px;
+      background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+    .edu-module-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+
+    /* Tables Grid inside Module */
+    .edu-tables-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 14px;
+    }
+    .edu-table-card {
+      background: var(--bg-base);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .edu-table-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(194, 136, 47, 0.4);
+    }
+    .edu-table-top { margin-bottom: 10px; }
+    .edu-table-label { font-size: 15px; font-weight: 700; color: var(--text-main); margin-bottom: 2px; }
+    .edu-table-name {
+      font-size: 11px; font-family: monospace; color: var(--gold-light);
+      word-break: break-all;
+    }
+    .edu-table-desc { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+    .edu-table-actions {
+      display: flex; gap: 8px; margin-top: 12px; padding-top: 10px;
+      border-top: 1px solid var(--border-color);
+    }
+    .edu-btn-action {
+      flex: 1; padding: 5px 8px; border-radius: 6px; font-size: 11px; font-weight: 600;
+      text-align: center; text-decoration: none; border: 1px solid var(--border-color);
+      background: var(--bg-card); color: var(--text-main) !important; transition: all 0.15s;
+    }
+    .edu-btn-action:hover {
+      background: var(--gold-bg); border-color: rgba(194, 136, 47, 0.4);
+      color: var(--gold-light) !important;
+    }
+    .edu-btn-action.primary {
+      background: rgba(16, 185, 129, 0.12); color: #34d399 !important; border-color: rgba(16, 185, 129, 0.3);
+    }
+    .edu-btn-action.primary:hover { background: rgba(16, 185, 129, 0.25); }
+
+    /* Dictionary Table View */
+    .edu-dict-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow-x: auto;
+      display: none;
+    }
+    .edu-dict-table {
+      width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;
+    }
+    .edu-dict-table th {
+      background: var(--bg-base); padding: 12px 16px;
+      border-bottom: 2px solid var(--border-color); font-weight: 700;
+      color: var(--text-muted); text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em;
+    }
+    .edu-dict-table td {
+      padding: 12px 16px; border-bottom: 1px solid var(--border-color);
+    }
+    .edu-dict-table tr:hover td { background: var(--bg-card-hover); }
+
+    /* ERD View */
+    .edu-erd-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      display: none;
+      overflow-x: auto;
+    }
+    .edu-erd-schema {
+      display: flex; flex-direction: column; gap: 24px;
+    }
+    .edu-flow-lane {
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 16px;
+      background: var(--bg-base);
+    }
+    .edu-flow-title {
+      font-size: 14px; font-weight: 700; color: var(--gold-light);
+      margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+    }
+    .edu-flow-nodes {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .edu-node {
+      padding: 10px 14px; border-radius: 8px;
+      background: var(--bg-card); border: 1px solid rgba(194, 136, 47, 0.3);
+      font-size: 13px; font-weight: 600; color: var(--text-main);
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .edu-node small { font-size: 10px; color: var(--text-muted); font-family: monospace; }
+    .edu-arrow { font-size: 18px; color: var(--gold-primary); }
+
+    /* Empty state */
+    .edu-empty {
+      text-align: center; padding: 48px 24px; color: var(--text-muted);
+      display: none;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body data-theme="dark"&gt;
+
+&lt;div class="edu-container"&gt;
+
+  &lt;!-- Header --&gt;
+  &lt;header class="edu-header"&gt;
+    &lt;div class="edu-brand"&gt;
+      &lt;div class="edu-brand-logo"&gt;&amp;#127979;&lt;/div&gt;
+      &lt;div&gt;
+        &lt;h1&gt;EduSphere University ERP &amp;bull; Data Model &amp;amp; Architecture&lt;/h1&gt;
+        &lt;p&gt;Comprehensive Entity Relationship &amp;amp; Table Directory across 13 Functional Modules (70 Scoped Tables)&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="edu-header-actions"&gt;
+      &lt;a href="/admission" target="_blank" class="edu-btn edu-btn-ghost"&gt;&amp;#127760; Admissions Portal&lt;/a&gt;
+      &lt;button type="button" class="edu-btn edu-btn-ghost" onclick="toggleTheme()" id="themeBtn"&gt;&amp;#9728;&amp;#65039; Theme&lt;/button&gt;
+      &lt;a href="/$schema_map.do?sysparm_table=x_1790229_edusph_0_university" target="_blank" class="edu-btn edu-btn-gold"&gt;&amp;#128506;&amp;#65039; University Schema Map&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/header&gt;
+
+  &lt;!-- Executive Stats Grid --&gt;
+  &lt;div class="edu-stats-grid"&gt;
+    &lt;div class="edu-stat-box"&gt;
+      &lt;div class="edu-stat-icon"&gt;&amp;#127979;&lt;/div&gt;
+      &lt;div&gt;
+        &lt;div class="edu-stat-num"&gt;13&lt;/div&gt;
+        &lt;div class="edu-stat-label"&gt;Functional Modules&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="edu-stat-box"&gt;
+      &lt;div class="edu-stat-icon"&gt;&amp;#128451;&amp;#65039;&lt;/div&gt;
+      &lt;div&gt;
+        &lt;div class="edu-stat-num"&gt;70&lt;/div&gt;
+        &lt;div class="edu-stat-label"&gt;Scoped Data Tables&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="edu-stat-box"&gt;
+      &lt;div class="edu-stat-icon"&gt;&amp;#9878;&amp;#65039;&lt;/div&gt;
+      &lt;div&gt;
+        &lt;div class="edu-stat-num"&gt;100%&lt;/div&gt;
+        &lt;div class="edu-stat-label"&gt;Relational Integrity&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="edu-stat-box"&gt;
+      &lt;div class="edu-stat-icon"&gt;&amp;#128640;&lt;/div&gt;
+      &lt;div&gt;
+        &lt;div class="edu-stat-num"&gt;1&lt;/div&gt;
+        &lt;div class="edu-stat-label"&gt;Unified App Menu&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Controls Bar --&gt;
+  &lt;div class="edu-controls"&gt;
+    &lt;div class="edu-search-row"&gt;
+      &lt;div class="edu-search-wrap"&gt;
+        &lt;span class="edu-search-icon"&gt;&amp;#128269;&lt;/span&gt;
+        &lt;input type="text" id="tableSearch" class="edu-search-input" placeholder="Search tables, modules, or technical table names..." onkeyup="filterTables()" /&gt;
+      &lt;/div&gt;
+      &lt;div class="edu-view-tabs"&gt;
+        &lt;button class="edu-tab-btn active" id="tabCards" onclick="switchView('cards')"&gt;&amp;#128450;&amp;#65039; Module Cards&lt;/button&gt;
+        &lt;button class="edu-tab-btn" id="tabErd" onclick="switchView('erd')"&gt;&amp;#128202; ERD &amp;amp; Flows&lt;/button&gt;
+        &lt;button class="edu-tab-btn" id="tabDict" onclick="switchView('dict')"&gt;&amp;#128196; Data Dictionary&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Filter Pills --&gt;
+    &lt;div class="edu-filter-pills" id="modulePills"&gt;
+      &lt;button class="edu-pill active" onclick="filterByModule('all', this)"&gt;All Modules (70)&lt;/button&gt;
+      &lt;button class="edu-pill" onclick="filterByModule('univ', this)"&gt;University &amp;amp; Affiliation (5)&lt;/button&gt;
+      &lt;button class="edu-pill" onclick="filterByModule('acad', this)"&gt;Academic Structure (9)&lt;/button&gt;
+      &lt;button class="edu-pill" onclick="filterByModule('adm', this)"&gt;Admissions &amp;amp; Registration (5)&lt;/button&gt;
+      &lt;button class="edu-pill" onclick="filterByModule('stud', this)"&gt;Student Lifecycle (3)&lt;/button&gt;
+      &lt;button class="edu-pill" onclick="filterByModule('fac', this)"&gt;Faculty &amp;amp; People (3)&lt;/button&gt;
+      &lt;button class="edu-pill" onclick="filterByModule('att', this)"&gt;Attendance &amp;amp; Proxy (5)&lt;/button&gt;
+      &lt;button class="edu-pill" onclick="filterByModule('leave', this)"&gt;Leave Management (4)&lt;/button&gt;
+      &lt;button class="edu-pill" onclick="filterByModule('time', this)"&gt;Timetable &amp;amp; Scheduling (5)&lt;/button&gt;
+      &lt;button class="edu-pill" onclick="filterByModule('exam', this)"&gt;Examinations &amp;amp; Results (9)&lt;/button&gt;
+      &lt;button class="edu-pill" onclick="filterByModule('fin', this)"&gt;Payments &amp;amp; Payroll (6)&lt;/button&gt;
+      &lt;button class="edu-pill" onclick="filterByModule('place', this)"&gt;Placements (5)&lt;/button&gt;
+      &lt;button class="edu-pill" onclick="filterByModule('asset', this)"&gt;Assets (2)&lt;/button&gt;
+      &lt;button class="edu-pill" onclick="filterByModule('event', this)"&gt;Events (5)&lt;/button&gt;
+      &lt;button class="edu-pill" onclick="filterByModule('desk', this)"&gt;Help Desk (4)&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- VIEW 1: MODULE CARDS --&gt;
+  &lt;div id="viewCards"&gt;&lt;/div&gt;
+
+  &lt;!-- VIEW 2: ERD &amp; ARCHITECTURE --&gt;
+  &lt;div id="viewErd" class="edu-erd-wrap"&gt;
+    &lt;div class="edu-erd-schema"&gt;
+      &lt;!-- Flow 1 --&gt;
+      &lt;div class="edu-flow-lane"&gt;
+        &lt;div class="edu-flow-title"&gt;&amp;#127979; University &amp;amp; Admission Intake Flow&lt;/div&gt;
+        &lt;div class="edu-flow-nodes"&gt;
+          &lt;div class="edu-node"&gt;University&lt;small&gt;x_..._university&lt;/small&gt;&lt;/div&gt;
+          &lt;span class="edu-arrow"&gt;&amp;rarr;&lt;/span&gt;
+          &lt;div class="edu-node"&gt;College&lt;small&gt;x_..._college&lt;/small&gt;&lt;/div&gt;
+          &lt;span class="edu-arrow"&gt;&amp;rarr;&lt;/span&gt;
+          &lt;div class="edu-node"&gt;College Program&lt;small&gt;x_..._coll_prog&lt;/small&gt;&lt;/div&gt;
+          &lt;span class="edu-arrow"&gt;&amp;rarr;&lt;/span&gt;
+          &lt;div class="edu-node"&gt;Admission App&lt;small&gt;x_..._admission_application&lt;/small&gt;&lt;/div&gt;
+          &lt;span class="edu-arrow"&gt;&amp;rarr;&lt;/span&gt;
+          &lt;div class="edu-node"&gt;Enrolled Student&lt;small&gt;x_..._student&lt;/small&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- Flow 2 --&gt;
+      &lt;div class="edu-flow-lane"&gt;
+        &lt;div class="edu-flow-title"&gt;&amp;#128218; Academic &amp;amp; Scheduling Hierarchy&lt;/div&gt;
+        &lt;div class="edu-flow-nodes"&gt;
+          &lt;div class="edu-node"&gt;Academic Year&lt;small&gt;x_..._academic_year&lt;/small&gt;&lt;/div&gt;
+          &lt;span class="edu-arrow"&gt;&amp;rarr;&lt;/span&gt;
+          &lt;div class="edu-node"&gt;Program&lt;small&gt;x_..._program&lt;/small&gt;&lt;/div&gt;
+          &lt;span class="edu-arrow"&gt;&amp;rarr;&lt;/span&gt;
+          &lt;div class="edu-node"&gt;Semester&lt;small&gt;x_..._semester&lt;/small&gt;&lt;/div&gt;
+          &lt;span class="edu-arrow"&gt;&amp;rarr;&lt;/span&gt;
+          &lt;div class="edu-node"&gt;Course Offering&lt;small&gt;x_..._course_offering&lt;/small&gt;&lt;/div&gt;
+          &lt;span class="edu-arrow"&gt;&amp;rarr;&lt;/span&gt;
+          &lt;div class="edu-node"&gt;Section&lt;small&gt;x_..._section&lt;/small&gt;&lt;/div&gt;
+          &lt;span class="edu-arrow"&gt;&amp;rarr;&lt;/span&gt;
+          &lt;div class="edu-node"&gt;Timetable Entry&lt;small&gt;x_..._timetable_entry&lt;/small&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- Flow 3 --&gt;
+      &lt;div class="edu-flow-lane"&gt;
+        &lt;div class="edu-flow-title"&gt;&amp;#128221; Examination &amp;amp; Evaluation Pipeline&lt;/div&gt;
+        &lt;div class="edu-flow-nodes"&gt;
+          &lt;div class="edu-node"&gt;Exam Event&lt;small&gt;x_..._exam_event&lt;/small&gt;&lt;/div&gt;
+          &lt;span class="edu-arrow"&gt;&amp;rarr;&lt;/span&gt;
+          &lt;div class="edu-node"&gt;Exam Schedule&lt;small&gt;x_..._exam_schedule&lt;/small&gt;&lt;/div&gt;
+          &lt;span class="edu-arrow"&gt;&amp;rarr;&lt;/span&gt;
+          &lt;div class="edu-node"&gt;Seating Plan&lt;small&gt;x_..._seating_plan&lt;/small&gt;&lt;/div&gt;
+          &lt;span class="edu-arrow"&gt;&amp;rarr;&lt;/span&gt;
+          &lt;div class="edu-node"&gt;Hall Ticket&lt;small&gt;x_..._hall_ticket&lt;/small&gt;&lt;/div&gt;
+          &lt;span class="edu-arrow"&gt;&amp;rarr;&lt;/span&gt;
+          &lt;div class="edu-node"&gt;Mark Entry&lt;small&gt;x_..._mark&lt;/small&gt;&lt;/div&gt;
+          &lt;span class="edu-arrow"&gt;&amp;rarr;&lt;/span&gt;
+          &lt;div class="edu-node"&gt;Official Result&lt;small&gt;x_..._result&lt;/small&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- Flow 4 --&gt;
+      &lt;div class="edu-flow-lane"&gt;
+        &lt;div class="edu-flow-title"&gt;&amp;#128176; Student Fee &amp;amp; Accounting Flow&lt;/div&gt;
+        &lt;div class="edu-flow-nodes"&gt;
+          &lt;div class="edu-node"&gt;Fee Structure&lt;small&gt;x_..._fee_structure&lt;/small&gt;&lt;/div&gt;
+          &lt;span class="edu-arrow"&gt;&amp;rarr;&lt;/span&gt;
+          &lt;div class="edu-node"&gt;Student Fee Due&lt;small&gt;x_..._student_fee&lt;/small&gt;&lt;/div&gt;
+          &lt;span class="edu-arrow"&gt;&amp;rarr;&lt;/span&gt;
+          &lt;div class="edu-node"&gt;Payment Transaction&lt;small&gt;x_..._payment_transaction&lt;/small&gt;&lt;/div&gt;
+          &lt;span class="edu-arrow"&gt;&amp;rarr;&lt;/span&gt;
+          &lt;div class="edu-node"&gt;Scholarship Waiver&lt;small&gt;x_..._scholarship&lt;/small&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;!-- Flow 5 --&gt;
+      &lt;div class="edu-flow-lane"&gt;
+        &lt;div class="edu-flow-title"&gt;&amp;#128188; Campus Placements Pipeline&lt;/div&gt;
+        &lt;div class="edu-flow-nodes"&gt;
+          &lt;div class="edu-node"&gt;Company&lt;small&gt;x_..._company&lt;/small&gt;&lt;/div&gt;
+          &lt;span class="edu-arrow"&gt;&amp;rarr;&lt;/span&gt;
+          &lt;div class="edu-node"&gt;Placement Drive&lt;small&gt;x_..._placement_drive&lt;/small&gt;&lt;/div&gt;
+          &lt;span class="edu-arrow"&gt;&amp;rarr;&lt;/span&gt;
+          &lt;div class="edu-node"&gt;Drive Registration&lt;small&gt;x_..._drive_registration&lt;/small&gt;&lt;/div&gt;
+          &lt;span class="edu-arrow"&gt;&amp;rarr;&lt;/span&gt;
+          &lt;div class="edu-node"&gt;Interview Round&lt;small&gt;x_..._interview_round&lt;/small&gt;&lt;/div&gt;
+          &lt;span class="edu-arrow"&gt;&amp;rarr;&lt;/span&gt;
+          &lt;div class="edu-node"&gt;Job Offer&lt;small&gt;x_..._placement_offer&lt;/small&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- VIEW 3: DATA DICTIONARY TABLE --&gt;
+  &lt;div id="viewDict" class="edu-dict-wrap"&gt;
+    &lt;table class="edu-dict-table"&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th&gt;#&lt;/th&gt;
+          &lt;th&gt;Module Domain&lt;/th&gt;
+          &lt;th&gt;Table Display Label&lt;/th&gt;
+          &lt;th&gt;Technical Table Name&lt;/th&gt;
+          &lt;th&gt;Core Purpose / References&lt;/th&gt;
+          &lt;th&gt;Actions&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody id="dictTableBody"&gt;&lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Empty State --&gt;
+  &lt;div id="emptyState" class="edu-empty"&gt;
+    &lt;h3&gt;No matching tables or modules found&lt;/h3&gt;
+    &lt;p&gt;Try searching with another keyword or clear the search filter.&lt;/p&gt;
+  &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;script&gt;&lt;![CDATA[
+  var modulesData = JSON.parse(']]&gt;[{"id": "univ", "name": "University &amp; Affiliation", "icon": "\ud83c\udfdb\ufe0f", "color": "#3b82f6", "desc": "Foundational governance for universities, affiliated constituent colleges, programs, and onboarding.", "tables": [{"label": "University", "name": "x_1790229_edusph_0_university", "desc": "Central university entity (code, address, status, registration)."}, {"label": "College", "name": "x_1790229_edusph_0_college", "desc": "Affiliated colleges (NSIT, DTU, IIITD, IGDTUW)."}, {"label": "College Onboarding", "name": "x_1790229_edusph_0_onboarding", "desc": "Onboarding approval workflow for new colleges."}, {"label": "Affiliation Record", "name": "x_1790229_edusph_0_affiliation", "desc": "Annual university-college affiliation validity &amp; accreditation."}, {"label": "College Program", "name": "x_1790229_edusph_0_coll_prog", "desc": "Mapping between colleges, degree programs &amp; approved seats."}]}, {"id": "acad", "name": "Academic Structure", "icon": "\ud83d\udcda", "color": "#8b5cf6", "desc": "Curriculum architecture from academic years down to course offerings, lab batches, and elective quotas.", "tables": [{"label": "Academic Year", "name": "x_1790229_edusph_0_academic_year", "desc": "Academic intake cycles (e.g., 2026-27)."}, {"label": "Program", "name": "x_1790229_edusph_0_program", "desc": "Degree definitions (B.Tech, M.Tech, BCA, MCA)."}, {"label": "Semester", "name": "x_1790229_edusph_0_semester", "desc": "Sequential term definitions across programs."}, {"label": "Course", "name": "x_1790229_edusph_0_course", "desc": "Master course catalog (course code, credits, syllabus)."}, {"label": "Course Offering", "name": "x_1790229_edusph_0_course_offering", "desc": "Live semester instances of courses with faculty instructors."}, {"label": "Curriculum Course", "name": "x_1790229_edusph_0_curriculum_course", "desc": "Syllabus mapping connecting programs to required courses."}, {"label": "Section", "name": "x_1790229_edusph_0_section", "desc": "Classroom student divisions (Section A, B, C)."}, {"label": "Lab Batch", "name": "x_1790229_edusph_0_lab_batch", "desc": "Practical laboratory sub-batches (Batch 1, 2)."}, {"label": "Elective Quota", "name": "x_1790229_edusph_0_elective_quota", "desc": "Seat capacity management for elective course selections."}]}, {"id": "adm", "name": "Admissions &amp; Candidate Registration", "icon": "\ud83c\udf93", "color": "#10b981", "desc": "External candidate self-registration, verification, counseling, and admission intake workflow.", "tables": [{"label": "Admission Application", "name": "x_1790229_edusph_0_admission_application", "desc": "Primary counseling application record with merit scores &amp; branch choices."}, {"label": "Eligibility Application", "name": "x_1790229_edusph_0_eligibility_application", "desc": "Candidate academic eligibility verification checks."}, {"label": "Candidate Profiles", "name": "x_1790229_edusph_0_self_reg_user_profile_755648", "desc": "Self-registration external applicant profile record."}, {"label": "Registration Requests", "name": "x_1790229_edusph_0_user_reg_req_755648", "desc": "ServiceNow external user self-registration requests."}, {"label": "Activation Requests", "name": "x_1790229_edusph_0_user_acti_req_755648", "desc": "Email token activation requests for external candidates."}]}, {"id": "stud", "name": "Student Lifecycle", "icon": "\ud83d\udc68\u200d\ud83c\udf93", "color": "#06b6d4", "desc": "Official student master records, uploaded certificates, and semester course enrollment.", "tables": [{"label": "Student", "name": "x_1790229_edusph_0_student", "desc": "Enrolled student master (roll number, email, college, status)."}, {"label": "Student Document", "name": "x_1790229_edusph_0_student_document", "desc": "Uploaded identity, category, and academic certificates."}, {"label": "Course Registration", "name": "x_1790229_edusph_0_course_registration", "desc": "Student semester-wise subject and elective enrollments."}]}, {"id": "fac", "name": "Faculty &amp; Organization", "icon": "\ud83d\udc68\u200d\ud83c\udfeb", "color": "#f59e0b", "desc": "Organizational departments, professors, staff, and institutional administrative authorities.", "tables": [{"label": "Department", "name": "x_1790229_edusph_0_department", "desc": "Academic departments (Computer Science, Mechanical, etc.)."}, {"label": "Employee &amp; Faculty", "name": "x_1790229_edusph_0_employee", "desc": "Faculty and staff master (designation, department, college)."}, {"label": "Authority Assignment", "name": "x_1790229_edusph_0_authority_assignment", "desc": "Delegation of administrative authority (Dean, HOD, Exam Controller)."}]}, {"id": "att", "name": "Attendance &amp; Proxy Faculty", "icon": "\u23f1\ufe0f", "color": "#ec4899", "desc": "Daily class attendance tracking, aggregate percentage calculations, and substitute proxy assignments.", "tables": [{"label": "Class Session", "name": "x_1790229_edusph_0_class_session", "desc": "Individual scheduled lecture and lab classroom sessions."}, {"label": "Student Attendance", "name": "x_1790229_edusph_0_student_attendance", "desc": "Per-student session attendance mark (Present/Absent)."}, {"label": "Attendance Summary", "name": "x_1790229_edusph_0_attendance_summary", "desc": "Aggregated semester attendance percentage per course."}, {"label": "Faculty Attendance", "name": "x_1790229_edusph_0_faculty_attendance", "desc": "Daily faculty check-in / check-out records."}, {"label": "Proxy Request", "name": "x_1790229_edusph_0_proxy_request", "desc": "Substitute faculty arrangement during professor absence."}]}, {"id": "leave", "name": "Leave Management", "icon": "\ud83c\udf34", "color": "#14b8a6", "desc": "Faculty and staff leave allowances, applications, balance management, and event-based proxies.", "tables": [{"label": "Leave Type", "name": "x_1790229_edusph_0_leave_type", "desc": "Leave categories (Casual, Medical, Earned, Duty)."}, {"label": "Leave Balance", "name": "x_1790229_edusph_0_leave_balance", "desc": "Accrued and remaining days per employee per year."}, {"label": "Faculty Leave", "name": "x_1790229_edusph_0_faculty_leave", "desc": "Leave requests submitted by faculty with approval status."}, {"label": "Event Proxy Request", "name": "x_1790229_edusph_0_event_proxy_request", "desc": "Special proxy substitute requests triggered by event leaves."}]}, {"id": "time", "name": "Timetable &amp; Scheduling", "icon": "\ud83d\udcc5", "color": "#6366f1", "desc": "Room scheduling, period slots, clash detection, and weekly section timetables.", "tables": [{"label": "Room", "name": "x_1790229_edusph_0_room", "desc": "Classrooms, lecture halls, and lab room facilities."}, {"label": "Period", "name": "x_1790229_edusph_0_period", "desc": "Daily time slots (e.g., Period 1: 09:00 - 10:00)."}, {"label": "Timetable", "name": "x_1790229_edusph_0_timetable", "desc": "Master weekly schedule for a program semester section."}, {"label": "Timetable Entry", "name": "x_1790229_edusph_0_timetable_entry", "desc": "Individual slot mapping day, period, course, room &amp; faculty."}, {"label": "Timetable Change", "name": "x_1790229_edusph_0_timetable_change", "desc": "Audit tracking for rescheduled periods or room swaps."}]}, {"id": "exam", "name": "Examinations &amp; Grading", "icon": "\ud83d\udcdd", "color": "#e11d48", "desc": "Examination events, schedules, seating allocation, hall tickets, grading, and backlog re-evaluations.", "tables": [{"label": "Exam Event", "name": "x_1790229_edusph_0_exam_event", "desc": "Major examination session (Mid-Term, End-Term 2026-27)."}, {"label": "Exam Schedule", "name": "x_1790229_edusph_0_exam_schedule", "desc": "Date and timing schedule per course exam."}, {"label": "Seating Plan", "name": "x_1790229_edusph_0_seating_plan", "desc": "Hall seating arrangement blueprint."}, {"label": "Seat Assignment", "name": "x_1790229_edusph_0_seat_assignment", "desc": "Specific desk/seat assigned to each student for an exam."}, {"label": "Hall Ticket", "name": "x_1790229_edusph_0_hall_ticket", "desc": "Admit card generated for authorized exam attendees."}, {"label": "Mark", "name": "x_1790229_edusph_0_mark", "desc": "Component marks (Internal, Theory, Practical, Viva)."}, {"label": "Result", "name": "x_1790229_edusph_0_result", "desc": "Semester GPA, total marks, percentage, and pass/fail grade."}, {"label": "Backlog Registration", "name": "x_1790229_edusph_0_backlog_registration", "desc": "Remedial / supplementary examination appearance."}, {"label": "Re-evaluation Request", "name": "x_1790229_edusph_0_re_evaluation_request", "desc": "Student appeals for paper re-checking and score revision."}]}, {"id": "fin", "name": "Fee &amp; Payroll Finance", "icon": "\ud83d\udcb0", "color": "#16a34a", "desc": "Tuition fee structures, candidate payment gateway records, scholarships, and faculty payroll.", "tables": [{"label": "Fee Structure", "name": "x_1790229_edusph_0_fee_structure", "desc": "Tuition, lab, hostel, and library fee breakdown per program."}, {"label": "Student Fee", "name": "x_1790229_edusph_0_student_fee", "desc": "Student fee dues, waivers, and collection status."}, {"label": "Payment Transaction", "name": "x_1790229_edusph_0_payment_transaction", "desc": "Transaction logs for fee payments (Razorpay/Stripe/Bank)."}, {"label": "Scholarship", "name": "x_1790229_edusph_0_scholarship", "desc": "Merit and need-based student financial assistance grants."}, {"label": "Salary Structure", "name": "x_1790229_edusph_0_salary_structure", "desc": "Faculty compensation scale (Basic, HRA, DA, Allowances)."}, {"label": "Payroll Record", "name": "x_1790229_edusph_0_payroll_record", "desc": "Monthly salary disbursement and payslip records."}]}, {"id": "place", "name": "Placements &amp; Internships", "icon": "\ud83d\udcbc", "color": "#7c3aed", "desc": "Corporate campus recruitment drives, student registrations, interview stages, and job offers.", "tables": [{"label": "Company", "name": "x_1790229_edusph_0_company", "desc": "Recruiting partner organizations (TCS, Google, Microsoft)."}, {"label": "Placement Drive", "name": "x_1790229_edusph_0_placement_drive", "desc": "Scheduled recruitment drives with package details."}, {"label": "Drive Registration", "name": "x_1790229_edusph_0_drive_registration", "desc": "Eligible student registrations for placement drives."}, {"label": "Interview Round", "name": "x_1790229_edusph_0_interview_round", "desc": "Hiring rounds (Aptitude, Technical, HR interview)."}, {"label": "Placement Offer", "name": "x_1790229_edusph_0_placement_offer", "desc": "Official job offers, package (LPA), and joining dates."}]}, {"id": "asset", "name": "Campus Assets", "icon": "\ud83d\udcbb", "color": "#ea580c", "desc": "University hardware, laboratory equipment, projectors, and staff asset provisioning.", "tables": [{"label": "Asset Request", "name": "x_1790229_edusph_0_asset_request", "desc": "Requisitions for IT devices or laboratory instruments."}, {"label": "Asset Allocation", "name": "x_1790229_edusph_0_asset_allocation", "desc": "Direct asset assignment to faculty, departments, or labs."}]}, {"id": "event", "name": "Events &amp; Campus Life", "icon": "\ud83c\udf89", "color": "#0284c7", "desc": "Campus seminars, cultural fests, sports meets, QR-code entry, budget approvals, and guest resources.", "tables": [{"label": "Event", "name": "x_1790229_edusph_0_event", "desc": "Campus fests, conferences, hackathons, and seminars."}, {"label": "Event Registration", "name": "x_1790229_edusph_0_event_registration", "desc": "Attendee registrations and QR pass issuance."}, {"label": "Event Attendance", "name": "x_1790229_edusph_0_event_attendance", "desc": "QR scanner check-in timestamps at venue gates."}, {"label": "Event Budget", "name": "x_1790229_edusph_0_event_budget", "desc": "Expense tracking and funding approvals for events."}, {"label": "Event Resource", "name": "x_1790229_edusph_0_event_resource", "desc": "Auditoriums, sound systems, and catering requirements."}]}, {"id": "desk", "name": "Help Desk &amp; Feedback", "icon": "\ud83c\udfa7", "color": "#475569", "desc": "Student service requests, grievance ticketing, SLA matrices, and course feedback surveys.", "tables": [{"label": "Service Ticket", "name": "x_1790229_edusph_0_service_ticket", "desc": "Student and faculty support tickets (Hostel, ID card, IT)."}, {"label": "SLA Matrix", "name": "x_1790229_edusph_0_sla_matrix", "desc": "Resolution turnaround time thresholds based on urgency."}, {"label": "Feedback Form", "name": "x_1790229_edusph_0_feedback_form", "desc": "Semester course and faculty feedback survey definitions."}, {"label": "Feedback Response", "name": "x_1790229_edusph_0_feedback_response", "desc": "Student submitted ratings and qualitative comments."}]}]&lt;![CDATA[');
+  var currentModuleFilter = 'all';
+
+  function initPage() {
+    var savedTheme = localStorage.getItem('edusphere_theme') || 'dark';
+    document.body.setAttribute('data-theme', savedTheme);
+    updateThemeBtn(savedTheme);
+    renderCards();
+    renderDictionary();
+  }
+
+  function toggleTheme() {
+    var cur = document.body.getAttribute('data-theme') || 'dark';
+    var next = (cur === 'dark') ? 'light' : 'dark';
+    document.body.setAttribute('data-theme', next);
+    localStorage.setItem('edusphere_theme', next);
+    updateThemeBtn(next);
+  }
+
+  function updateThemeBtn(theme) {
+    var btn = document.getElementById('themeBtn');
+    if (btn) {
+      btn.innerHTML = (theme === 'dark') ? '&amp;#9728;&amp;#65039; Light Mode' : '&amp;#127769; Dark Mode';
+    }
+  }
+
+  function renderCards() {
+    var container = document.getElementById('viewCards');
+    container.innerHTML = '';
+    var searchVal = (document.getElementById('tableSearch').value || '').toLowerCase().trim();
+
+    var totalMatches = 0;
+
+    modulesData.forEach(function(mod) {
+      if (currentModuleFilter !== 'all' &amp;&amp; mod.id !== currentModuleFilter) return;
+
+      var filteredTables = mod.tables.filter(function(t) {
+        if (!searchVal) return true;
+        return t.label.toLowerCase().indexOf(searchVal) !== -1 ||
+               t.name.toLowerCase().indexOf(searchVal) !== -1 ||
+               t.desc.toLowerCase().indexOf(searchVal) !== -1 ||
+               mod.name.toLowerCase().indexOf(searchVal) !== -1;
+      });
+
+      if (filteredTables.length === 0) return;
+      totalMatches += filteredTables.length;
+
+      var block = document.createElement('div');
+      block.className = 'edu-module-block';
+      block.id = 'mod-' + mod.id;
+
+      var html = '&lt;div class="edu-module-header"&gt;' +
+        '&lt;div class="edu-module-title"&gt;' +
+          '&lt;span style="font-size:22px;"&gt;' + mod.icon + '&lt;/span&gt;' +
+          '&lt;h2&gt;' + mod.name + '&lt;/h2&gt;' +
+          '&lt;span class="edu-module-tag"&gt;' + filteredTables.length + ' Tables&lt;/span&gt;' +
+        '&lt;/div&gt;' +
+        '&lt;a href="/$schema_map.do?sysparm_table=' + filteredTables[0].name + '" target="_blank" class="edu-btn edu-btn-ghost" style="font-size:11px;padding:4px 8px;"&gt;&amp;#128506;&amp;#65039; Module Schema&lt;/a&gt;' +
+      '&lt;/div&gt;' +
+      '&lt;div class="edu-module-desc"&gt;' + mod.desc + '&lt;/div&gt;' +
+      '&lt;div class="edu-tables-grid"&gt;';
+
+      filteredTables.forEach(function(t) {
+        html += '&lt;div class="edu-table-card"&gt;' +
+          '&lt;div class="edu-table-top"&gt;' +
+            '&lt;div class="edu-table-label"&gt;' + t.label + '&lt;/div&gt;' +
+            '&lt;div class="edu-table-name"&gt;' + t.name + '&lt;/div&gt;' +
+            '&lt;div class="edu-table-desc"&gt;' + t.desc + '&lt;/div&gt;' +
+          '&lt;/div&gt;' +
+          '&lt;div class="edu-table-actions"&gt;' +
+            '&lt;a href="/' + t.name + '_list.do" target="_blank" class="edu-btn-action primary"&gt;&amp;#128203; List&lt;/a&gt;' +
+            '&lt;a href="/' + t.name + '.do" target="_blank" class="edu-btn-action"&gt;&amp;#10133; New&lt;/a&gt;' +
+            '&lt;a href="/$schema_map.do?sysparm_table=' + t.name + '" target="_blank" class="edu-btn-action" title="Open Native Schema Map"&gt;&amp;#128506;&amp;#65039; Map&lt;/a&gt;' +
+          '&lt;/div&gt;' +
+        '&lt;/div&gt;';
+      });
+
+      html += '&lt;/div&gt;';
+      block.innerHTML = html;
+      container.appendChild(block);
+    });
+
+    var empty = document.getElementById('emptyState');
+    if (totalMatches === 0) {
+      empty.style.display = 'block';
+    } else {
+      empty.style.display = 'none';
+    }
+  }
+
+  function renderDictionary() {
+    var tbody = document.getElementById('dictTableBody');
+    tbody.innerHTML = '';
+    var searchVal = (document.getElementById('tableSearch').value || '').toLowerCase().trim();
+
+    var count = 1;
+    modulesData.forEach(function(mod) {
+      if (currentModuleFilter !== 'all' &amp;&amp; mod.id !== currentModuleFilter) return;
+
+      mod.tables.forEach(function(t) {
+        if (searchVal) {
+          var match = t.label.toLowerCase().indexOf(searchVal) !== -1 ||
+                      t.name.toLowerCase().indexOf(searchVal) !== -1 ||
+                      t.desc.toLowerCase().indexOf(searchVal) !== -1 ||
+                      mod.name.toLowerCase().indexOf(searchVal) !== -1;
+          if (!match) return;
+        }
+
+        var tr = document.createElement('tr');
+        tr.innerHTML = '&lt;td&gt;&lt;strong&gt;' + (count++) + '&lt;/strong&gt;&lt;/td&gt;' +
+          '&lt;td&gt;&lt;span style="display:inline-flex;align-items:center;gap:6px;"&gt;' + mod.icon + ' ' + mod.name + '&lt;/span&gt;&lt;/td&gt;' +
+          '&lt;td&gt;&lt;strong&gt;' + t.label + '&lt;/strong&gt;&lt;/td&gt;' +
+          '&lt;td&gt;&lt;code style="font-size:11px;color:var(--gold-light);"&gt;' + t.name + '&lt;/code&gt;&lt;/td&gt;' +
+          '&lt;td&gt;' + t.desc + '&lt;/td&gt;' +
+          '&lt;td style="white-space:nowrap;"&gt;' +
+            '&lt;a href="/' + t.name + '_list.do" target="_blank" class="edu-btn edu-btn-ghost" style="padding:4px 8px;font-size:11px;margin-right:4px;"&gt;&amp;#128203; List&lt;/a&gt;' +
+            '&lt;a href="/$schema_map.do?sysparm_table=' + t.name + '" target="_blank" class="edu-btn edu-btn-ghost" style="padding:4px 8px;font-size:11px;"&gt;&amp;#128506;&amp;#65039; Map&lt;/a&gt;' +
+          '&lt;/td&gt;';
+        tbody.appendChild(tr);
+      });
+    });
+  }
+
+  function filterTables() {
+    renderCards();
+    renderDictionary();
+  }
+
+  function filterByModule(modId, btn) {
+    currentModuleFilter = modId;
+    var pills = document.querySelectorAll('#modulePills .edu-pill');
+    pills.forEach(function(p) { p.classList.remove('active'); });
+    if (btn) btn.classList.add('active');
+    renderCards();
+    renderDictionary();
+  }
+
+  function switchView(view) {
+    document.getElementById('tabCards').classList.remove('active');
+    document.getElementById('tabErd').classList.remove('active');
+    document.getElementById('tabDict').classList.remove('active');
+
+    document.getElementById('viewCards').style.display = 'none';
+    document.getElementById('viewErd').style.display = 'none';
+    document.getElementById('viewDict').style.display = 'none';
+
+    if (view === 'cards') {
+      document.getElementById('tabCards').classList.add('active');
+      document.getElementById('viewCards').style.display = 'block';
+    } else if (view === 'erd') {
+      document.getElementById('tabErd').classList.add('active');
+      document.getElementById('viewErd').style.display = 'block';
+    } else if (view === 'dict') {
+      document.getElementById('tabDict').classList.add('active');
+      document.getElementById('viewDict').style.display = 'block';
+    }
+  }
+
+  window.onload = initPage;
+]]&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&lt;/j:jelly&gt;
+</html>
+        <name>data_model</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>developer.abhinav</sys_created_by>
+        <sys_created_on>2026-11-19 11:15:01</sys_created_on>
+        <sys_id>6b29a45bc3605750d70532f1b40131a4</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>data_model</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_ui_page_6b29a45bc3605750d70532f1b40131a4</sys_update_name>
+        <sys_updated_by>developer.abhinav</sys_updated_by>
+        <sys_updated_on>2026-11-19 11:16:50</sys_updated_on>
+    </sys_ui_page>
+</record_update>

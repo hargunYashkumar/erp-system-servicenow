@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_user_role_contains">
+    <sys_user_role_contains action="INSERT_OR_UPDATE">
+        <contains display_value="snc_external" name="snc_external">940ba702933002009c8579b4f47ffbe2</contains>
+        <role display_value="x_erp.applicant" name="x_erp.applicant">4d8bba5ac3d41b10d70532f1b401314b</role>
+        <sys_class_name>sys_user_role_contains</sys_class_name>
+        <sys_created_by>developer.abhinav</sys_created_by>
+        <sys_created_on>2026-11-19 09:39:35</sys_created_on>
+        <sys_id>ad53141bc3ac1750d70532f1b4013165</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>snc_external.x_erp.applicant</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_user_role_contains_ad53141bc3ac1750d70532f1b4013165</sys_update_name>
+        <sys_updated_by>developer.abhinav</sys_updated_by>
+        <sys_updated_on>2026-11-19 09:39:35</sys_updated_on>
+    </sys_user_role_contains>
+</record_update>

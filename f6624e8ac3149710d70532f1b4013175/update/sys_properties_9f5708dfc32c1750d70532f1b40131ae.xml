@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description/>
+        <ignore_cache>false</ignore_cache>
+        <is_private>false</is_private>
+        <name>glide.entry.first.page.script</name>
+        <read_roles/>
+        <suffix>x_1790229_edusph_0</suffix>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>developer.abhinav</sys_created_by>
+        <sys_created_on>2026-11-19 08:47:17</sys_created_on>
+        <sys_id>9f5708dfc32c1750d70532f1b40131ae</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>glide.entry.first.page.script</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_properties_9f5708dfc32c1750d70532f1b40131ae</sys_update_name>
+        <sys_updated_by>developer.abhinav</sys_updated_by>
+        <sys_updated_on>2026-11-19 08:47:17</sys_updated_on>
+        <type>string</type>
+        <value>new SPEntryPage().getFirstPageURL()</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=9f5708dfc32c1750d70532f1b40131ae"/>
+</record_update>

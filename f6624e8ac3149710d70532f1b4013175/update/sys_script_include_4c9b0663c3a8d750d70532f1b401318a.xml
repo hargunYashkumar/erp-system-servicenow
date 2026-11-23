@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_1790229_edusph_0.CounsellingScheduleService</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>Validates counselling schedule dates, deadlines, and phase transitions.</description>
+        <mobile_callable>false</mobile_callable>
+        <name>CounsellingScheduleService</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var CounsellingScheduleService = Class.create();
+CounsellingScheduleService.prototype = {
+    initialize: function() {},
+
+    getActiveConfig: function() {
+        var cfg = new GlideRecord('x_1790229_edusph_0_counselling_config');
+        cfg.addQuery('status', 'Active');
+        cfg.orderByDesc('sys_created_on');
+        cfg.setLimit(1);
+        cfg.query();
+        if (cfg.next()) {
+            return {
+                sys_id: cfg.getUniqueValue(),
+                counselling_start_date: cfg.getValue('counselling_start_date'),
+                round1_start_date: cfg.getValue('round1_start_date'),
+                round1_pref_deadline: cfg.getValue('round1_pref_deadline'),
+                round1_result_date: cfg.getValue('round1_result_date'),
+                round1_acceptance_deadline: cfg.getValue('round1_acceptance_deadline'),
+                round2_start_date: cfg.getValue('round2_start_date'),
+                round2_pref_deadline: cfg.getValue('round2_pref_deadline'),
+                round2_result_date: cfg.getValue('round2_result_date'),
+                round2_acceptance_deadline: cfg.getValue('round2_acceptance_deadline'),
+                status: cfg.getValue('status')
+            };
+        }
+        return null;
+    },
+
+    /**
+     * Determines current phase
+     */
+    getCurrentPhase: function() {
+        var cfg = this.getActiveConfig();
+        if (!cfg) return { phase: 'open', message: 'Counselling is open' };
+
+        var gdtNow = new GlideDateTime();
+        var nowStr = gdtNow.getDisplayValue();
+        var nowDate = gdtNow.getDate().getValue();
+
+        if (nowDate < cfg.counselling_start_date) {
+            return {
+                phase: 'before_counselling',
+                startDate: cfg.counselling_start_date,
+                message: 'Counselling will begin on ' + cfg.counselling_start_date + '.'
+            };
+        }
+
+        if (nowStr <= cfg.round1_pref_deadline) {
+            return {
+                phase: 'round1_preferences',
+                round: 1,
+                deadline: cfg.round1_pref_deadline,
+                message: 'Round 1 counselling is active. Submit preferences before ' + cfg.round1_pref_deadline + '.'
+            };
+        }
+
+        if (nowDate < cfg.round1_result_date) {
+            return {
+                phase: 'round1_processing',
+                round: 1,
+                resultDate: cfg.round1_result_date,
+                message: 'Preferences locked. Round 1 allocation in progress. Results on ' + cfg.round1_result_date + '.'
+            };
+        }
+
+        if (nowStr <= cfg.round1_acceptance_deadline) {
+            return {
+                phase: 'round1_results',
+                round: 1,
+                deadline: cfg.round1_acceptance_deadline,
+                message: 'Round 1 results published. Accept, Reject or Float before ' + cfg.round1_acceptance_deadline + '.'
+            };
+        }
+
+        if (cfg.round2_start_date && nowDate >= cfg.round2_start_date) {
+            if (cfg.round2_result_date && nowDate < cfg.round2_result_date) {
+                return {
+                    phase: 'round2_processing',
+                    round: 2,
+                    resultDate: cfg.round2_result_date,
+                    message: 'Round 2 seat allotment in progress. Results on ' + cfg.round2_result_date + '.'
+                };
+            }
+            if (cfg.round2_acceptance_deadline && nowStr <= cfg.round2_acceptance_deadline) {
+                return {
+                    phase: 'round2_results',
+                    round: 2,
+                    deadline: cfg.round2_acceptance_deadline,
+                    message: 'Round 2 final allotment published. Confirm admission before ' + cfg.round2_acceptance_deadline + '.'
+                };
+            }
+        }
+
+        return {
+            phase: 'concluded',
+            message: 'Centralized counselling cycle for the academic year has concluded.'
+        };
+    },
+
+    type: 'CounsellingScheduleService'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>developer.abhinav</sys_created_by>
+        <sys_created_on>2026-11-20 13:03:21</sys_created_on>
+        <sys_id>4c9b0663c3a8d750d70532f1b401318a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>CounsellingScheduleService</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_script_include_4c9b0663c3a8d750d70532f1b401318a</sys_update_name>
+        <sys_updated_by>developer.abhinav</sys_updated_by>
+        <sys_updated_on>2026-11-20 13:03:21</sys_updated_on>
+    </sys_script_include>
+</record_update>

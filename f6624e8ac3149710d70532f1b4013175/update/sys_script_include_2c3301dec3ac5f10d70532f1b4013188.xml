@@ -5,7 +5,7 @@
         <api_name>x_1790229_edusph_0.AdmissionMeritEngine</api_name>
         <caller_access/>
         <client_callable>false</client_callable>
-        <description/>
+        <description>Calculates composite merit score and 5-tier centralized applicant ranking.</description>
         <mobile_callable>false</mobile_callable>
         <name>AdmissionMeritEngine</name>
         <sandbox_callable>false</sandbox_callable>
@@ -16,87 +16,118 @@ AdmissionMeritEngine.prototype = {
     /**
      * Calculates composite merit score: (10th% + 12th% + JEE) / 3
      */
-    calculateMeritScore: function(appGR) {
-        if (!appGR || !appGR.isValidRecord()) return 0;
-        var m10 = parseFloat(appGR.getValue('class_10_percentage')) || 0;
-        var m12 = parseFloat(appGR.getValue('class_12_percentage')) || 0;
-        var jee = parseFloat(appGR.getValue('jee_score')) || 0;
+    calculateMeritScore: function(arg1, arg2, arg3) {
+        var m10 = 0, m12 = 0, jee = 0;
+        if (typeof arg1 === 'number' || typeof arg1 === 'string') {
+            m10 = parseFloat(arg1) || 0;
+            m12 = parseFloat(arg2) || 0;
+            jee = parseFloat(arg3) || 0;
+        } else if (arg1 && typeof arg1.isValidRecord === 'function' && arg1.isValidRecord()) {
+            m10 = parseFloat(arg1.getValue('class_10_percentage')) || 0;
+            m12 = parseFloat(arg1.getValue('class_12_percentage')) || 0;
+            jee = parseFloat(arg1.getValue('jee_score')) || 0;
+        }
         var composite = (m10 + m12 + jee) / 3;
         return parseFloat(composite.toFixed(2));
     },
 
     /**
-     * 4-Tier Tie-Breaker Comparison:
-     * 1. Overall composite merit
-     * 2. JEE Score
-     * 3. Secondary Average (10th + 12th) / 2
-     * 4. Max individual (10th or 12th)
-     * 5. Seniority by DOB
+     * 5-Tier Tie-Breaker Comparison:
+     * Tier 1: Composite Merit Score (Highest first)
+     * Tier 2: JEE Score (Highest first)
+     * Tier 3: Class 12 Percentage (Highest first)
+     * Tier 4: Class 10 Percentage (Highest first)
+     * Tier 5: Seniority by DOB (Older first: earlier DOB string < later DOB string)
      */
     compareApplicants: function(a, b) {
-        // Tier 0: Composite Merit
-        if (b.merit !== a.merit) return b.merit - a.merit;
+        var meritA = a.merit !== undefined ? a.merit : (parseFloat(a.merit_score) || 0);
+        var meritB = b.merit !== undefined ? b.merit : (parseFloat(b.merit_score) || 0);
+        if (meritB !== meritA) return meritB - meritA;
 
-        // Tier 1: JEE Score
-        if (b.jee !== a.jee) return b.jee - a.jee;
+        var jeeA = a.jee !== undefined ? a.jee : (parseFloat(a.jee_score) || 0);
+        var jeeB = b.jee !== undefined ? b.jee : (parseFloat(b.jee_score) || 0);
+        if (jeeB !== jeeA) return jeeB - jeeA;
 
-        // Tier 2: Average of 10th and 12th
-        var avgA = (a.m10 + a.m12) / 2;
-        var avgB = (b.m10 + b.m12) / 2;
-        if (avgB !== avgA) return avgB - avgA;
+        var m12A = a.m12 !== undefined ? a.m12 : (parseFloat(a.class_12_percentage) || 0);
+        var m12B = b.m12 !== undefined ? b.m12 : (parseFloat(b.class_12_percentage) || 0);
+        if (m12B !== m12A) return m12B - m12A;
 
-        // Tier 3: Highest individual score
-        var maxA = Math.max(a.m10, a.m12);
-        var maxB = Math.max(b.m10, b.m12);
-        if (maxB !== maxA) return maxB - maxA;
+        var m10A = a.m10 !== undefined ? a.m10 : (parseFloat(a.class_10_percentage) || 0);
+        var m10B = b.m10 !== undefined ? b.m10 : (parseFloat(b.class_10_percentage) || 0);
+        if (m10B !== m10A) return m10B - m10A;
 
-        // Tier 4: Seniority by DOB (older first)
-        if (a.dob && b.dob) {
-            return a.dob < b.dob ? -1 : 1;
+        var dobA = a.dob || a.date_of_birth || '';
+        var dobB = b.dob || b.date_of_birth || '';
+        if (dobA && dobB) {
+            return dobA < dobB ? -1 : (dobA > dobB ? 1 : 0);
         }
 
         return 0;
     },
 
+    sortCandidates: function(list) {
+        var self = this;
+        list.sort(function(a, b) { return self.compareApplicants(a, b); });
+        return list;
+    },
+
     /**
-     * Ranks all verified applications for a college program
+     * Ranks ALL verified applicants across the university
      */
-    rankApplicants: function(collegeId, programId) {
+    rankAllVerifiedApplicants: function() {
         var gr = new GlideRecord('x_1790229_edusph_0_admission_application');
-        gr.addQuery('college', collegeId);
-        gr.addQuery('program', programId);
-        gr.addQuery('status', 'CONTAINS', 'verified').addOrCondition('status', 'in merit');
+        var statQc = gr.addQuery('status', 'CONTAINS', 'verified');
+        statQc.addOrCondition('status', 'in_merit');
+        statQc.addOrCondition('status', 'in merit');
         gr.query();
 
         var list = [];
         while (gr.next()) {
+            var m10Val = gr.getValue('class_10_percentage');
+            var m12Val = gr.getValue('class_12_percentage');
+            var jeeVal = gr.getValue('jee_score');
+            var dobVal = gr.getValue('date_of_birth') || '';
+
+            var isIncomplete = (!m10Val || !m12Val || !jeeVal || !dobVal);
             var merit = this.calculateMeritScore(gr);
+
             list.push({
                 sys_id: gr.getUniqueValue(),
                 app_no: gr.getValue('app_no'),
+                name: gr.getValue('name'),
                 category: gr.getValue('category'),
                 merit: merit,
-                jee: parseFloat(gr.getValue('jee_score')) || 0,
-                m10: parseFloat(gr.getValue('class_10_percentage')) || 0,
-                m12: parseFloat(gr.getValue('class_12_percentage')) || 0,
-                dob: gr.getValue('date_of_birth') || ''
+                jee: parseFloat(jeeVal) || 0,
+                m10: parseFloat(m10Val) || 0,
+                m12: parseFloat(m12Val) || 0,
+                dob: dobVal,
+                incomplete: isIncomplete
             });
         }
 
         var self = this;
         list.sort(function(a, b) { return self.compareApplicants(a, b); });
 
-        // Update merit scores and set status to 'in merit'
+        // Update calculated merit scores on applications
         for (var i = 0; i < list.length; i++) {
             var upd = new GlideRecord('x_1790229_edusph_0_admission_application');
             if (upd.get(list[i].sys_id)) {
                 upd.setValue('merit_score', list[i].merit);
-                upd.setValue('status', 'in merit');
+                if (upd.getValue('status') === 'verified') {
+                    upd.setValue('status', 'in_merit');
+                }
                 upd.update();
             }
         }
 
         return list;
+    },
+
+    /**
+     * Backwards-compatible program-specific ranking
+     */
+    rankApplicants: function(collegeId, programId) {
+        return this.rankAllVerifiedApplicants();
     },
 
     type: 'AdmissionMeritEngine'
@@ -106,13 +137,13 @@ AdmissionMeritEngine.prototype = {
         <sys_created_by>developer.abhinav</sys_created_by>
         <sys_created_on>2026-11-16 10:34:46</sys_created_on>
         <sys_id>2c3301dec3ac5f10d70532f1b4013188</sys_id>
-        <sys_mod_count>0</sys_mod_count>
+        <sys_mod_count>5</sys_mod_count>
         <sys_name>AdmissionMeritEngine</sys_name>
         <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
         <sys_policy/>
         <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
         <sys_update_name>sys_script_include_2c3301dec3ac5f10d70532f1b4013188</sys_update_name>
         <sys_updated_by>developer.abhinav</sys_updated_by>
-        <sys_updated_on>2026-11-16 10:34:46</sys_updated_on>
+        <sys_updated_on>2026-11-20 13:25:10</sys_updated_on>
     </sys_script_include>
 </record_update>
