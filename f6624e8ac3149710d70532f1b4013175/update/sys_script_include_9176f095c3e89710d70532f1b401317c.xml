@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1790229_edusph_0.LabBatchReferenceQualifier</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>LabBatchReferenceQualifier</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var LabBatchReferenceQualifier = Class.create();
+LabBatchReferenceQualifier.prototype = {
+    initialize: function() {},
+
+    getLabBatches: function(offeringId) {
+
+        // No Offering selected
+        if (!offeringId) {
+            return 'sys_idISEMPTY';
+        }
+
+        // Retrieve selected Course Offering
+        var offering = new GlideRecord('x_1790229_edusph_0_course_offering');
+
+        if (!offering.get(offeringId)) {
+            return 'sys_idISEMPTY';
+        }
+
+        // Get Section associated with Offering
+        var sectionId = offering.getValue(
+            'section'
+        );
+
+        if (!sectionId) {
+            return 'sys_idISEMPTY';
+        }
+
+        // Return Lab Batches belonging to that Section
+        return 'section=' + sectionId;
+    },
+
+    type: 'LabBatchReferenceQualifier'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Developer-Vayu</sys_created_by>
+        <sys_created_on>2026-11-13 07:07:14</sys_created_on>
+        <sys_id>9176f095c3e89710d70532f1b401317c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>LabBatchReferenceQualifier</sys_name>
+        <sys_package display_value="EduSphere University ERP System" source="x_1790229_edusph_0">f6624e8ac3149710d70532f1b4013175</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="EduSphere University ERP System">f6624e8ac3149710d70532f1b4013175</sys_scope>
+        <sys_update_name>sys_script_include_9176f095c3e89710d70532f1b401317c</sys_update_name>
+        <sys_updated_by>Developer-Vayu</sys_updated_by>
+        <sys_updated_on>2026-11-13 07:07:14</sys_updated_on>
+    </sys_script_include>
+</record_update>

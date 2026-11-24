@@ -18,10 +18,10 @@
         </element>
         <element label="Decision On" max_length="40" name="decision_on" type="glide_date_time"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Absent Faculty" max_length="32" name="absent_faculty" reference="x_1790229_edusph_0_employee" type="reference"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Requested By" mandatory="true" max_length="32" name="requested_by" reference="x_1790229_edusph_0_employee" type="reference"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Proxy Faculty" max_length="32" name="proxy_faculty" reference="x_1790229_edusph_0_employee" type="reference"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Decision By" max_length="32" name="decision_by" reference="x_1790229_edusph_0_employee" type="reference"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Session" max_length="32" name="session" reference="x_1790229_edusph_0_class_session" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Requested By" mandatory="true" max_length="32" name="requested_by" reference="x_1790229_edusph_0_employee" reference_qual="javascript: new AttendanceRefQual().getEligibleRequesters()" type="reference" use_reference_qualifier="advanced"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Proxy Faculty" max_length="32" name="proxy_faculty" reference="x_1790229_edusph_0_employee" reference_qual="javascript: new AttendanceRefQual().getAvailableProxyFaculty()" type="reference" use_reference_qualifier="advanced"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Decision By" max_length="32" name="decision_by" reference="x_1790229_edusph_0_employee" reference_qual="roles=x_erp.hod^ORroles=x_erp.principal^EQ" reference_qual_condition="roles=x_erp.hod^ORroles=x_erp.principal^EQ" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Session" max_length="32" name="session" reference="x_1790229_edusph_0_class_session" reference_qual="javascript: new AttendanceRefQual().getScheduledSessionsForCurrentCollege()" type="reference" use_reference_qualifier="advanced"/>
         <element attributes="edge_encryption_enabled=true" choice="1" label="Status" mandatory="true" max_length="40" name="status" type="choice">
             <choice>
                 <element inactive_on_update="false" label="Requested" sequence="1" value="Requested"/>

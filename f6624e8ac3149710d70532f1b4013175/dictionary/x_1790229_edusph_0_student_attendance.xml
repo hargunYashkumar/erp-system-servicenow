@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
     <element attributes="enforce_dot_walk_cross_scope_access=true" db_object_id="e9d9a7a2c3589b10d70532f1b40131b8" label="Student Attendance" max_length="40" name="x_1790229_edusph_0_student_attendance" type="collection">
         <element label="Correction Approved On" max_length="40" name="correction_approved_on" type="glide_date_time"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Session" max_length="32" name="session" reference="x_1790229_edusph_0_class_session" type="reference"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Marked By" max_length="32" name="marked_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Session" max_length="32" name="session" reference="x_1790229_edusph_0_class_session" reference_qual="javascript: new AttendanceRefQual().getSessionsForCurrentCollege()" type="reference" use_reference_qualifier="advanced"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Marked By" max_length="32" name="marked_by" reference="x_1790229_edusph_0_employee" reference_qual="userDYNAMIC90d1921e5f510100a9ad2572f2b477fe^roles=x_erp.faculty^EQ" reference_qual_condition="userDYNAMIC90d1921e5f510100a9ad2572f2b477fe^roles=x_erp.faculty^EQ" type="reference"/>
         <element label="Correction Requested On" max_length="40" name="correction_requested_on" type="glide_date_time"/>
         <element attributes="edge_encryption_enabled=true" label="Weightage" max_length="38" name="weightage" type="decimal"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Correction Approved By" max_length="32" name="correction_approved_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Correction Approved By" max_length="32" name="correction_approved_by" reference="x_1790229_edusph_0_employee" reference_qual="roles=x_erp.hod^EQ" reference_qual_condition="roles=x_erp.hod^EQ" type="reference"/>
         <element label="Correction Reason" max_length="255" name="correction_reason" type="string"/>
         <element attributes="edge_encryption_enabled=true" choice="1" default="Not Requested" label="Correction Status" max_length="40" name="correction_status" type="choice">
             <choice>
@@ -15,8 +15,8 @@
                 <element inactive_on_update="false" label="Pending Approval" sequence="1" value="Pending Approval"/>
             </choice>
         </element>
-        <element label="Section" max_length="32" name="section" reference="x_1790229_edusph_0_section" type="reference"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" type="reference"/>
+        <element label="Section " max_length="32" name="section" reference="x_1790229_edusph_0_section" reference_qual="javascript: new AttendanceRefQual().getSectionsForCurrentCollege()" type="reference" use_reference_qualifier="advanced"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Student" mandatory="true" max_length="32" name="student" reference="x_1790229_edusph_0_student" reference_qual="javascript: new AttendanceRefQual().getStudentsForSelectedCollegeAndSection()" type="reference" use_reference_qualifier="advanced"/>
         <element attributes="edge_encryption_enabled=true" choice="1" label="Status" mandatory="true" max_length="40" name="status" type="choice">
             <choice>
                 <element inactive_on_update="false" label="Absent" sequence="1" value="Absent"/>

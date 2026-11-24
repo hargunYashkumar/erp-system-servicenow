@@ -7,7 +7,7 @@
         <element label="Decision On" max_length="40" name="decision_on" type="glide_date_time"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Event" mandatory="true" max_length="32" name="event" reference="x_1790229_edusph_0_event" reference_qual="javascript:new EventsRefQual().getEventsForCurrentEmployeeCollege()" type="reference" use_reference_qualifier="advanced"/>
         <element attributes="edge_encryption_enabled=true,omit_sys_original=true" label="Approved Amount" max_length="20" name="approved_amount" type="currency"/>
-        <element attributes="edge_encryption_enabled=true" choice="1" label="Stauts" mandatory="true" max_length="40" name="stauts" type="choice">
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Status" mandatory="true" max_length="40" name="stauts" type="choice">
             <choice>
                 <element inactive_on_update="false" label="Rejected" sequence="4" value="Rejected"/>
                 <element inactive_on_update="false" label="Partially Approved" sequence="3" value="Partially Approved"/>

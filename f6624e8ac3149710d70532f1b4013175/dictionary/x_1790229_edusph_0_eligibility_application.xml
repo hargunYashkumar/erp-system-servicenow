@@ -6,7 +6,7 @@
         <element label="Pct" max_length="40" name="pct" type="string"/>
         <element label="Reason" max_length="255" name="reason" type="string"/>
         <element label="Decision Notes" max_length="255" name="decision_notes" type="string"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Decision By" max_length="32" name="decision_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Decision By" max_length="32" name="decision_by" reference="x_1790229_edusph_0_employee" reference_qual="roles=x_erp.principal^ORroles=x_erp.hod^ORroles=x_erp.dean^EQ" reference_qual_condition="roles=x_erp.principal^ORroles=x_erp.hod^ORroles=x_erp.dean^EQ" type="reference"/>
         <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Semester" mandatory="true" max_length="32" name="semester" reference="x_1790229_edusph_0_semester" type="reference"/>
         <element choice="1" label="Status" mandatory="true" max_length="40" name="status" type="string">
             <choice>

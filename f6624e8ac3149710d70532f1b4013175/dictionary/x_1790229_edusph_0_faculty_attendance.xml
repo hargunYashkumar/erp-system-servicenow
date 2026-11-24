@@ -12,8 +12,8 @@
         <element label="Check Out" max_length="40" name="check_out" type="glide_date_time"/>
         <element label="Date" mandatory="true" max_length="40" name="date" type="glide_date"/>
         <element label="Check In" max_length="40" name="check_in" type="glide_date_time"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Employee" mandatory="true" max_length="32" name="employee" reference="x_1790229_edusph_0_employee" type="reference"/>
-        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Regularized By" max_length="32" name="regularized_by" reference="x_1790229_edusph_0_employee" type="reference"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Employee" mandatory="true" max_length="32" name="employee" reference="x_1790229_edusph_0_employee" reference_qual="javascript: new AttendanceRefQual().getEmployeesForCurrentCollege()" type="reference" use_reference_qualifier="advanced"/>
+        <element attributes="edge_encryption_enabled=true,encode_utf8=false" label="Regularized By" max_length="32" name="regularized_by" reference="x_1790229_edusph_0_employee" reference_qual="roles=x_erp.principal^ORroles=x_erp.dean^EQ" reference_qual_condition="roles=x_erp.principal^ORroles=x_erp.dean^EQ" type="reference"/>
         <element attributes="edge_encryption_enabled=true" label="Hours" max_length="15" name="hours" type="decimal"/>
         <element label="Regularization Reason" max_length="255" name="regularization_reason" type="string"/>
         <element attributes="edge_encryption_enabled=true" label="Late Arrival Flag" mandatory="true" max_length="40" name="late_arrival_flag" type="boolean"/>
